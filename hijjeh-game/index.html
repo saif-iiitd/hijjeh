@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hijjeh - Urdu Spelling Game</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles.css" />
+
+    <!-- React (CDN) -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Babel (so we can keep JSX in the HTML for now) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Word bank -->
+    <script src="./bacWords.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useEffect, useMemo, useRef, useState } = React;
+
+      // From words.js (attached to window)
+      const WORD_BANK = window.WORD_BANK;
+      const LETTER_POOL = window.LETTER_POOL;
+      const NON_JOINERS = new Set(window.NON_JOINERS);
+
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+      function pickRandom(list) {
+        return list[Math.floor(Math.random() * list.length)];
+      }
+      function clamp(n, min, max) {
+        return Math.max(min, Math.min(max, n));
+      }
+
+      function buildRound(level, seenWordSet) {
+        const eligible = WORD_BANK.filter(w => w.level <= level);
+        const unSeen = eligible.filter(w => !seenWordSet.has(w.word));
+        const chosen = (unSeen.length > 0) ? pickRandom(unSeen) : pickRandom(eligible);
+
+        const distractorCount = clamp(1 + level * 2, 2, 14);
+        const allowDuplicatesInTiles = level >= 5;
+        const includeHardDistractors = level >= 5;
+
+        const answerLetters = chosen.letters;
+
+        let distractors = [];
+        while (distractors.length < distractorCount) {
+          const l = pickRandom(LETTER_POOL);
+          if (!answerLetters.includes(l) || allowDuplicatesInTiles) distractors.push(l);
+        }
+
+        if (includeHardDistractors) {
+          const families = [
+            ["ب","پ","ت","ث"],
+            ["ج","چ","ح","خ"],
+            ["س","ش"],
+            ["ص","ض"],
+            ["ز","ذ"],
+            ["د","ر"]
+          ];
+          distractors.push(...pickRandom(families));
+        }
+
+        const tiles = shuffle([...answerLetters, ...distractors].slice(0, 6 + level * 2));
+        for (const req of answerLetters) {
+          if (!tiles.includes(req)) tiles.push(req);
+        }
+
+        return {
+          ...chosen,
+          tiles: shuffle(tiles),
+          meta: {
+            distractorCount,
+            showSlots: level <= 4,
+            partialResetOnMistake: level <= 3,
+            timeLimitSec: level >= 6 ? 20 : null,
+            hintsEnabled: level >= 4,
+          }
+        };
+      }
+
+      function App() {
+        const [level, setLevel] = useState(1);
+        const [score, setScore] = useState(0);
+        const [streak, setStreak] = useState(0);
+        const [mistakes, setMistakes] = useState(0);
+
+        const seenWordsRef = useRef(new Set());
+        const [round, setRound] = useState(() => buildRound(1, seenWordsRef.current));
+
+        const [picked, setPicked] = useState([]);
+        const [usedTileCounts, setUsedTileCounts] = useState({});
+        const [feedback, setFeedback] = useState({ text: "Tap the letters to decode the word.", tone: "" });
+
+        const [hintMeter, setHintMeter] = useState(0);
+        const [timeLeft, setTimeLeft] = useState(null);
+
+        // NEW: controls word fade + tiles delay
+        const [showWord, setShowWord] = useState(false);
+        const [showTiles, setShowTiles] = useState(false);
+
+        // Start per-round animations
+        useEffect(() => {
+          setShowWord(false);
+          setShowTiles(false);
+
+          // fade word in
+          const id1 = requestAnimationFrame(() => setShowWord(true));
+
+          // show tiles shortly after word begins appearing
+          const id2 = setTimeout(() => setShowTiles(true), 250);
+
+          return () => {
+            cancelAnimationFrame(id1);
+            clearTimeout(id2);
+          };
+        }, [round.word]);
+
+        // Timer reset
+        useEffect(() => {
+          if (round.meta.timeLimitSec) setTimeLeft(round.meta.timeLimitSec);
+          else setTimeLeft(null);
+        }, [round.word]);
+
+        // Timer tick
+        useEffect(() => {
+          if (timeLeft == null) return;
+          if (timeLeft <= 0) {
+            setFeedback({ text: "⏰ Time up! Try again.", tone: "bad" });
+            registerMistake(true);
+            return;
+          }
+          const id = setInterval(() => setTimeLeft(t => (t == null ? null : t - 1)), 1000);
+          return () => clearInterval(id);
+        }, [timeLeft]);
+
+        function startNewRound(nextLevel = level, carrySeen = true) {
+          if (carrySeen) seenWordsRef.current.add(round.word);
+          const nr = buildRound(nextLevel, seenWordsRef.current);
+          setRound(nr);
+          setPicked([]);
+          setUsedTileCounts({});
+          setFeedback({ text: "Decode the word by tapping its letters.", tone: "" });
+          setHintMeter(0);
+        }
+
+        function resetProgress() {
+          seenWordsRef.current = new Set();
+          setLevel(1);
+          setScore(0);
+          setStreak(0);
+          setMistakes(0);
+
+          const nr = buildRound(1, seenWordsRef.current);
+          setRound(nr);
+
+          setPicked([]);
+          setUsedTileCounts({});
+          setFeedback({ text: "Tap the letters to decode the word.", tone: "" });
+          setHintMeter(0);
+        }
+
+        function canUseTile(letter) {
+          const available = round.tiles.filter(t => t === letter).length;
+          const used = usedTileCounts[letter] || 0;
+          return used < available;
+        }
+
+        function tapTile(letter) {
+          if (!canUseTile(letter)) return;
+
+          const nextIndex = picked.length;
+          const expected = round.letters[nextIndex];
+
+          setUsedTileCounts(prev => ({ ...prev, [letter]: (prev[letter] || 0) + 1 }));
+          const newPicked = [...picked, letter];
+          setPicked(newPicked);
+
+          if (letter !== expected) {
+            setFeedback({ text: "❌ Not quite. Try again.", tone: "bad" });
+            registerMistake(false);
+
+            if (round.meta.partialResetOnMistake) {
+              setPicked(picked);
+              setUsedTileCounts(prev => ({ ...prev, [letter]: Math.max(0, (prev[letter] || 1) - 1) }));
+            } else {
+              setTimeout(() => {
+                setPicked([]);
+                setUsedTileCounts({});
+              }, 250);
+            }
+            return;
+          }
+
+          setFeedback({ text: "✅ Good!", tone: "good" });
+
+          if (newPicked.length === round.letters.length) {
+            const basePoints = 10 + level * 2;
+            const timeBonus = (timeLeft != null) ? Math.max(0, timeLeft) : 0;
+            const streakBonus = Math.min(20, streak * 2);
+            const gained = basePoints + timeBonus + streakBonus;
+
+            setScore(s => s + gained);
+            setStreak(s => s + 1);
+
+            const nextStreak = streak + 1;
+            const shouldLevelUp = nextStreak > 0 && nextStreak % 3 === 0;
+
+            setFeedback({
+              text: `🎉 Word decoded! +${gained} points${shouldLevelUp ? " — Level up!" : ""}`,
+              tone: "good"
+            });
+
+            const newLevel = shouldLevelUp ? clamp(level + 1, 1, 6) : level;
+            if (shouldLevelUp) setLevel(newLevel);
+
+            setTimeout(() => startNewRound(newLevel, true), 650);
+          }
+        }
+
+        function registerMistake(hardReset) {
+          setMistakes(m => m + 1);
+          setStreak(0);
+          const bump = hardReset ? 35 : 20;
+          setHintMeter(h => clamp(h + bump, 0, 100));
+        }
+
+        function revealHint() {
+          if (!round.meta.hintsEnabled) return;
+          if (hintMeter < 70) return;
+
+          const nextIndex = picked.length;
+          const expected = round.letters[nextIndex];
+          setFeedback({ text: `Hint: next letter is “${expected}”`, tone: "" });
+          setHintMeter(h => clamp(h - 70, 0, 100));
+        }
+
+        function undo() {
+          if (picked.length === 0) return;
+          const last = picked[picked.length - 1];
+          setPicked(picked.slice(0, -1));
+          setUsedTileCounts(prev => ({ ...prev, [last]: Math.max(0, (prev[last] || 1) - 1) }));
+          setFeedback({ text: "Undid last pick.", tone: "" });
+        }
+
+        function skip() {
+          setFeedback({ text: "Skipped. New word!", tone: "" });
+          setStreak(0);
+          startNewRound(level, true);
+        }
+
+        const slots = useMemo(() => {
+          const total = round.letters.length;
+          const arr = [];
+          for (let i = 0; i < total; i++) arr.push(picked[i] ?? "—");
+          return arr;
+        }, [picked, round.word]);
+
+        return (
+          <div className="app">
+            <div className="header">Hijjeh - Urdu Spelling Game</div>
+
+            <div className="topbar">
+              <div className="stats">
+                <div className="pill">Level: <strong>{level}</strong></div>
+                <div className="pill">Score: <strong>{score}</strong></div>
+                <div className="pill">Streak: <strong>{streak}</strong></div>
+                <div className="pill">Mistakes: <strong>{mistakes}</strong></div>
+                {timeLeft != null && <div className="pill">Time: <strong>{timeLeft}s</strong></div>}
+              </div>
+
+              <div className="controls">
+                <button onClick={undo}>Undo</button>
+                <button onClick={skip}>Skip</button>
+                <button className="primary" onClick={resetProgress}>Reset</button>
+              </div>
+            </div>
+
+            <div className="canvas">
+              <div className="targetWrap">
+                <div className="label">
+                  Look at the target word below. Spell it out (hijje lagayiye) by tapping the letters that appear below.
+                </div>
+
+                <div className={"targetWord" + (showWord ? " show" : "")} title={round.tags?.join(", ")}>
+                  {round.word}
+                </div>
+
+                <div className="selectionRow">
+                  {round.meta.showSlots && (
+                    <div className="slots" style={{ direction: "rtl" }}>
+                      {slots.map((s, idx) => (
+                        <div key={idx} className={"slot " + (s !== "—" ? "" : "empty")}>{s}</div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className={"feedback " + (feedback.tone || "")}>
+                    {feedback.text}
+                  </div>
+
+                  {round.meta.hintsEnabled && (
+                    <div className="hintWrap">
+                      <div className="hintBar" aria-label="Hint meter">
+                        <div className="hintFill" style={{ width: `${hintMeter}%` }} />
+                      </div>
+                      <div className="hintRow">
+                        <button onClick={revealHint} disabled={hintMeter < 70}>
+                          Hint (needs 70%)
+                        </button>
+                        <div className="tiny">Hint meter charges with mistakes.</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className={"tilesArea" + (showTiles ? " show" : "")}>
+                <div className="tiles" role="list">
+                  {round.tiles.map((l, idx) => {
+                    const used = (usedTileCounts[l] || 0);
+                    const available = round.tiles.filter(t => t === l).length;
+                    const isUsedUp = used >= available;
+
+                    return (
+                      <div
+                        key={idx + "-" + l}
+                        className={"tile " + (isUsedUp ? "used" : "")}
+                        onClick={() => tapTile(l)}
+                        role="listitem"
+                        aria-label={"Letter " + l}
+                        title={(NON_JOINERS.has(l) ? "Non-joining letter" : "Letter")}
+                        style={{ transitionDelay: showTiles ? `${idx * 30}ms` : "0ms" }}
+                      >
+                        {l}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

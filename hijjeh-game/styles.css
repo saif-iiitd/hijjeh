@@ -1,0 +1,182 @@
+:root{
+  --text:#000;
+  --muted:#666;
+  --line:#000;
+  --lineLight:#d9d9d9;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  background-image:url("budhiyabg.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  color:#000;
+  font-family:Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+}
+
+.app{
+  max-width:980px;
+  margin:0 auto;
+  padding:16px;
+  display:grid;
+  gap:14px;
+}
+
+.header{
+  font-size:40px;
+  font-weight:600;
+}
+
+.topbar{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:14px;
+}
+
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.pill{
+  padding:6px 10px;
+  font-size:13px;
+}
+
+.pill strong{ font-weight:600; }
+
+.controls{ display:flex; gap:10px; }
+
+button{
+  background:transparent;
+  border:1px solid #000;
+  color:#000;
+  padding:10px 14px;
+  font-family:inherit;
+  cursor:pointer;
+}
+button:hover{ background:#000; color:#fff; }
+button.primary{ background:#000; color:#fff; }
+
+.canvas{
+  min-height:380px;
+  padding:18px;
+  position:relative;
+}
+
+.targetWrap{ display:grid; gap:10px; }
+.label{ font-size:12px; }
+
+/* Word fade in (class toggled by React) */
+.targetWord{
+  direction:rtl;
+  text-align:center;
+  font-family:Roboto, "Noto Nastaliq Urdu", serif;
+  font-size:86px;
+  padding:10px;
+  border-bottom:1px solid var(--lineLight);
+
+  opacity:0;
+  transform:translateY(6px);
+  transition: opacity 3s ease, transform 600ms ease;
+}
+.targetWord.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.selectionRow{ display:grid; gap:80px; }
+
+.slots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.slot{
+  width:46px;
+  height:54px;
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  font-family:Roboto, "Noto Nastaliq Urdu", serif;
+}
+.slot.empty{ color:#bbb; }
+
+.feedback{
+  min-height:22px;
+  font-size:14px;
+  color:#000;
+}
+
+/* Tiles: hidden until showTiles=true */
+.tilesArea{
+  position:relative;
+  padding:14px;
+  border-top:1px solid var(--lineLight);
+  margin-top:20px;
+
+  opacity:0;
+  transform:translateY(8px);
+  transition: opacity 450ms ease, transform 450ms ease;
+}
+.tilesArea.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.tiles{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.tile{
+  min-width:56px;
+  height:56px;
+  display:grid;
+  place-items:center;
+  font-size:24px;
+  font-family:Roboto, "Noto Nastaliq Urdu", serif;
+  cursor:pointer;
+  user-select:none;
+
+  opacity:0;
+  transform:translateY(8px);
+  transition: opacity 3s ease, transform 320ms ease, background 120ms ease;
+}
+
+/* when tilesArea is shown, tiles become visible (staggered via inline transitionDelay) */
+.tilesArea.show .tile{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.tile:hover{ background:#f5f5f5; }
+.tile.used{ opacity:0.35 !important; cursor:default; }
+
+.hintBar{
+  height:10px;
+  border:1px solid var(--lineLight);
+}
+
+.hintFill{
+  height:100%;
+  width:0%;
+  background:#000;
+  transition:width 200ms ease;
+}
+
+.hintWrap{ display:grid; gap:8px; }
+.hintRow{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+.tiny{ font-size:12px; }
