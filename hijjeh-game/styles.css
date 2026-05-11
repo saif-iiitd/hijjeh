@@ -10,16 +10,29 @@
   box-sizing:border-box;
 }
 
-body{
-  margin:0;
-  min-height:100svh;
+html::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
   background-image:url("budhiyabg.png");
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
+}
+
+html,
+body{
+  min-height:100%;
+}
+
+body{
+  margin:0;
   color:#000;
   font-family:Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  background:transparent;
 }
+
 
 /* ===== Shared compact layout ===== */
 
