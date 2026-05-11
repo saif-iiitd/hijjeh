@@ -8,17 +8,23 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- CSS -->
     <link rel="stylesheet" href="./styles.css" />
 
-    <!-- React (CDN) -->
+    <!-- React CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 
-    <!-- Babel (so we can keep JSX in the HTML for now) -->
+    <!-- Babel for JSX in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- Word bank -->
@@ -29,9 +35,8 @@
     <div id="root"></div>
 
     <script type="text/babel">
-      const { useEffect, useMemo, useRef, useState } = React;
+const { useEffect, useRef, useState } = React;
 
-      // From words.js (attached to window)
       const WORD_BANK = window.WORD_BANK;
       const LETTER_POOL = window.LETTER_POOL;
       const NON_JOINERS = new Set(window.NON_JOINERS);
@@ -44,9 +49,11 @@
         }
         return a;
       }
+
       function pickRandom(list) {
         return list[Math.floor(Math.random() * list.length)];
       }
+
       function clamp(n, min, max) {
         return Math.max(min, Math.min(max, n));
       }
@@ -54,7 +61,7 @@
       function buildRound(level, seenWordSet) {
         const eligible = WORD_BANK.filter(w => w.level <= level);
         const unSeen = eligible.filter(w => !seenWordSet.has(w.word));
-        const chosen = (unSeen.length > 0) ? pickRandom(unSeen) : pickRandom(eligible);
+        const chosen = unSeen.length > 0 ? pickRandom(unSeen) : pickRandom(eligible);
 
         const distractorCount = clamp(1 + level * 2, 2, 14);
         const allowDuplicatesInTiles = level >= 5;
@@ -65,22 +72,26 @@
         let distractors = [];
         while (distractors.length < distractorCount) {
           const l = pickRandom(LETTER_POOL);
-          if (!answerLetters.includes(l) || allowDuplicatesInTiles) distractors.push(l);
+          if (!answerLetters.includes(l) || allowDuplicatesInTiles) {
+            distractors.push(l);
+          }
         }
 
         if (includeHardDistractors) {
           const families = [
-            ["ب","پ","ت","ث"],
-            ["ج","چ","ح","خ"],
-            ["س","ش"],
-            ["ص","ض"],
-            ["ز","ذ"],
-            ["د","ر"]
+            ["ب", "پ", "ت", "ث"],
+            ["ج", "چ", "ح", "خ"],
+            ["س", "ش"],
+            ["ص", "ض"],
+            ["ز", "ذ"],
+            ["د", "ر"]
           ];
+
           distractors.push(...pickRandom(families));
         }
 
         const tiles = shuffle([...answerLetters, ...distractors].slice(0, 6 + level * 2));
+
         for (const req of answerLetters) {
           if (!tiles.includes(req)) tiles.push(req);
         }
@@ -90,10 +101,9 @@
           tiles: shuffle(tiles),
           meta: {
             distractorCount,
-            showSlots: level <= 4,
             partialResetOnMistake: level <= 3,
             timeLimitSec: level >= 6 ? 20 : null,
-            hintsEnabled: level >= 4,
+            hintsEnabled: level >= 4
           }
         };
       }
@@ -103,30 +113,33 @@
         const [score, setScore] = useState(0);
         const [streak, setStreak] = useState(0);
         const [mistakes, setMistakes] = useState(0);
+	const [showHints, setShowHints] = useState(true);
 
         const seenWordsRef = useRef(new Set());
         const [round, setRound] = useState(() => buildRound(1, seenWordsRef.current));
 
         const [picked, setPicked] = useState([]);
         const [usedTileCounts, setUsedTileCounts] = useState({});
-        const [feedback, setFeedback] = useState({ text: "Tap the letters to decode the word.", tone: "" });
+        const [feedback, setFeedback] = useState({
+          text: "Tap the letters to decode the word.",
+          tone: ""
+        });
 
         const [hintMeter, setHintMeter] = useState(0);
         const [timeLeft, setTimeLeft] = useState(null);
 
-        // NEW: controls word fade + tiles delay
         const [showWord, setShowWord] = useState(false);
         const [showTiles, setShowTiles] = useState(false);
 
-        // Start per-round animations
+        const wordStackRef = useRef(null);
+        const wordBlackRef = useRef(null);
+        const [clipLeftPx, setClipLeftPx] = useState("100%");
+
         useEffect(() => {
           setShowWord(false);
           setShowTiles(false);
 
-          // fade word in
           const id1 = requestAnimationFrame(() => setShowWord(true));
-
-          // show tiles shortly after word begins appearing
           const id2 = setTimeout(() => setShowTiles(true), 250);
 
           return () => {
@@ -135,27 +148,50 @@
           };
         }, [round.word]);
 
-        // Timer reset
         useEffect(() => {
-          if (round.meta.timeLimitSec) setTimeLeft(round.meta.timeLimitSec);
-          else setTimeLeft(null);
+          if (round.meta.timeLimitSec) {
+            setTimeLeft(round.meta.timeLimitSec);
+          } else {
+            setTimeLeft(null);
+          }
         }, [round.word]);
 
-        // Timer tick
         useEffect(() => {
           if (timeLeft == null) return;
+
           if (timeLeft <= 0) {
             setFeedback({ text: "⏰ Time up! Try again.", tone: "bad" });
+            setTimeLeft(null);
             registerMistake(true);
             return;
           }
-          const id = setInterval(() => setTimeLeft(t => (t == null ? null : t - 1)), 1000);
+
+          const id = setInterval(() => {
+            setTimeLeft(t => (t == null ? null : t - 1));
+          }, 1000);
+
           return () => clearInterval(id);
         }, [timeLeft]);
 
+        useEffect(() => {
+          function remeasure() {
+            const stack = wordStackRef.current;
+            if (!stack) return;
+
+            if (picked.length === 0) {
+              setClipLeftPx(`${stack.getBoundingClientRect().width}px`);
+            }
+          }
+
+          window.addEventListener("resize", remeasure);
+          return () => window.removeEventListener("resize", remeasure);
+        }, [picked.length]);
+
         function startNewRound(nextLevel = level, carrySeen = true) {
           if (carrySeen) seenWordsRef.current.add(round.word);
+
           const nr = buildRound(nextLevel, seenWordsRef.current);
+
           setRound(nr);
           setPicked([]);
           setUsedTileCounts({});
@@ -165,14 +201,15 @@
 
         function resetProgress() {
           seenWordsRef.current = new Set();
+
           setLevel(1);
           setScore(0);
           setStreak(0);
           setMistakes(0);
 
           const nr = buildRound(1, seenWordsRef.current);
-          setRound(nr);
 
+          setRound(nr);
           setPicked([]);
           setUsedTileCounts({});
           setFeedback({ text: "Tap the letters to decode the word.", tone: "" });
@@ -191,7 +228,11 @@
           const nextIndex = picked.length;
           const expected = round.letters[nextIndex];
 
-          setUsedTileCounts(prev => ({ ...prev, [letter]: (prev[letter] || 0) + 1 }));
+          setUsedTileCounts(prev => ({
+            ...prev,
+            [letter]: (prev[letter] || 0) + 1
+          }));
+
           const newPicked = [...picked, letter];
           setPicked(newPicked);
 
@@ -201,13 +242,17 @@
 
             if (round.meta.partialResetOnMistake) {
               setPicked(picked);
-              setUsedTileCounts(prev => ({ ...prev, [letter]: Math.max(0, (prev[letter] || 1) - 1) }));
+              setUsedTileCounts(prev => ({
+                ...prev,
+                [letter]: Math.max(0, (prev[letter] || 1) - 1)
+              }));
             } else {
               setTimeout(() => {
                 setPicked([]);
                 setUsedTileCounts({});
               }, 250);
             }
+
             return;
           }
 
@@ -215,7 +260,7 @@
 
           if (newPicked.length === round.letters.length) {
             const basePoints = 10 + level * 2;
-            const timeBonus = (timeLeft != null) ? Math.max(0, timeLeft) : 0;
+            const timeBonus = timeLeft != null ? Math.max(0, timeLeft) : 0;
             const streakBonus = Math.min(20, streak * 2);
             const gained = basePoints + timeBonus + streakBonus;
 
@@ -231,6 +276,7 @@
             });
 
             const newLevel = shouldLevelUp ? clamp(level + 1, 1, 6) : level;
+
             if (shouldLevelUp) setLevel(newLevel);
 
             setTimeout(() => startNewRound(newLevel, true), 650);
@@ -240,6 +286,7 @@
         function registerMistake(hardReset) {
           setMistakes(m => m + 1);
           setStreak(0);
+
           const bump = hardReset ? 35 : 20;
           setHintMeter(h => clamp(h + bump, 0, 100));
         }
@@ -250,15 +297,22 @@
 
           const nextIndex = picked.length;
           const expected = round.letters[nextIndex];
+
           setFeedback({ text: `Hint: next letter is “${expected}”`, tone: "" });
           setHintMeter(h => clamp(h - 70, 0, 100));
         }
 
         function undo() {
           if (picked.length === 0) return;
+
           const last = picked[picked.length - 1];
+
           setPicked(picked.slice(0, -1));
-          setUsedTileCounts(prev => ({ ...prev, [last]: Math.max(0, (prev[last] || 1) - 1) }));
+          setUsedTileCounts(prev => ({
+            ...prev,
+            [last]: Math.max(0, (prev[last] || 1) - 1)
+          }));
+
           setFeedback({ text: "Undid last pick.", tone: "" });
         }
 
@@ -268,93 +322,132 @@
           startNewRound(level, true);
         }
 
-        const slots = useMemo(() => {
-          const total = round.letters.length;
-          const arr = [];
-          for (let i = 0; i < total; i++) arr.push(picked[i] ?? "—");
-          return arr;
-        }, [picked, round.word]);
-
         return (
-          <div className="app">
-            <div className="header">Hijjeh - Urdu Spelling Game</div>
+          <div className="app compact-ui">
+            <div className="header"><i>Hijjeh</i> - Urdu Spelling Game</div>
 
-            <div className="topbar">
+            <div className="topbar sidebar">
               <div className="stats">
-                <div className="pill">Level: <strong>{level}</strong></div>
-                <div className="pill">Score: <strong>{score}</strong></div>
-                <div className="pill">Streak: <strong>{streak}</strong></div>
-                <div className="pill">Mistakes: <strong>{mistakes}</strong></div>
-                {timeLeft != null && <div className="pill">Time: <strong>{timeLeft}s</strong></div>}
+                <div className="pill">
+                  Level <strong>{level}</strong>
+                </div>
+                <div className="pill">
+                  Score <strong>{score}</strong>
+                </div>
+                <div className="pill">
+                  Streak <strong>{streak}</strong>
+                </div>
+                <div className="pill">
+                  Mistakes <strong>{mistakes}</strong>
+                </div>
+                {timeLeft != null && (
+                  <div className="pill">
+                    Time <strong>{timeLeft}s</strong>
+                  </div>
+                )}
               </div>
 
               <div className="controls">
-                <button onClick={undo}>Undo</button>
-                <button onClick={skip}>Skip</button>
-                <button className="primary" onClick={resetProgress}>Reset</button>
+                <button onClick={undo} aria-label="Undo" title="Undo">
+                  Undo
+                </button>
+                <button onClick={skip} aria-label="Skip" title="Skip">
+                  Skip
+                </button>
+                <button
+                  className="primary"
+                  onClick={resetProgress}
+                  aria-label="Reset"
+                  title="Reset"
+                >
+                  Reset
+                </button>
+
+<button
+  onClick={() => setShowHints(h => !h)}
+  aria-label={showHints ? "Hide hints" : "Show hints"}
+  title={showHints ? "Hide hints" : "Show hints"}
+>
+  {showHints ? "Hide hints" : "Show hints"}
+</button>
+
               </div>
             </div>
 
-            <div className="canvas">
-              <div className="targetWrap">
-                <div className="label">
-                  Look at the target word below. Spell it out (hijje lagayiye) by tapping the letters that appear below.
-                </div>
-
-                <div className={"targetWord" + (showWord ? " show" : "")} title={round.tags?.join(", ")}>
-                  {round.word}
-                </div>
-
-                <div className="selectionRow">
-                  {round.meta.showSlots && (
-                    <div className="slots" style={{ direction: "rtl" }}>
-                      {slots.map((s, idx) => (
-                        <div key={idx} className={"slot " + (s !== "—" ? "" : "empty")}>{s}</div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className={"feedback " + (feedback.tone || "")}>
-                    {feedback.text}
+            <div className="main">
+              <div className="canvas card">
+                <div className="targetWrap">
+                  <div className="label">
+                    Look at the target word below. Spell it out by tapping the letters below.
                   </div>
 
-                  {round.meta.hintsEnabled && (
-                    <div className="hintWrap">
-                      <div className="hintBar" aria-label="Hint meter">
-                        <div className="hintFill" style={{ width: `${hintMeter}%` }} />
-                      </div>
-                      <div className="hintRow">
-                        <button onClick={revealHint} disabled={hintMeter < 70}>
-                          Hint (needs 70%)
-                        </button>
-                        <div className="tiny">Hint meter charges with mistakes.</div>
-                      </div>
+<div
+  className={"targetWord" + (showWord ? " show" : "")}
+  title={round.tags?.join(", ")}
+>
+  {round.word}
+</div>
+
+<div className={"letterProgress " + (showHints ? "showLetters" : "hideLetters")} aria-label="Spelling progress">
+  {round.letters.map((letter, idx) => (
+    <span
+      key={idx}
+      className={"progressLetter " + (idx < picked.length ? "done" : "")}
+    >
+      {letter}
+    </span>
+  ))}
+</div>
+
+<div className="selectionRow">
+                    <div className={"feedback " + (feedback.tone || "")}>
+                      {feedback.text}
                     </div>
-                  )}
-                </div>
-              </div>
 
-              <div className={"tilesArea" + (showTiles ? " show" : "")}>
-                <div className="tiles" role="list">
-                  {round.tiles.map((l, idx) => {
-                    const used = (usedTileCounts[l] || 0);
-                    const available = round.tiles.filter(t => t === l).length;
-                    const isUsedUp = used >= available;
+                    {showHints && round.meta.hintsEnabled && (
+                      <div className="hintWrap">
+                        <div className="hintBar" aria-label="Hint meter">
+                          <div
+                            className="hintFill"
+                            style={{ width: `${hintMeter}%` }}
+                          />
+                        </div>
 
-                    return (
-                      <div
-                        key={idx + "-" + l}
-                        className={"tile " + (isUsedUp ? "used" : "")}
-                        onClick={() => tapTile(l)}
-                        role="listitem"
-                        aria-label={"Letter " + l}
-                        title={(NON_JOINERS.has(l) ? "Non-joining letter" : "Letter")}
-                        style={{ transitionDelay: showTiles ? `${idx * 30}ms` : "0ms" }}
-                      >
-                        {l}
+                        <div className="hintRow">
+                          <button onClick={revealHint} disabled={hintMeter < 70}>
+                            Hint
+                          </button>
+                          <div className="tiny">Hint meter charges with mistakes.</div>
+                        </div>
                       </div>
-                    );
-                  })}
+                    )}
+                  </div>
+                </div>
+
+                <div className={"tilesArea" + (showTiles ? " show" : "")}>
+                  <div className="tiles" role="list">
+                    {round.tiles.map((l, idx) => {
+                      const used = usedTileCounts[l] || 0;
+                      const available = round.tiles.filter(t => t === l).length;
+                      const isUsedUp = used >= available;
+
+                      return (
+                        <div
+                          key={idx + "-" + l}
+                          className={"tile " + (isUsedUp ? "used" : "")}
+                          onClick={() => tapTile(l)}
+                          role="listitem"
+                          aria-label={"Letter " + l}
+                          title={NON_JOINERS.has(l) ? "Non-joining letter" : "Letter"}
+                          style={{
+                            transitionDelay: showTiles ? `${idx * 30}ms` : "0ms"
+                          }}
+                        >
+                          {l}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
