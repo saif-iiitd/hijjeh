@@ -7,5 +7,5 @@ export { LetterProgress } from "./LetterProgress.jsx";
 export { HintMeter } from "./HintMeter.jsx";
 export { Tile, Tiles } from "./Tiles.jsx";
 export { Toolbar } from "./Toolbar.jsx";
-export { Colophon, BAFTER_URL, BAFTER_NAME } from "./Colophon.jsx";
+export { Colophon, BAFTER_URL, BAFTER_NAME, GRADE_URL, GRADE_NAME } from "./Colophon.jsx";
 export { AboutPage } from "./AboutPage.jsx";

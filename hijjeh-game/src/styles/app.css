@@ -322,21 +322,30 @@ button{ font-family:inherit; color:inherit; }
 .colophon{
   margin:0 -14px;
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:auto 1fr;      /* credit on the left, logos on the right */
   border-top:1px solid var(--ink);
   background:var(--panel);
   padding-bottom:env(safe-area-inset-bottom);
 }
-.colophon > *{ padding:12px 14px; display:flex; flex-direction:column; gap:6px; align-items:flex-start; }
+.colophon > *{ padding:12px 14px; display:flex; flex-direction:column; gap:6px; align-items:flex-start; min-width:0; }
 .credit small,
 .affil small{ font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); }
-.credit strong{ font-size:16px; font-weight:700; }
-.aboutLink{ margin-top:2px; font-size:13px; font-weight:700; text-decoration:none; color:var(--brand); border-bottom:1px solid currentColor; padding-bottom:1px; }
+.creditRow{ display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 14px; }   /* name and About link on one line */
+.creditName{ font-size:16px; font-weight:700; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--rule); white-space:nowrap; }
+.creditName:hover{ color:var(--brand); border-bottom-color:var(--brand); }
+.aboutLink{ font-size:13px; font-weight:700; text-decoration:none; color:var(--brand); border-bottom:1px solid currentColor; padding-bottom:1px; white-space:nowrap; }
 .aboutLink:hover{ color:var(--ink); }
-.affil{ border-inline-start:1px solid var(--rule); text-decoration:none; color:var(--ink); }
-.affil img{ display:block; height:20px; width:auto; }
-.affilName{ font-size:10px; line-height:1.3; color:var(--ink-soft); }
-.affil:hover .affilName{ color:var(--brand); }
+.affil{ border-inline-start:1px solid var(--rule); color:var(--ink); }
+/* Logos: small, each in its own white box, with a gap between. Height steps down on small screens. */
+.logos{ --logo-h:16px; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.logos a{ display:block; padding:5px 8px; background:#fff; border:1px solid var(--rule); }
+.logos img{ display:block; height:var(--logo-h); width:auto; }
+/* Phones: not enough width for both cells side by side, so the logos get their own row */
+@media (max-width:520px){
+  .colophon{ grid-template-columns:1fr; }
+  .affil{ border-inline-start:0; border-top:1px solid var(--rule); padding-top:10px; padding-bottom:12px; }
+  .logos{ --logo-h:12px; gap:12px; }
+}
 
 /* ===== About page ===== */
 
@@ -380,6 +389,13 @@ button{ font-family:inherit; color:inherit; }
 .aboutBookEn{ font-size:14px; font-weight:700; }
 .aboutBookBy{ font-size:13px; color:var(--ink-soft); }
 .aboutBook .buyLink{ margin-top:6px; padding:6px 10px; font-size:11px; }
+.aboutCredits{ display:grid; gap:10px; }
+.aboutCredit{ display:flex; align-items:center; gap:14px; padding:10px 12px; background:rgba(255,255,255,.6); }
+.aboutCredit > a{ flex:0 0 104px; display:block; }      /* same-width logo slot so the names line up */
+.aboutCredit img{ display:block; width:100%; height:auto; }
+.aboutCreditRole{ font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); }
+.aboutCreditName{ font-size:15px; font-weight:700; line-height:1.35; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--rule); }
+.aboutCreditName:hover{ color:var(--brand); border-bottom-color:var(--brand); }
 
 :focus-visible{ outline:3px solid var(--brand); outline-offset:2px; }
 

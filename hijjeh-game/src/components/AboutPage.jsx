@@ -1,12 +1,12 @@
 import { ABOUT } from "../data/about.js";
-import { BAFTER_URL } from "./Colophon.jsx";
+import { BAFTER_URL, BAFTER_NAME, GRADE_URL, GRADE_NAME, bafterLogo, gradeLogo } from "./Colophon.jsx";
 
 const num = i => String(i + 1).padStart(2, "0");
 
 /**
  * The About page: back button, title, numbered sections (the game, the series, the poet, BAFTER) and
- * "The books" with each cover and, where set, a Buy on Amazon button. Wording lives in
- * `src/data/about.js`. The app shows it in place of the game when the address ends in `#/about`.
+ * "The books" with each cover and, where set, a Buy on Amazon button, and "Credits" with the full
+ * names of Saif Ali and the two organisations. Wording lives in `src/data/about.js`. The app shows it in place of the game when the address ends in `#/about`.
  *
  * @param {Object} props
  * @param {import("../data/types.js").Book[]} props.books   The installed books, listed with cover and Buy link.
@@ -59,6 +59,36 @@ export function AboutPage({ books, onBack }) {
           </div>
         </section>
       )}
+
+      <section className="aboutSection">
+        <h2><span className="aboutNum">{num(ABOUT.sections.length + (books.length > 0 ? 1 : 0))}</span>Credits</h2>
+        <div className="aboutCredits">
+          <div className="aboutCredit">
+            <div>
+              <div className="aboutCreditRole">Game design</div>
+              <a className="aboutCreditName" href={GRADE_URL} target="_blank" rel="noopener noreferrer">Saif Ali</a>
+            </div>
+          </div>
+          <div className="aboutCredit">
+            <a href={BAFTER_URL} target="_blank" rel="noopener noreferrer" aria-label={"BAFTER — " + BAFTER_NAME}>
+              <img src={bafterLogo} alt="B.A.F.T.E.R" />
+            </a>
+            <div>
+              <div className="aboutCreditRole">In association with</div>
+              <a className="aboutCreditName" href={BAFTER_URL} target="_blank" rel="noopener noreferrer">{BAFTER_NAME}</a>
+            </div>
+          </div>
+          <div className="aboutCredit">
+            <a href={GRADE_URL} target="_blank" rel="noopener noreferrer" aria-label={"GRADE — " + GRADE_NAME}>
+              <img src={gradeLogo} alt="GRADE" />
+            </a>
+            <div>
+              <div className="aboutCreditRole">In association with</div>
+              <a className="aboutCreditName" href={GRADE_URL} target="_blank" rel="noopener noreferrer">{GRADE_NAME}</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
