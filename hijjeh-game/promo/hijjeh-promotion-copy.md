@@ -70,6 +70,17 @@ For families who want to keep going after the last page, we now offer a companio
 
 **Headline:** Budhiya aur Chidiya ki Kahaani: read it, then play with its words
 
+**Intro (the book + game pedagogy)**
+
+Research on learning games keeps returning to one quiet finding: a game works best when it is not left to work alone. In a review of dozens of studies, learning games gave a modest edge over conventional teaching, and the edge was largest when the game was combined with other instruction, played over several sessions, and shared with others (Wouters et al., 2013). This month's story is built on that idea.
+
+*Budhiya aur Chidiya ki Kahaani* is the other instruction. It is a poem by Barkat Ali Firaq, illustrated by Nida Ali, with English transliteration and an illustrated alphabet that shows the shapes each Urdu letter takes in a word. The pictures and the words support one another in memory (Paivio, 1986; Mayer, 2009), and the poem gives children sound and meaning to attach to the print (Ehri, 2014). *Hijjeh* is the game that comes after. It uses only the words of that poem, and the child rebuilds each one from its letters: recalling a word rather than re-reading it (Roediger & Karpicke, 2006), in a form of guided play where children are free to try but every tap is about spelling (Weisberg, Hirsh-Pasek & Golinkoff, 2013).
+
+The two are meant to be used as a loop rather than a sequence: read a page together, play a few words, return to the book. Each does a different job, and each is better for having the other.
+
+*(Shorter version, if space is tight)*
+Learning games work best when they are not left to work alone: in a review of dozens of studies, the gains were largest when a game was combined with other teaching, played over several sessions, and shared (Wouters et al., 2013). *Budhiya aur Chidiya ki Kahaani* is that other teaching: an illustrated Urdu poem with English transliteration. *Hijjeh* is the game: children rebuild the poem's words letter by letter. Read a page, play a few words, return to the book.
+
 **On the shelf:** the Kindle edition of *Budhiya aur Chidiya ki Kahaani*, a poem by Barkat Ali Firaq, illustrated by Nida Ali. Urdu with English transliteration, a reader's guide and an illustrated alphabet. One of the first titles in BAFTER's *Learning While Living* series.
 
 **On the screen:** *Hijjeh*, the spelling game we designed to go with it.
@@ -145,5 +156,6 @@ GRADE · BAFTER
 - Paivio, A. (1986). *Mental Representations: A Dual Coding Approach.* Oxford University Press.
 - Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. *Psychological Science, 17*(3), 249–255.
 - Weisberg, D. S., Hirsh-Pasek, K., & Golinkoff, R. M. (2013). Guided play: Where curricular goals meet a playful pedagogy. *Mind, Brain, and Education, 7*(2), 104–112.
+- Wouters, P., van Nimwegen, C., van Oostendorp, H., & van der Spek, E. D. (2013). A meta-analysis of the cognitive and motivational effects of serious games. *Journal of Educational Psychology, 105*(2), 249–265.
 
 *These describe the ideas the approach draws on. They do not show that Hijjeh itself improves spelling; that would need its own study.*
