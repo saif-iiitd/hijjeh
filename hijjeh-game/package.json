@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "build:single": "vite build --config vite.single.config.js",
     "build:types": "tsc -p tsconfig.types.json",
-    "build:package": "npm run build:lib && npm run build:types"
+    "build:package": "npm run build:lib && npm run build:types",
+    "publish:pages": "npm run build:single && node scripts/publish.mjs"
   },
   "dependencies": {
     "@fontsource/andika": "^5.3.0",
@@ -30,9 +31,6 @@
   "main": "dist-lib/hijjeh.js",
   "module": "dist-lib/hijjeh.js",
   "types": "dist-lib/types/index.d.ts",
-  "sideEffects": [
-    "*.css"
-  ],
   "exports": {
     ".": {
       "types": "./dist-lib/types/index.d.ts",

@@ -9,11 +9,25 @@ Needs Node.js 20+.
 
 ```bash
 npm install
-npm run dev        # play at http://localhost:5173
-npm run build      # static game in dist/ (works offline, fonts included)
-npm run build:single # ONE file, dist-single/index.html — opens by double-click, fully offline
-npm run build:lib  # UI components + book data as an ES module in dist-lib/
+npm run dev            # play at http://localhost:5173 (entry: app.html)
+npm run build          # static game in dist/ (works offline, fonts included)
+npm run build:single   # ONE file, dist-single/app.html — opens by double-click, fully offline
+npm run publish:pages  # build:single, then write it to index.html for GitHub Pages
+npm run build:lib      # UI components + book data as an ES module in dist-lib/
 ```
+
+## Publishing to GitHub Pages
+
+The site is served straight from this repository at
+`https://saif-iiitd.github.io/hijjeh/hijjeh-game/index.html`, so **`index.html` here is the built game**,
+not source (the source entry is `app.html`). After changing the game:
+
+```bash
+npm run publish:pages
+git add index.html && git commit -m "Update published game" && git push
+```
+
+Note: don't add a `"sideEffects"` field to `package.json` — it makes the production build drop the font stylesheets.
 
 Deep links: `?book=budhiya`, `?book=phirki`, `?book=pyaara` open a book directly (e.g. from a QR code
 printed in it); `?mode=free` forces free play.
