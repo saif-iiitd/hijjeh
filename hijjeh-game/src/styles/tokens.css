@@ -1,0 +1,15 @@
+/* Design tokens. --accent / --done / --paper-tint are overridden per book at runtime (see useGame). */
+
+:root{
+  --ink:#1c1917;
+  --ink-soft:rgba(28,25,23,0.62);
+  --rule:rgba(28,25,23,0.2);
+  --accent:#a01102;          /* BAFTER red */
+  --done:#1f6f5c;            /* Mughal-tile green */
+  --good:#1f6f5c;
+  --bad:#a01102;
+  --tap:52px;
+  --ui:Andika, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --display:"Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --urdu:"Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
+}

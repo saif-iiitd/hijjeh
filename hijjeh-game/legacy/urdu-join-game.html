@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urdu Letter Join Game (Prototype)</title>
+
+    <!-- React (CDN) + Babel for a single-file prototype -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Optional: A readable Urdu-capable font. If it fails, system font will render. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#ffffff;
+  --text:#000000;
+  --muted:#666666;
+  --line:#000000;
+  --lineLight:#d9d9d9;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background-image: url("siteback.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color:#000000;
+  font-family:Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+}
+
+.app{
+  max-width:980px;
+  margin:0 auto;
+  padding:16px;
+  display:grid;
+  gap:14px;
+}
+
+/* TOP BAR */
+
+.header{
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.topbar{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:14px;
+}
+
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.pill{
+  padding:6px 10px;
+  font-size:13px;
+}
+
+.pill strong{
+  font-weight:600;
+}
+
+button {
+  background: transparent;
+  border: 1px solid black;
+  color: black;
+  padding: 10px 14px;
+  font-family: Roboto, sans-serif;
+  cursor: pointer;
+}
+
+button:hover {
+  background: black;
+  color: white;
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+}
+
+/* GAME CANVAS */
+
+.canvas{
+  min-height:380px;
+  padding:18px;
+  position:relative;
+}
+
+/* WORD AREA */
+
+.targetWrap{
+  display:grid;
+  gap:10px;
+}
+
+.label{
+  font-size:12px;
+}
+
+.targetWord{
+  direction: rtl;
+  text-align: center;
+  font-family: Roboto, "Noto Nastaliq Urdu", serif;
+  font-size: 86px;
+  padding: 10px;
+  border-bottom:1px solid var(--lineLight);
+
+  animation: fadeWord 4s ease;
+}
+
+@keyframes fadeWord{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+
+/* SLOT ROW */
+
+.selectionRow{
+  display:grid;
+  gap:80px;
+}
+
+.slots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.slot{
+  width:46px;
+  height:54px;
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  font-family:Roboto, "Noto Nastaliq Urdu", serif;
+}
+
+.slot.empty{
+  color:#bbb;
+}
+
+/* FEEDBACK */
+
+.feedback{
+  min-height:22px;
+  font-size:14px;
+  color:#000;
+}
+
+/* LETTER TILE AREA */
+
+.tilesArea {
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px;
+  border-top: 1px solid var(--lineLight);
+  top: 20px;
+}
+
+.tiles{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.tile{
+  min-width:56px;
+  height:56px;
+  display:grid;
+  place-items:center;
+  font-size:24px;
+  font-family:Roboto, "Noto Nastaliq Urdu", serif;
+  cursor:pointer;
+  user-select:none;
+}
+
+.tile:hover{
+  background:#f5f5f5;
+}
+
+.tile.used{
+  opacity:0.35;
+  cursor:default;
+}
+
+/* HINT BAR */
+
+.hintBar{
+  height:10px;
+  border:1px solid var(--lineLight);
+}
+
+.hintFill{
+  height:100%;
+  width:0%;
+  background:#000;
+  transition:width 200ms ease;
+}
+
+.tiny{
+  font-size:12px;
+}
+
+/* MODAL */
+
+.modalBack{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:grid;
+  place-items:center;
+}
+
+.modal{
+  max-width:720px;
+  width:100%;
+  background:#fff;
+  border:1px solid #000;
+  padding:16px;
+}
+
+.modal h2{
+  margin:0 0 8px 0;
+}
+
+.modal ul{
+  margin:8px 0 0 18px;
+  color:#333;
+}
+
+.kbd{
+  border:1px solid #000;
+  padding:2px 6px;
+  font-size:12px;
+}
+
+</style>
+</head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useEffect, useMemo, useRef, useState } = React;
+
+      // --- Core datasets (starter set; expand later) ---
+      // Each round: target word + the base letters in order (player taps in this order).
+      const WORD_BANK = [
+        // Level 1-2: very easy
+        { word: "ب", letters: ["ب"], level: 1, tags: ["single"] },
+        { word: "ا", letters: ["ا"], level: 1, tags: ["single", "non-joiner"] },
+        { word: "با", letters: ["ب", "ا"], level: 2, tags: ["simple"] },
+        { word: "اب", letters: ["ا", "ب"], level: 2, tags: ["simple"] },
+        { word: "بابا", letters: ["ب","ا","ب","ا"], level: 2, tags: ["simple"] },
+
+        // Level 3: a bit longer
+        { word: "بیت", letters: ["ب","ی","ت"], level: 3, tags: ["3-letter"] },
+        { word: "کتاب", letters: ["ک","ت","ا","ب"], level: 3, tags: ["4-letter"] },
+        { word: "پاکستان", letters: ["پ","ا","ک","س","ت","ا","ن"], level: 3, tags: ["longer"] },
+
+        // Level 4: non-joining letters introduce breaks (ا، د، ر، و…)
+        { word: "دور", letters: ["د","و","ر"], level: 4, tags: ["non-joiners"] },
+        { word: "اور", letters: ["ا","و","ر"], level: 4, tags: ["non-joiners"] },
+        { word: "راز", letters: ["ر","ا","ز"], level: 4, tags: ["non-joiners"] },
+
+        // Level 5: similar shapes/dots confusion
+        { word: "شیر", letters: ["ش","ی","ر"], level: 5, tags: ["dots", "similar-shapes"] },
+        { word: "سبق", letters: ["س","ب","ق"], level: 5, tags: ["dots"] },
+        { word: "ثابت", letters: ["ث","ا","ب","ت"], level: 5, tags: ["b/p/t/th family"] },
+
+        // Level 6: longer + mixed
+        { word: "زندگی", letters: ["ز","ن","د","گ","ی"], level: 6, tags: ["mixed"] },
+        { word: "محبت", letters: ["م","ح","ب","ت"], level: 6, tags: ["mixed"] },
+      ];
+
+      // A lightweight letter pool (expand later). Use Urdu base letters.
+      const LETTER_POOL = [
+        "ا","ب","پ","ت","ث","ج","چ","ح","خ","د","ذ","ر","ز","ژ","س","ش","ص","ض","ط","ظ","ع","غ",
+        "ف","ق","ک","گ","ل","م","ن","و","ہ","ی"
+      ];
+
+      // Some letters that commonly do NOT connect on the left (simplified list)
+      const NON_JOINERS = new Set(["ا","د","ذ","ر","ز","ژ","و"]);
+
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function pickRandom(list) {
+        return list[Math.floor(Math.random() * list.length)];
+      }
+
+      function unique(arr) {
+        return [...new Set(arr)];
+      }
+
+      function clamp(n, min, max) {
+        return Math.max(min, Math.min(max, n));
+      }
+
+      function buildRound(level, seenWordSet) {
+        // Prefer words at or below current level; gradually include current level more often.
+        const eligible = WORD_BANK.filter(w => w.level <= level);
+        // Avoid repeats when possible
+        const unSeen = eligible.filter(w => !seenWordSet.has(w.word));
+        const chosen = (unSeen.length > 0) ? pickRandom(unSeen) : pickRandom(eligible);
+
+        // Difficulty knobs
+        const distractorCount = clamp(1 + level * 2, 2, 14);  // grows with level
+        const allowDuplicatesInTiles = level >= 5;            // later levels can include similar duplicates
+        const includeHardDistractors = level >= 5;
+
+        const answerLetters = chosen.letters;
+
+        // Build distractors: start with random letters, then optionally "confusable" ones later
+        let distractors = [];
+        while (distractors.length < distractorCount) {
+          const l = pickRandom(LETTER_POOL);
+          if (!answerLetters.includes(l) || allowDuplicatesInTiles) distractors.push(l);
+        }
+
+        if (includeHardDistractors) {
+          // Add confusable families for b/p/t/th and s/sh etc. (simple heuristic)
+          const families = [
+            ["ب","پ","ت","ث"],
+            ["ج","چ","ح","خ"],
+            ["س","ش"],
+            ["ص","ض"],
+            ["ز","ذ"],
+            ["د","ر"]
+          ];
+          const fam = pickRandom(families);
+          distractors.push(...fam);
+        }
+
+        // Tiles include all required answer letters (including repeats) + distractors
+        // For repeats, we keep repeats in the tile list, so player can tap twice.
+        const tiles = shuffle([...answerLetters, ...distractors].slice(0, 6 + level * 2));
+
+        // Ensure all needed letters are present even after slicing
+        // If missing, append them
+        for (const req of answerLetters) {
+          if (!tiles.includes(req)) tiles.push(req);
+        }
+
+        return {
+          ...chosen,
+          tiles: shuffle(tiles),
+          meta: {
+            distractorCount,
+            showSlots: level <= 4,     // remove training wheels later
+            partialResetOnMistake: level <= 3,
+            timeLimitSec: level >= 6 ? 20 : null, // optional timer at higher levels
+            hintsEnabled: level >= 4,
+          }
+        };
+      }
+
+      function App() {
+        const [showHelp, setShowHelp] = useState(false);
+
+        const [level, setLevel] = useState(1);
+        const [score, setScore] = useState(0);
+        const [streak, setStreak] = useState(0);
+        const [mistakes, setMistakes] = useState(0);
+
+        const seenWordsRef = useRef(new Set());
+
+        const [round, setRound] = useState(() => buildRound(1, seenWordsRef.current));
+        const [picked, setPicked] = useState([]); // chosen letters in order
+        const [usedTileCounts, setUsedTileCounts] = useState({}); // letter -> used count
+
+        const [feedback, setFeedback] = useState({ text: "Tap the letters to decode the word.", tone: "" });
+
+        // hint meter grows on mistakes; at threshold, reveal next letter
+        const [hintMeter, setHintMeter] = useState(0); // 0..100
+
+        // timer (only for higher levels)
+        const [timeLeft, setTimeLeft] = useState(null);
+
+        // Reset timer per round
+        useEffect(() => {
+          if (round.meta.timeLimitSec) setTimeLeft(round.meta.timeLimitSec);
+          else setTimeLeft(null);
+        }, [round.word]);
+
+        // Tick timer
+        useEffect(() => {
+          if (timeLeft == null) return;
+          if (timeLeft <= 0) {
+            setFeedback({ text: "⏰ Time up! Try again.", tone: "bad" });
+            registerMistake(true);
+            return;
+          }
+          const id = setInterval(() => setTimeLeft(t => (t == null ? null : t - 1)), 1000);
+          return () => clearInterval(id);
+        }, [timeLeft]);
+
+        function startNewRound(nextLevel = level, carrySeen = true) {
+          if (carrySeen) seenWordsRef.current.add(round.word);
+          const nr = buildRound(nextLevel, seenWordsRef.current);
+          setRound(nr);
+          setPicked([]);
+          setUsedTileCounts({});
+          setFeedback({ text: "Decode the word by tapping its letters.", tone: "" });
+          setHintMeter(0);
+        }
+
+        function resetProgress() {
+          seenWordsRef.current = new Set();
+          setLevel(1);
+          setScore(0);
+          setStreak(0);
+          setMistakes(0);
+          const nr = buildRound(1, seenWordsRef.current);
+          setRound(nr);
+          setPicked([]);
+          setUsedTileCounts({});
+          setFeedback({ text: "Tap the letters to decode the word.", tone: "" });
+          setHintMeter(0);
+        }
+
+        function canUseTile(letter) {
+          const available = round.tiles.filter(t => t === letter).length;
+          const used = usedTileCounts[letter] || 0;
+          return used < available;
+        }
+
+        function tapTile(letter) {
+          if (!canUseTile(letter)) return;
+
+          const nextIndex = picked.length;
+          const expected = round.letters[nextIndex];
+
+          // update used tile count
+          setUsedTileCounts(prev => ({ ...prev, [letter]: (prev[letter] || 0) + 1 }));
+
+          // add pick
+          const newPicked = [...picked, letter];
+          setPicked(newPicked);
+
+          // validate immediately at each step (gentle early, stricter later)
+          if (letter !== expected) {
+            setFeedback({ text: "❌ Not quite. Try again.", tone: "bad" });
+            registerMistake(false);
+
+            if (round.meta.partialResetOnMistake) {
+              // remove last pick and unuse that tile
+              setPicked(picked); // revert
+              setUsedTileCounts(prev => ({ ...prev, [letter]: Math.max(0, (prev[letter] || 1) - 1) }));
+            } else {
+              // stricter: reset whole attempt
+              setTimeout(() => {
+                setPicked([]);
+                setUsedTileCounts({});
+              }, 250);
+            }
+            return;
+          }
+
+          // correct step
+          setFeedback({ text: "✅ Good!", tone: "good" });
+
+          // round complete
+          if (newPicked.length === round.letters.length) {
+            const basePoints = 10 + level * 2;
+            const timeBonus = (timeLeft != null) ? Math.max(0, timeLeft) : 0;
+            const streakBonus = Math.min(20, streak * 2);
+            const gained = basePoints + timeBonus + streakBonus;
+
+            setScore(s => s + gained);
+            setStreak(s => s + 1);
+
+            // level up every 3 correct rounds in a row (simple rule)
+            const nextStreak = streak + 1;
+            const shouldLevelUp = nextStreak > 0 && nextStreak % 3 === 0;
+
+            setFeedback({
+              text: `🎉 Word decoded! +${gained} points${shouldLevelUp ? " — Level up!" : ""}`,
+              tone: "good"
+            });
+
+            const newLevel = shouldLevelUp ? clamp(level + 1, 1, 6) : level;
+            if (shouldLevelUp) setLevel(newLevel);
+
+            setTimeout(() => startNewRound(newLevel, true), 650);
+          }
+        }
+
+        function registerMistake(hardReset) {
+          setMistakes(m => m + 1);
+          setStreak(0);
+
+          // hint meter grows with mistakes (more at higher levels)
+          const bump = hardReset ? 35 : 20;
+          setHintMeter(h => clamp(h + bump, 0, 100));
+        }
+
+        function revealHint() {
+          // Reveal next expected letter if hints enabled and meter high enough
+          if (!round.meta.hintsEnabled) return;
+          if (hintMeter < 70) return;
+
+          const nextIndex = picked.length;
+          const expected = round.letters[nextIndex];
+          setFeedback({ text: `Hint: next letter is “${expected}”`, tone: "" });
+          setHintMeter(h => clamp(h - 70, 0, 100));
+        }
+
+        function undo() {
+          if (picked.length === 0) return;
+          const last = picked[picked.length - 1];
+          setPicked(picked.slice(0, -1));
+          setUsedTileCounts(prev => ({ ...prev, [last]: Math.max(0, (prev[last] || 1) - 1) }));
+          setFeedback({ text: "Undid last pick.", tone: "" });
+        }
+
+        function skip() {
+          setFeedback({ text: "Skipped. New word!", tone: "" });
+          setStreak(0);
+          startNewRound(level, true);
+        }
+
+        const slots = useMemo(() => {
+          const total = round.letters.length;
+          const arr = [];
+          for (let i = 0; i < total; i++) arr.push(picked[i] ?? "—");
+          return arr;
+        }, [picked, round.word]);
+
+        return (
+          <div className="app">
+            {showHelp && (
+              <div className="modalBack" onClick={() => setShowHelp(false)}>
+                <div className="modal" onClick={(e) => e.stopPropagation()}>
+                  <h2>Urdu Decode Game (Prototype)</h2>
+                  <div className="tiny">
+                    هدف: اوپر والا لفظ دیکھ کر نیچے سے درست حروف منتخب کریں۔
+                  </div>
+                  <ul>
+                    <li>Tap letters to build the word’s letters in order.</li>
+                    <li>Early levels: mistakes only remove the last pick.</li>
+                    <li>Later levels: mistakes reset the attempt and add harder distractors.</li>
+                    <li>Hints unlock after mistakes (hint meter).</li>
+                  </ul>
+                  <div style={{display:"flex", gap:10, marginTop:12, flexWrap:"wrap"}}>
+                    <button className="primary" onClick={() => setShowHelp(false)}>Start</button>
+                    <button onClick={() => { resetProgress(); setShowHelp(false); }}>Reset & Start</button>
+                    <div className="tiny" style={{alignSelf:"center"}}>
+                      Tip: You can also use <span className="kbd">Undo</span>.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className = "header">Hijjeh - Urdu Spelling Game</div>
+
+            <div className="topbar">
+              <div className="stats">
+                <div className="pill">Level: <strong>{level}</strong></div>
+                <div className="pill">Score: <strong>{score}</strong></div>
+                <div className="pill">Streak: <strong>{streak}</strong></div>
+                <div className="pill">Mistakes: <strong>{mistakes}</strong></div>
+                {timeLeft != null && (
+                  <div className="pill">Time: <strong>{timeLeft}s</strong></div>
+                )}
+              </div>
+
+              <div className="controls">
+                <button onClick={undo}>Undo</button>
+                <button onClick={skip}>Skip</button>
+                <button className="primary" onClick={resetProgress}>Reset</button>
+              </div>
+            </div>
+
+            <div className="canvas">
+              <div className="targetWrap">
+                <div className="label">Look at the target word below. Spell it out (hijje lagayiye) by tapping the letters that appear below.</div>
+<div
+  className="targetWord"
+  key={round.word}
+  title={round.tags?.join(", ")}
+>
+  {round.word}
+</div>                <div className="selectionRow">
+                  {round.meta.showSlots && (
+                    <div className="slots" style={{ direction: "rtl" }}>
+                      {slots.map((s, idx) => {
+                        const isFilled = s !== "—";
+                        return (
+                          <div key={idx} className={"slot " + (isFilled ? "" : "empty")}>
+                            {s}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {!round.meta.showSlots && (
+                    <div className="tiny" style={{direction:"rtl", textAlign:"right"}}>
+                      Selected: <span style={{fontFamily:'"Noto Nastaliq Urdu", serif', fontSize: 28}}>
+                        {picked.join(" ")}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className={"feedback " + (feedback.tone || "")}>
+                    {feedback.text}
+                  </div>
+
+                  {round.meta.hintsEnabled && (
+                    <div style={{display:"grid", gap:8}}>
+                      <div className="hintBar" aria-label="Hint meter">
+                        <div className="hintFill" style={{ width: `${hintMeter}%` }} />
+                      </div>
+                      <div style={{display:"flex", gap:10, alignItems:"center", flexWrap:"wrap"}}>
+                        <button
+                          onClick={revealHint}
+                          disabled={hintMeter < 70}
+                          title={hintMeter < 70 ? "Make some mistakes (or wait for harder rounds) to charge hints." : "Reveal next letter"}
+                        >
+                          Hint (needs 70%)
+                        </button>
+                        <div className="tiny">
+                          Hint meter charges with mistakes. At higher levels, words include non-joiners & similar shapes.
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="tilesArea">
+                <div className="tiles" role="list">
+                  {round.tiles.map((l, idx) => {
+                    const used = (usedTileCounts[l] || 0);
+                    const available = round.tiles.filter(t => t === l).length;
+                    const isUsedUp = used >= available;
+
+                    return (
+                      <div
+                        key={idx + "-" + l}
+                        className={"tile " + (isUsedUp ? "used" : "")}
+                        onClick={() => tapTile(l)}
+                        role="listitem"
+                        aria-label={"Letter " + l}
+                        title={
+                          (NON_JOINERS.has(l) ? "Non-joining letter (simplified)" : "Letter") +
+                          (isUsedUp ? " • used" : "")
+                        }
+                        style={{ animationDelay: `${idx * 20}ms` }}
+                      >
+                        {l}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

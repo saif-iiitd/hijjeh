@@ -1,0 +1,26 @@
+{
+  "name": "hijjeh",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hijjeh — an Urdu spelling game for early readers, with book-linked word lists. Game design: Saif Ali. Affiliated with BAFTER.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:lib": "vite build --config vite.lib.config.js",
+    "preview": "vite preview",
+    "build:single": "vite build --config vite.single.config.js"
+  },
+  "dependencies": {
+    "@fontsource/andika": "^5.3.0",
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/noto-nastaliq-urdu": "^5.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.3.1",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}
