@@ -10,11 +10,13 @@ import { NON_JOINERS } from "../data/letters.js";
  * @param {(letter: string) => void} props.onTap   Called with the letter when tapped.
  * @param {number} [props.delayMs]         Entrance delay, to stagger a row of tiles.
  * @param {boolean} [props.fontReady]      True once the Urdu font has loaded.
+ * @param {"a" | "b"} [props.hit]         Glows the tile once, as the reward for a correct pick; alternate "a"/"b" to replay.
  */
-export function Tile({ letter, used, onTap, delayMs = 0, fontReady }) {
+export function Tile({ letter, used, onTap, delayMs = 0, fontReady, hit }) {
   return (
     <div
       className={"tile " + (used ? "used" : "")}
+      data-hit={hit}
       onClick={() => onTap(letter)}
       role="listitem"
       aria-label={"Letter " + letter}
@@ -36,16 +38,22 @@ export function Tile({ letter, used, onTap, delayMs = 0, fontReady }) {
  * @param {boolean} props.show                            Fades the board in when true.
  * @param {(letter: string) => void} props.onTap          Called with the tapped letter.
  * @param {boolean} [props.fontReady]                     True once the Urdu font has loaded.
+ * @param {{ letter: string, n: number } | null} [props.hit]  The last correct pick; that tile glows.
  */
-export function Tiles({ tiles, usedTileCounts, show, onTap, fontReady }) {
+export function Tiles({ tiles, usedTileCounts, show, onTap, fontReady, hit }) {
   return (
     <div className={"tilesArea" + (show ? " show" : "")}>
       <div className="tiles" role="list" lang="ur">
         {tiles.map((l, idx) => {
           const available = tiles.filter(t => t === l).length;
-          const used = (usedTileCounts[l] || 0) >= available;
+          const usedCount = usedTileCounts[l] || 0;
+          const used = usedCount >= available;
+          // The copy of this letter that was just used is the one that glows.
+          const copy = tiles.slice(0, idx).filter(t => t === l).length;
+          const isHit = !!hit && hit.letter === l && copy === usedCount - 1;
           return (
-            <Tile key={idx + "-" + l} letter={l} used={used} onTap={onTap} delayMs={show ? idx * 30 : 0} fontReady={fontReady} />
+            <Tile key={idx + "-" + l} letter={l} used={used} onTap={onTap} delayMs={show ? idx * 30 : 0} fontReady={fontReady}
+              hit={isHit ? (hit.n % 2 ? "a" : "b") : undefined} />
           );
         })}
       </div>

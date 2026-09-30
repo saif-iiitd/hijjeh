@@ -1,5 +1,5 @@
 /* Design tokens — "Origami" direction.
-   --accent, --done and --paper-tint are overridden per book at runtime (see useGame), so every book
+   --accent and --done are overridden per book at runtime (see useGame), so every book
    keeps the colours of its cover. --brand (Hijjeh red) never changes. */
 
 :root{
@@ -11,8 +11,9 @@
   --done:#1f6fe0;                      /* correct letters; replaced by the loaded book's colour */
   --good:#55705e;
   --bad:#d81f00;
-  --panel:rgba(250,246,236,0.92);      /* the game/about card */
-  --gable-fill:#faf5e8;                /* inside of the gable word frame */
+  --bg:#eeeeef;                        /* page background: modern light gray */
+  --panel:rgba(252,252,252,0.96);      /* the game/about card */
+  --gable-fill:#f8f8f8;                /* inside of the gable word frame */
   --chip:rgba(255,255,255,0.55);       /* stat strip and toolbar */
   --tap:52px;
   --ui:Andika, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;

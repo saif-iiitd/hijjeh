@@ -19,6 +19,7 @@ export default {
   subtitleEn: "The Paper Pinwheel",
   author: "Barkat Ali Firaq",
   cover,
+  buyUrl: "",         // Amazon link for this book; empty until it is added (no button shows while empty)
   accent: "#a85a18",   // deep orange, legible version of the pinwheel orange
   done: "#4e7a3f",     // green of the cover's lower triangle
   paper: "#f3eece",    // cover background

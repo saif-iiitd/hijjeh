@@ -29,6 +29,8 @@ export function useGame() {
   const [feedback, setFeedback] = useState({ text: "Tap the letters to decode the word.", tone: "" });
 
   const [hintMeter, setHintMeter] = useState(0);
+  // The last correct pick { letter, slot, n }, used to glow that tile and slot. n counts up so the glow replays.
+  const [hit, setHit] = useState(null);
   const [timeLeft, setTimeLeft] = useState(null);
 
   const [showWord, setShowWord] = useState(false);
@@ -69,8 +71,7 @@ export function useGame() {
     root.dataset.mode = book ? "book" : "free";
     const vars = [
       ["--accent", book && book.accent],
-      ["--done", book && (book.done || book.accent)],
-      ["--paper-tint", book && book.paper]
+      ["--done", book && (book.done || book.accent)]
     ];
     for (const [prop, val] of vars) {
       if (val) root.style.setProperty(prop, val);
@@ -84,6 +85,7 @@ export function useGame() {
     setRound(buildRound(nextLevel, seenWordsRef.current, nextBank));
     setPicked([]);
     setUsedTileCounts({});
+    setHit(null);
     setFeedback({ text: "Decode the word by tapping its letters.", tone: "" });
     setHintMeter(0);
   }
@@ -98,6 +100,7 @@ export function useGame() {
     setRound(buildRound(1, seenWordsRef.current, nextBank));
     setPicked([]);
     setUsedTileCounts({});
+    setHit(null);
     setFeedback({ text: "Tap the letters to decode the word.", tone: "" });
     setHintMeter(0);
   }
@@ -132,6 +135,7 @@ export function useGame() {
     setPicked(newPicked);
 
     if (letter !== expected) {
+      setHit(null);
       setFeedback({ text: "Not quite — try again.", tone: "bad" });
       registerMistake(false);
 
@@ -148,6 +152,7 @@ export function useGame() {
       return;
     }
 
+    setHit(h => ({ letter, slot: picked.length, n: (h ? h.n : 0) + 1 }));
     const isLast = newPicked.length === round.letters.length;
     if (!isLast) setFeedback({ text: `Right — ${letter}. Next letter.`, tone: "good" });
 
@@ -184,6 +189,7 @@ export function useGame() {
     if (picked.length === 0) return;
     const last = picked[picked.length - 1];
     setPicked(picked.slice(0, -1));
+    setHit(null);
     setUsedTileCounts(prev => ({ ...prev, [last]: Math.max(0, (prev[last] || 1) - 1) }));
     setFeedback({ text: "Undid last pick.", tone: "" });
   }
@@ -202,7 +208,7 @@ export function useGame() {
     // progress
     level, score, streak, mistakes, timeLeft, seenCount,
     // the current round
-    round, picked, usedTileCounts, feedback, hintMeter, showHints, showWord, showTiles,
+    round, picked, usedTileCounts, hit, feedback, hintMeter, showHints, showWord, showTiles,
     // actions
     switchMode, tapTile, revealHint, undo, skip, resetProgress,
     toggleHints: () => setShowHints(h => !h)

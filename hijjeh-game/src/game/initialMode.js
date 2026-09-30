@@ -1,16 +1,17 @@
-// Which mode and book to start in.
-// Priority: ?book=<id> (e.g. from a QR code printed in a book)  >  ?mode=free  >  last choice  >  free play.
+// Which mode and book to start in. The game opens in Choose Book mode.
+// Mode: ?mode=free opens Free play; anything else opens Choose Book.
+// Book: ?book=<id> (e.g. from a QR code printed in a book)  >  the last book chosen  >  the first book.
 import { BOOKS } from "../data/books/index.js";
 
 const STORAGE_KEY = "hijjeh-mode";
 
 export function getInitialMode() {
-  const fallback = { mode: "free", bookId: BOOKS[0] ? BOOKS[0].id : null };
+  const firstBookId = BOOKS[0] ? BOOKS[0].id : null;
 
   const q = new URLSearchParams(window.location.search);
   const wanted = q.get("book");
   if (wanted && BOOKS.some(b => b.id === wanted)) return { mode: "book", bookId: wanted };
-  if (q.get("mode") === "free") return { mode: "free", bookId: fallback.bookId };
+  if (q.get("mode") === "free" || !firstBookId) return { mode: "free", bookId: firstBookId };
 
   let saved = null;
   try {
@@ -18,10 +19,8 @@ export function getInitialMode() {
   } catch (e) {
     /* storage may be blocked */
   }
-  if (saved && (saved.mode === "free" || BOOKS.some(b => b.id === saved.bookId))) {
-    return { mode: saved.mode, bookId: saved.bookId || fallback.bookId };
-  }
-  return fallback;
+  const lastBookId = saved && BOOKS.some(b => b.id === saved.bookId) ? saved.bookId : firstBookId;
+  return { mode: "book", bookId: lastBookId };
 }
 
 export function rememberMode(mode, bookId) {

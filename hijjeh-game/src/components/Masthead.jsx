@@ -21,7 +21,7 @@ export function Masthead({ inBookMode, hasBooks, onFree, onBook }) {
           Free play
         </button>
         <button role="tab" aria-selected={inBookMode === true} disabled={!hasBooks} onClick={() => inBookMode !== true && onBook()}>
-          Book
+          Choose Book
         </button>
       </div>
     </header>

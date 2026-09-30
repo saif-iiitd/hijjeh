@@ -3,7 +3,7 @@
  * words have been played; a "Buy on Amazon" button appears when the book has a `buyUrl`.
  * With more than one book the whole banner is the picker (an invisible select stretched over it),
  * so a child taps the banner to change book.
- * The book's colours come from CSS variables set on <html> (`--accent`, `--done`, `--paper-tint`).
+ * The book's colours come from CSS variables set on <html> (`--accent`, `--done`).
  *
  * @param {Object} props
  * @param {import("../data/types.js").Book} props.book          The loaded book.

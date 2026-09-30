@@ -44,6 +44,7 @@ export default function App() {
               <LetterProgress
                 letters={round.letters}
                 pickedCount={g.picked.length}
+              hit={g.hit}
                 showHints={g.showHints}
                 fontReady={fontReady}
               />
@@ -60,6 +61,7 @@ export default function App() {
               usedTileCounts={g.usedTileCounts}
               show={g.showTiles}
               onTap={g.tapTile}
+              hit={g.hit}
               fontReady={fontReady}
             />
           </main>

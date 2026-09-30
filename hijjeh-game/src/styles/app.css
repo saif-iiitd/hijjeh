@@ -1,6 +1,6 @@
 /* Hijjeh — Origami direction: flat, square-edged, hairline-ruled.
    One typeface (Andika) for all interface text; Noto Nastaliq Urdu for Urdu.
-   Colours come from tokens.css; each book overrides --accent / --done / --paper-tint. */
+   Colours come from tokens.css; each book overrides --accent / --done. */
 
 *{ box-sizing:border-box; border-radius:0; -webkit-tap-highlight-color:transparent; }
 
@@ -10,7 +10,7 @@ body{
   margin:0;
   min-height:100vh;
   min-height:100dvh;
-  background:#e9e6de;
+  background:#e6e2d8 url("../assets/paper.jpg") center / cover fixed no-repeat;   /* crumpled paper behind the game */
   color:var(--ink);
   font-family:var(--ui);
 }
@@ -29,7 +29,7 @@ button{ font-family:inherit; color:inherit; }
   flex-direction:column;
   gap:10px;
   padding:max(10px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
-  background:var(--paper-tint, #f1e9d6);
+  background:var(--bg);
   border:1px solid var(--ink);
   font-family:var(--ui);
 }
@@ -77,9 +77,9 @@ button{ font-family:inherit; color:inherit; }
   align-items:center;
   gap:12px;
   padding:10px 14px 10px 12px;
-  border:1px solid var(--accent);
-  border-inline-start-width:5px;
-  background:color-mix(in srgb, var(--accent) 16%, transparent);
+  border:1px solid var(--rule);
+  border-inline-start:5px solid var(--accent);   /* the side bar is the only book-coloured highlight */
+  background:var(--panel);
 }
 .bookCover{ flex:none; display:block; width:42px; height:auto; }
 .bookText{ min-width:0; flex:1; }
@@ -273,6 +273,24 @@ button{ font-family:inherit; color:inherit; }
 @media (hover:hover){ .tilesArea.show .tile:hover{ outline:2px solid var(--brand); outline-offset:-2px; } }
 .tilesArea.show .tile.used{ background:rgba(40,2,9,.06); color:rgba(40,2,9,.3); cursor:default; outline:0; }
 
+/* ===== Reward glow for a correct letter (tile you tapped, and its slot) =====
+   The data attribute alternates a/b so the animation replays on every correct pick. */
+
+@keyframes glowA{
+  0%  { box-shadow:0 0 0 0 transparent, 0 0 0 0 transparent; }
+  25% { box-shadow:0 0 0 3px color-mix(in srgb, var(--done) 50%, transparent), 0 0 18px 4px color-mix(in srgb, var(--done) 55%, transparent); }
+  100%{ box-shadow:0 0 0 0 transparent, 0 0 0 0 transparent; }
+}
+@keyframes glowB{
+  0%  { box-shadow:0 0 0 0 transparent, 0 0 0 0 transparent; }
+  25% { box-shadow:0 0 0 3px color-mix(in srgb, var(--done) 50%, transparent), 0 0 18px 4px color-mix(in srgb, var(--done) 55%, transparent); }
+  100%{ box-shadow:0 0 0 0 transparent, 0 0 0 0 transparent; }
+}
+.tile[data-hit="a"]{ animation:glowA .9s ease-out; }
+.tile[data-hit="b"]{ animation:glowB .9s ease-out; }
+.progressLetter[data-glow="a"]{ animation:glowA .9s ease-out; }
+.progressLetter[data-glow="b"]{ animation:glowB .9s ease-out; }
+
 /* ===== Toolbar ===== */
 
 .toolbar{ display:grid; grid-template-columns:repeat(4, 1fr); background:var(--chip); }
@@ -388,4 +406,5 @@ button{ font-family:inherit; color:inherit; }
 
 @media (prefers-reduced-motion:reduce){
   *{ transition-duration:.01ms !important; }
+  .tile[data-hit], .progressLetter[data-glow]{ animation:none; }
 }

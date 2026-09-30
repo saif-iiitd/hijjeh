@@ -27,7 +27,7 @@ export default {
   subtitleEn: "The Story of the Old Woman and the Bird",
   author: "Barkat Ali Firaq",
   cover,
-  buyUrl: "https://www.amazon.in/dp/B09Q7T7XX3",
+  buyUrl: "https://www.amazon.in/dp/B09Q7T7XX3",   // Amazon link; leave "" to hide the Buy button
   accent: "#9a4326",   // terracotta of the cover title
   done: "#5b6a3a",     // olive of the cover foliage
   paper: "#f4e7d7",    // cover background
