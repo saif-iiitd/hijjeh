@@ -1,23 +1,36 @@
 import bafterLogo from "../assets/bafter-logo.png";
 
 export const BAFTER_URL = "https://bafter.wordpress.com";
+export const BAFTER_NAME = "Barkat Ali Firaq Trust for Education and Research";
 
-/** Credits: game design by Saif Ali; BAFTER as the affiliated organisation (logo links to its site). */
-export function Colophon() {
+/**
+ * Two-cell footer. Left: "Game design Saif Ali" and a link to the About page (or back to the game
+ * when the About page is open). Right: the BAFTER logo and full name, linking to its website in a
+ * new tab, marked "In association with".
+ *
+ * @param {Object} props
+ * @param {boolean} [props.onAboutPage]   True on the About page; the left link then returns to the game.
+ */
+export function Colophon({ onAboutPage = false }) {
   return (
     <footer className="colophon">
-      <span className="credit">
-        Game design <strong>Saif Ali</strong>
-      </span>
+      <div className="credit">
+        <small>Game design</small>
+        <strong>Saif Ali</strong>
+        {onAboutPage
+          ? <a className="aboutLink" href="#/">← Back to the game</a>
+          : <a className="aboutLink" href="#/about">About Hijjeh →</a>}
+      </div>
       <a
         className="affil"
         href={BAFTER_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="BAFTER — Barkat Ali Firaq Trust for Education and Research (opens the BAFTER website)"
+        aria-label={"BAFTER — " + BAFTER_NAME + " (opens the BAFTER website)"}
       >
-        <span>Affiliated organisation</span>
-        <img src={bafterLogo} alt="B.A.F.T.E.R" height="18" />
+        <small>In association with</small>
+        <img src={bafterLogo} alt="B.A.F.T.E.R" height="20" />
+        <span className="affilName">{BAFTER_NAME}</span>
       </a>
     </footer>
   );

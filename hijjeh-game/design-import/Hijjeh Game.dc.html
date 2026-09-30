@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/modernist-8ca47095-2303-4966-b5f5-0078bf925978/styles.css">
+<script src="_ds/modernist-8ca47095-2303-4966-b5f5-0078bf925978/_ds_bundle.js"></script>
+<style>
+@font-face{font-family:'Noto Nastaliq Urdu';src:url(hijjeh/fonts/nastaliq.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Andika';font-weight:400;src:url(hijjeh/fonts/andika-400.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Andika';font-weight:700;src:url(hijjeh/fonts/andika-700.woff2) format('woff2');font-display:swap}
+body{margin:0;background:#e9e6de}
+*{box-sizing:border-box;border-radius:0}
+[id="3a"] *,[id="3b"] *,[id="4a"] *,[id="4b"] *,[id="5a"] *,[id="5b"] *,[id="6a"] *,[id="6b"] *{font-family:Andika,system-ui,sans-serif}[id="3a"] [lang="ur"],[id="3a"] [lang="ur"] *,[id="3b"] [lang="ur"],[id="3b"] [lang="ur"] *,[id="4a"] [lang="ur"],[id="4a"] [lang="ur"] *,[id="4b"] [lang="ur"],[id="4b"] [lang="ur"] *,[id="5a"] [lang="ur"],[id="5a"] [lang="ur"] *,[id="5b"] [lang="ur"],[id="5b"] [lang="ur"] *,[id="6a"] [lang="ur"],[id="6a"] [lang="ur"] *,[id="6b"] [lang="ur"],[id="6b"] [lang="ur"] *{font-family:"Noto Nastaliq Urdu",serif}
+a{color:#a85a18}a:hover{color:#1c1917}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(168,90,24,.35)}50%{box-shadow:0 0 0 6px rgba(168,90,24,0)}}
+</style>
+</helmet>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+
+<div id="6a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#d81f00;color:#fff;padding:3px 8px;margin-right:8px">6a</span>ORIGAMI — game</div>
+<div style="width:390px;min-height:844px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#280209;background:#f1e9d6;border:1px solid #280209;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#d81f00;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(40,2,9,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #280209;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;background:#d81f00;color:#fff;border-left:1px solid #280209">Book</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border:1px solid #f5a000;border-left-width:5px;background:rgba(245,160,0,.16)">
+    <img src="hijjeh/phirki-cover.jpg" width="42" height="59" style="flex:none;display:block">
+    <div style="min-width:0;flex:1">
+      <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7a4f00;font-weight:700">Book · tap to change</div>
+      <div style="font-size:15px;font-weight:700;line-height:1.3">Kaaghaz Ki Phirki</div>
+      <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#7a4f00">کاغذ کی پھرکی</div>
+    </div>
+    <div style="text-align:end;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(40,2,9,.72);white-space:nowrap"><b style="display:block;font-size:22px;line-height:1.1;letter-spacing:0;color:#280209">12/57</b>words</div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:14px;padding:14px;border:1px solid #280209;background:rgba(250,246,236,.92)">
+    <div style="position:absolute;top:-1px;right:18px;width:20px;height:26px;background:#f5a000;clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)"></div>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+      <sc-for list="{{ stats6 }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:6px 4px 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(40,2,9,.72);border-left:{{ p.bl }}">{{ p.k }}<b style="font-size:22px;line-height:1.2;letter-spacing:0;color:#280209">{{ p.v }}</b></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;gap:10px;text-align:center;justify-items:center">
+      <div style="font-size:14px;color:rgba(40,2,9,.72)">Look at the word, then tap its letters in order.</div>
+      <div style="width:100%;margin-top:6px;background:#f5a000;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding:1px">
+        <div style="background:#faf5e8;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding-top:44px">
+          <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:52px;line-height:1.9;padding:0 12px 18px">پھرکی</div>
+        </div>
+      </div>
+      <div dir="rtl" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ progress6 }}" as="s" hint-placeholder-count="5">
+          <span lang="ur" style="min-width:34px;height:44px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:{{ s.fg }};border-bottom:2px solid {{ s.bd }}"><span style="display:block;line-height:1;transform:translate({{ s.dx }}em,{{ s.dy }}em)">{{ s.ch }}</span></span>
+        </sc-for>
+      </div>
+      <div style="min-height:22px;font-size:15px;font-weight:700;color:#55705e">Right — پھ. Next letter.</div>
+      <div style="display:flex;align-items:center;gap:12px;width:100%;max-width:340px">
+        <div style="flex:1;height:6px;background:rgba(40,2,9,.12)"><div style="height:100%;width:45%;background:#d81f00"></div></div>
+        <div style="min-height:36px;padding:0 16px;display:flex;align-items:center;border:1px solid #d81f00;color:#d81f00;font-weight:700;font-size:14px;opacity:.45">Hint</div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(40,2,9,.25)">
+      <div dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px">
+        <sc-for list="{{ tiles6 }}" as="t" hint-placeholder-count="8">
+          <div lang="ur" style="aspect-ratio:1;display:grid;place-items:center;background:{{ t.bg }};font-family:'Noto Nastaliq Urdu',serif;font-size:28px;color:{{ t.fg }}"><span style="display:block;line-height:1;transform:translate({{ t.dx }}em,{{ t.dy }}em)">{{ t.ch }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+    <sc-for list="{{ tools6 }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;font-size:11px;font-weight:700;border-left:{{ b.bl }}"><span style="width:22px;height:22px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="margin:0 -14px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #280209;background:rgba(250,246,236,.92)">
+    <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(40,2,9,.72)">Game design</div>
+      <div style="font-size:16px;font-weight:700">Saif Ali</div>
+      <a href="#6b" style="margin-top:2px;font-size:13px;font-weight:700;text-decoration:none;color:#d81f00;border-bottom:1px solid currentColor;padding-bottom:1px">About Hijjeh →</a>
+    </div>
+    <a href="https://bafter.wordpress.com" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;border-left:1px solid rgba(40,2,9,.25);text-decoration:none;color:#280209">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(40,2,9,.72)">In association with</div>
+      <img src="hijjeh/bafter-logo.png" height="20" style="display:block;height:20px;width:auto">
+      <div style="font-size:10px;line-height:1.3;color:rgba(40,2,9,.72)">Barkat Ali Firaq Trust for Education and Research</div>
+    </a>
+  </div>
+</div>
+</div>
+
+<div id="6b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#d81f00;color:#fff;padding:3px 8px;margin-right:8px">6b</span>ORIGAMI — about</div>
+<div style="width:390px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#280209;background:#f1e9d6;border:1px solid #280209;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#d81f00;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(40,2,9,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #280209;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;border-left:1px solid #280209">Book</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:22px;padding:16px 14px 22px;border:1px solid #280209;background:rgba(250,246,236,.92)">
+    <div style="align-self:flex-start;min-height:40px;padding:0 12px;display:flex;align-items:center;white-space:nowrap;background:rgba(255,255,255,.7);font-size:14px;font-weight:700">← Back to the game</div>
+    <div style="display:flex;align-items:center;gap:14px;padding-bottom:28px;border-bottom:2px solid #280209">
+      <span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:44px;line-height:1.5;color:#d81f00">ہجے</span>
+      <h1 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700">About Hijjeh</h1>
+    </div>
+    <sc-for list="{{ about }}" as="s" hint-placeholder-count="4">
+      <section style="display:grid;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:11px;font-weight:700;color:#d81f00;letter-spacing:.08em">{{ s.n }}</span><h2 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:18px;font-weight:700">{{ s.h }}</h2></div>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p1 }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p2 }}</p>
+        <div style="display:grid;gap:0;border-top:1px solid rgba(40,2,9,.25)">
+          <sc-for list="{{ s.list }}" as="li" hint-placeholder-count="0"><div style="display:grid;grid-template-columns:14px 1fr;font-size:15px;line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(40,2,9,.25)"><span style="color:#d81f00;font-weight:700">–</span><span>{{ li }}</span></div></sc-for>
+        </div>
+      </section>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+
+<div id="5a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#dc2438;color:#fff;padding:3px 8px;margin-right:8px">5a</span>SUNSET + TEAL — game</div>
+<div style="width:390px;min-height:844px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#1f2b2d;background:#fde7b8;border:1px solid #1f2b2d;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#dc2438;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(31,43,45,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1f2b2d;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;background:#dc2438;color:#fff;border-left:1px solid #1f2b2d">Book</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border:1px solid #dc2438;border-left-width:5px;background:rgba(220,36,56,.08)">
+    <img src="hijjeh/phirki-cover.jpg" width="42" height="59" style="flex:none;display:block">
+    <div style="min-width:0;flex:1">
+      <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#dc2438;font-weight:700">Book · tap to change</div>
+      <div style="font-size:15px;font-weight:700;line-height:1.3">Kaaghaz Ki Phirki</div>
+      <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#dc2438">کاغذ کی پھرکی</div>
+    </div>
+    <div style="text-align:end;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(31,43,45,.72);white-space:nowrap"><b style="display:block;font-size:22px;line-height:1.1;letter-spacing:0;color:#dc2438">12/57</b>words</div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:14px;padding:14px;border:1px solid #1f2b2d;background:rgba(255,247,228,.92)">
+    <div style="position:absolute;top:-1px;right:18px;width:20px;height:26px;background:#dc2438;clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)"></div>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+      <sc-for list="{{ stats5 }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:6px 4px 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(31,43,45,.72);border-left:{{ p.bl }}">{{ p.k }}<b style="font-size:22px;line-height:1.2;letter-spacing:0;color:#1f2b2d">{{ p.v }}</b></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;gap:10px;text-align:center;justify-items:center">
+      <div style="font-size:14px;color:rgba(31,43,45,.72)">Look at the word, then tap its letters in order.</div>
+      <div style="width:100%;margin-top:6px;background:#dc2438;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding:1px">
+        <div style="background:#fff6e0;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding-top:44px">
+          <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:52px;line-height:1.9;padding:0 12px 18px">پھرکی</div>
+        </div>
+      </div>
+      <div dir="rtl" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ progress5 }}" as="s" hint-placeholder-count="5">
+          <span lang="ur" style="min-width:34px;height:44px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:{{ s.fg }};border-bottom:2px solid {{ s.bd }}"><span style="display:block;line-height:1;transform:translate({{ s.dx }}em,{{ s.dy }}em)">{{ s.ch }}</span></span>
+        </sc-for>
+      </div>
+      <div style="min-height:22px;font-size:15px;font-weight:700;color:#3e8087">Right — پھ. Next letter.</div>
+      <div style="display:flex;align-items:center;gap:12px;width:100%;max-width:340px">
+        <div style="flex:1;height:6px;background:rgba(31,43,45,.12)"><div style="height:100%;width:45%;background:#dc2438"></div></div>
+        <div style="min-height:36px;padding:0 16px;display:flex;align-items:center;border:1px solid #dc2438;color:#dc2438;font-weight:700;font-size:14px;opacity:.45">Hint</div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(31,43,45,.25)">
+      <div dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px">
+        <sc-for list="{{ tiles5 }}" as="t" hint-placeholder-count="8">
+          <div lang="ur" style="aspect-ratio:1;display:grid;place-items:center;background:{{ t.bg }};font-family:'Noto Nastaliq Urdu',serif;font-size:28px;color:{{ t.fg }}"><span style="display:block;line-height:1;transform:translate({{ t.dx }}em,{{ t.dy }}em)">{{ t.ch }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+    <sc-for list="{{ tools5 }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;font-size:11px;font-weight:700;border-left:{{ b.bl }}"><span style="width:22px;height:22px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="margin:0 -14px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1f2b2d;background:rgba(255,247,228,.92)">
+    <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(31,43,45,.72)">Game design</div>
+      <div style="font-size:16px;font-weight:700">Saif Ali</div>
+      <a href="#5b" style="margin-top:2px;font-size:13px;font-weight:700;text-decoration:none;color:#dc2438;border-bottom:1px solid currentColor;padding-bottom:1px">About Hijjeh →</a>
+    </div>
+    <a href="https://bafter.wordpress.com" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;border-left:1px solid rgba(31,43,45,.25);text-decoration:none;color:#1f2b2d">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(31,43,45,.72)">In association with</div>
+      <img src="hijjeh/bafter-logo.png" height="20" style="display:block;height:20px;width:auto">
+      <div style="font-size:10px;line-height:1.3;color:rgba(31,43,45,.72)">Barkat Ali Firaq Trust for Education and Research</div>
+    </a>
+  </div>
+</div>
+</div>
+
+<div id="5b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#dc2438;color:#fff;padding:3px 8px;margin-right:8px">5b</span>SUNSET + TEAL — about</div>
+<div style="width:390px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#1f2b2d;background:#fde7b8;border:1px solid #1f2b2d;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#dc2438;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(31,43,45,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1f2b2d;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;border-left:1px solid #1f2b2d">Book</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:22px;padding:16px 14px 22px;border:1px solid #1f2b2d;background:rgba(255,247,228,.92)">
+    <div style="align-self:flex-start;min-height:40px;padding:0 12px;display:flex;align-items:center;white-space:nowrap;background:rgba(255,255,255,.7);font-size:14px;font-weight:700">← Back to the game</div>
+    <div style="display:flex;align-items:center;gap:14px;padding-bottom:28px;border-bottom:2px solid #1f2b2d">
+      <span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:44px;line-height:1.5;color:#dc2438">ہجے</span>
+      <h1 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700">About Hijjeh</h1>
+    </div>
+    <sc-for list="{{ about }}" as="s" hint-placeholder-count="4">
+      <section style="display:grid;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:11px;font-weight:700;color:#dc2438;letter-spacing:.08em">{{ s.n }}</span><h2 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:18px;font-weight:700">{{ s.h }}</h2></div>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p1 }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p2 }}</p>
+        <div style="display:grid;gap:0;border-top:1px solid rgba(31,43,45,.25)">
+          <sc-for list="{{ s.list }}" as="li" hint-placeholder-count="0"><div style="display:grid;grid-template-columns:14px 1fr;font-size:15px;line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(31,43,45,.25)"><span style="color:#dc2438;font-weight:700">–</span><span>{{ li }}</span></div></sc-for>
+        </div>
+      </section>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+
+<div id="4a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#a01102;color:#fff;padding:3px 8px;margin-right:8px">4a</span>MODERN GRAY + RED — game</div>
+<div style="width:390px;min-height:844px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#1d1d1f;background:#eeeeee;border:1px solid #1d1d1f;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#a01102;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(29,29,31,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1d1d1f;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;background:#a01102;color:#fff;border-left:1px solid #1d1d1f">Book</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border:1px solid #a01102;border-left-width:5px;background:rgba(160,17,2,.08)">
+    <img src="hijjeh/phirki-cover.jpg" width="42" height="59" style="flex:none;display:block">
+    <div style="min-width:0;flex:1">
+      <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#a01102;font-weight:700">Book · tap to change</div>
+      <div style="font-size:15px;font-weight:700;line-height:1.3">Kaaghaz Ki Phirki</div>
+      <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#a01102">کاغذ کی پھرکی</div>
+    </div>
+    <div style="text-align:end;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(29,29,31,.72);white-space:nowrap"><b style="display:block;font-size:22px;line-height:1.1;letter-spacing:0;color:#a01102">12/57</b>words</div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:14px;padding:14px;border:1px solid #1d1d1f;background:rgba(250,250,250,.95)">
+    <div style="position:absolute;top:-1px;right:18px;width:20px;height:26px;background:#a01102;clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)"></div>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+      <sc-for list="{{ stats4 }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:6px 4px 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(29,29,31,.72);border-left:{{ p.bl }}">{{ p.k }}<b style="font-size:22px;line-height:1.2;letter-spacing:0;color:#1d1d1f">{{ p.v }}</b></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;gap:10px;text-align:center;justify-items:center">
+      <div style="font-size:14px;color:rgba(29,29,31,.72)">Look at the word, then tap its letters in order.</div>
+      <div style="width:100%;margin-top:6px;background:#a01102;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding:1px">
+        <div style="background:#f7f7f7;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding-top:44px">
+          <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:52px;line-height:1.9;padding:0 12px 18px">پھرکی</div>
+        </div>
+      </div>
+      <div dir="rtl" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ progress4 }}" as="s" hint-placeholder-count="5">
+          <span lang="ur" style="min-width:34px;height:44px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:{{ s.fg }};border-bottom:2px solid {{ s.bd }}"><span style="display:block;line-height:1;transform:translate({{ s.dx }}em,{{ s.dy }}em)">{{ s.ch }}</span></span>
+        </sc-for>
+      </div>
+      <div style="min-height:22px;font-size:15px;font-weight:700;color:#1d1d1f">Right — پھ. Next letter.</div>
+      <div style="display:flex;align-items:center;gap:12px;width:100%;max-width:340px">
+        <div style="flex:1;height:6px;background:rgba(29,29,31,.12)"><div style="height:100%;width:45%;background:#a01102"></div></div>
+        <div style="min-height:36px;padding:0 16px;display:flex;align-items:center;border:1px solid #a01102;color:#a01102;font-weight:700;font-size:14px;opacity:.45">Hint</div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(29,29,31,.25)">
+      <div dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px">
+        <sc-for list="{{ tiles4 }}" as="t" hint-placeholder-count="8">
+          <div lang="ur" style="aspect-ratio:1;display:grid;place-items:center;background:{{ t.bg }};font-family:'Noto Nastaliq Urdu',serif;font-size:28px;color:{{ t.fg }}"><span style="display:block;line-height:1;transform:translate({{ t.dx }}em,{{ t.dy }}em)">{{ t.ch }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+    <sc-for list="{{ tools4 }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;font-size:11px;font-weight:700;border-left:{{ b.bl }}"><span style="width:22px;height:22px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="margin:0 -14px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1d1d1f;background:rgba(250,250,250,.95)">
+    <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(29,29,31,.72)">Game design</div>
+      <div style="font-size:16px;font-weight:700">Saif Ali</div>
+      <a href="#4b" style="margin-top:2px;font-size:13px;font-weight:700;text-decoration:none;color:#a01102;border-bottom:1px solid currentColor;padding-bottom:1px">About Hijjeh →</a>
+    </div>
+    <a href="https://bafter.wordpress.com" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;border-left:1px solid rgba(29,29,31,.25);text-decoration:none;color:#1d1d1f">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(29,29,31,.72)">In association with</div>
+      <img src="hijjeh/bafter-logo.png" height="20" style="display:block;height:20px;width:auto">
+      <div style="font-size:10px;line-height:1.3;color:rgba(29,29,31,.72)">Barkat Ali Firaq Trust for Education and Research</div>
+    </a>
+  </div>
+</div>
+</div>
+
+<div id="4b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#a01102;color:#fff;padding:3px 8px;margin-right:8px">4b</span>MODERN GRAY + RED — about</div>
+<div style="width:390px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#1d1d1f;background:#eeeeee;border:1px solid #1d1d1f;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#a01102;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(29,29,31,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1d1d1f;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;border-left:1px solid #1d1d1f">Book</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:22px;padding:16px 14px 22px;border:1px solid #1d1d1f;background:rgba(250,250,250,.95)">
+    <div style="align-self:flex-start;min-height:40px;padding:0 12px;display:flex;align-items:center;white-space:nowrap;background:rgba(255,255,255,.7);font-size:14px;font-weight:700">← Back to the game</div>
+    <div style="display:flex;align-items:center;gap:14px;padding-bottom:28px;border-bottom:2px solid #1d1d1f">
+      <span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:44px;line-height:1.5;color:#a01102">ہجے</span>
+      <h1 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700">About Hijjeh</h1>
+    </div>
+    <sc-for list="{{ about }}" as="s" hint-placeholder-count="4">
+      <section style="display:grid;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:11px;font-weight:700;color:#a01102;letter-spacing:.08em">{{ s.n }}</span><h2 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:18px;font-weight:700">{{ s.h }}</h2></div>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p1 }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p2 }}</p>
+        <div style="display:grid;gap:0;border-top:1px solid rgba(29,29,31,.25)">
+          <sc-for list="{{ s.list }}" as="li" hint-placeholder-count="0"><div style="display:grid;grid-template-columns:14px 1fr;font-size:15px;line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(29,29,31,.25)"><span style="color:#a01102;font-weight:700">–</span><span>{{ li }}</span></div></sc-for>
+        </div>
+      </section>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+
+<div id="3a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#a85a18;color:#fff;padding:3px 8px;margin-right:8px">3a</span>GAME — unified type, flat, gable</div>
+<div style="width:390px;min-height:844px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#1c1917;background:linear-gradient(rgba(243,238,206,.62),rgba(243,238,206,.62)),#f3eece url(hijjeh/paper.jpg) center/cover;border:1px solid #1c1917;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#a85a18;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(28,25,23,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1c1917;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;background:#a85a18;color:#fff;border-left:1px solid #1c1917">Book</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border:1px solid #a85a18;border-left-width:5px;background:rgba(168,90,24,.08)">
+    <img src="hijjeh/phirki-cover.jpg" width="42" height="59" style="flex:none;display:block">
+    <div style="min-width:0;flex:1">
+      <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#a85a18;font-weight:700">Book · tap to change</div>
+      <div style="font-size:15px;font-weight:700;line-height:1.3">Kaaghaz Ki Phirki</div>
+      <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#a85a18">کاغذ کی پھرکی</div>
+    </div>
+    <div style="text-align:end;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(28,25,23,.72);white-space:nowrap"><b style="display:block;font-size:22px;line-height:1.1;letter-spacing:0;color:#a85a18">12/57</b>words</div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:14px;padding:14px;border:1px solid #1c1917;background:rgba(255,253,247,.7)">
+    <div style="position:absolute;top:-1px;right:18px;width:20px;height:26px;background:#a85a18;clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)"></div>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+      <sc-for list="{{ stats }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:6px 4px 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(28,25,23,.72);border-left:{{ p.bl }}">{{ p.k }}<b style="font-size:22px;line-height:1.2;letter-spacing:0;color:#1c1917">{{ p.v }}</b></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;gap:10px;text-align:center;justify-items:center">
+      <div style="font-size:14px;color:rgba(28,25,23,.72)">Look at the word, then tap its letters in order.</div>
+      <div style="width:100%;margin-top:6px;background:#a85a18;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding:1px">
+        <div style="background:rgb(250,247,238);clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding-top:44px">
+          <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:52px;line-height:1.9;padding:0 12px 18px">پھرکی</div>
+        </div>
+      </div>
+      <div dir="rtl" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ progress }}" as="s" hint-placeholder-count="5">
+          <span lang="ur" style="min-width:34px;height:44px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:{{ s.fg }};border-bottom:2px solid {{ s.bd }}"><span style="display:block;line-height:1;transform:translate({{ s.dx }}em,{{ s.dy }}em)">{{ s.ch }}</span></span>
+        </sc-for>
+      </div>
+      <div style="min-height:22px;font-size:15px;font-weight:700;color:#4e7a3f">Right — پھ. Next letter.</div>
+      <div style="display:flex;align-items:center;gap:12px;width:100%;max-width:340px">
+        <div style="flex:1;height:6px;background:rgba(28,25,23,.12)"><div style="height:100%;width:45%;background:#a85a18"></div></div>
+        <div style="min-height:36px;padding:0 16px;display:flex;align-items:center;border:1px solid #a85a18;color:#a85a18;font-weight:700;font-size:14px;opacity:.45">Hint</div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(28,25,23,.25)">
+      <div dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px">
+        <sc-for list="{{ tiles3 }}" as="t" hint-placeholder-count="8">
+          <div lang="ur" style="aspect-ratio:1;display:grid;place-items:center;background:{{ t.bg }};font-family:'Noto Nastaliq Urdu',serif;font-size:28px;color:{{ t.fg }}"><span style="display:block;line-height:1;transform:translate({{ t.dx }}em,{{ t.dy }}em)">{{ t.ch }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+    <sc-for list="{{ tools }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;font-size:11px;font-weight:700;border-left:{{ b.bl }}"><span style="width:22px;height:22px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="margin:0 -14px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1c1917;background:rgba(255,253,247,.7)">
+    <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(28,25,23,.72)">Game design</div>
+      <div style="font-size:16px;font-weight:700">Saif Ali</div>
+      <a href="#3b" style="margin-top:2px;font-size:13px;font-weight:700;text-decoration:none;color:#a85a18;border-bottom:1px solid currentColor;padding-bottom:1px">About Hijjeh →</a>
+    </div>
+    <a href="https://bafter.wordpress.com" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;border-left:1px solid rgba(28,25,23,.25);text-decoration:none;color:#1c1917">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(28,25,23,.72)">In association with</div>
+      <img src="hijjeh/bafter-logo.png" height="20" style="display:block;height:20px;width:auto">
+      <div style="font-size:10px;line-height:1.3;color:rgba(28,25,23,.72)">Barkat Ali Firaq Trust for Education and Research</div>
+    </a>
+  </div>
+</div>
+</div>
+
+<div id="3b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#a01102;color:#fff;padding:3px 8px;margin-right:8px">3b</span>ABOUT page</div>
+<div style="width:390px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#1c1917;background:#f4f1e8 url(hijjeh/paper.jpg) center/cover;border:1px solid #1c1917;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#a01102;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(28,25,23,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1c1917;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;border-left:1px solid #1c1917">Book</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:22px;padding:16px 14px 22px;border:1px solid #1c1917;background:rgba(255,253,247,.78)">
+    <div style="align-self:flex-start;min-height:40px;padding:0 12px;display:flex;align-items:center;white-space:nowrap;background:rgba(255,255,255,.7);font-size:14px;font-weight:700">← Back to the game</div>
+    <div style="display:flex;align-items:center;gap:14px;padding-bottom:28px;border-bottom:2px solid #1c1917">
+      <span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:44px;line-height:1.5;color:#a01102">ہجے</span>
+      <h1 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700">About Hijjeh</h1>
+    </div>
+    <sc-for list="{{ about }}" as="s" hint-placeholder-count="4">
+      <section style="display:grid;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:11px;font-weight:700;color:#a01102;letter-spacing:.08em">{{ s.n }}</span><h2 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:18px;font-weight:700">{{ s.h }}</h2></div>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p1 }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p2 }}</p>
+        <div style="display:grid;gap:0;border-top:1px solid rgba(28,25,23,.25)">
+          <sc-for list="{{ s.list }}" as="li" hint-placeholder-count="0"><div style="display:grid;grid-template-columns:14px 1fr;font-size:15px;line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(28,25,23,.25)"><span style="color:#a01102;font-weight:700">–</span><span>{{ li }}</span></div></sc-for>
+        </div>
+      </section>
+    </sc-for>
+    <section style="display:grid;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:11px;font-weight:700;color:#a01102;letter-spacing:.08em">05</span><h2 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:18px;font-weight:700">The books</h2></div>
+      <sc-for list="{{ books }}" as="b" hint-placeholder-count="3">
+        <div style="display:flex;gap:14px;align-items:flex-start;padding:10px 12px;border-left:5px solid {{ b.c }};background:rgba(255,255,255,.6)">
+          <img src="{{ b.img }}" width="48" height="68" style="flex:none;display:block;object-fit:cover">
+          <div style="display:grid;gap:2px;justify-items:start;min-width:0">
+            <div lang="ur" dir="rtl" style="font-family:'Noto Nastaliq Urdu',serif;font-size:19px;line-height:1.9;color:{{ b.c }}">{{ b.ur }}</div>
+            <div style="font-size:14px;font-weight:700">{{ b.en }}</div>
+            <div style="font-size:13px;color:rgba(28,25,23,.72)">A poem by Barkat Ali Firaq</div>
+            <div style="display:{{ b.buy }};margin-top:6px;padding:6px 10px;background:{{ b.c }};color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Buy on Amazon ↗</div>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+  </div>
+  <div style="margin:0 -14px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #1c1917;background:rgba(255,253,247,.7)">
+    <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(28,25,23,.72)">Game design</div>
+      <div style="font-size:16px;font-weight:700">Saif Ali</div>
+      <a href="#3a" style="margin-top:2px;font-size:13px;font-weight:700;text-decoration:none;color:#a01102;border-bottom:1px solid currentColor;padding-bottom:1px">← Back to the game</a>
+    </div>
+    <a href="https://bafter.wordpress.com" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;border-left:1px solid rgba(28,25,23,.25);text-decoration:none;color:#1c1917">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(28,25,23,.72)">In association with</div>
+      <img src="hijjeh/bafter-logo.png" height="20" style="display:block;height:20px;width:auto">
+      <div style="font-size:10px;line-height:1.3;color:rgba(28,25,23,.72)">Barkat Ali Firaq Trust for Education and Research</div>
+    </a>
+  </div>
+</div>
+</div>
+
+</section>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:var(--font-body)">
+<div id="2a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em;color:var(--color-text)"><span style="background:var(--color-accent-700);color:#fff;padding:3px 8px;margin-right:8px">2a</span>MODERNIST — game screen</div>
+<div style="width:390px;height:844px;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);border:2px solid var(--color-text);overflow:hidden;font-family:var(--font-body)">
+  <div style="display:flex;align-items:stretch;justify-content:space-between;border-bottom:2px solid var(--color-text)">
+    <div style="display:flex;align-items:center;gap:12px;padding:0 16px;height:52px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:24px;line-height:1;color:var(--color-accent);transform:translateY(-3px)">ہجے</span><span style="font-family:var(--font-heading);font-weight:800;font-size:16px;letter-spacing:.16em;text-transform:uppercase">Hijjeh</span></div>
+    <div style="display:flex;border-left:2px solid var(--color-text)">
+      <div style="display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap">Free</div>
+      <div style="display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--color-text);color:var(--color-bg);white-space:nowrap">Book</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:10px 16px;border-bottom:2px solid var(--color-text)">
+    <div class="grayscale" style="width:32px;height:45px;overflow:hidden"><img src="hijjeh/phirki-cover.jpg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+    <div style="min-width:0"><div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-700)">Book · tap to change</div><div style="font-family:var(--font-heading);font-weight:800;font-size:16px;line-height:1.2">Kaaghaz Ki Phirki</div></div>
+    <div style="font-family:var(--font-heading);font-weight:800;font-size:22px;line-height:1">12<span style="color:var(--color-neutral-600);font-size:14px">/57</span></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid var(--color-text)">
+    <sc-for list="{{ mStats }}" as="p" hint-placeholder-count="4">
+      <div style="padding:8px 12px 10px;border-left:{{ p.bl }}"><div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">{{ p.k }}</div><div style="font-family:var(--font-heading);font-weight:800;font-size:28px;line-height:1.1;color:{{ p.c }}">{{ p.v }}</div></div>
+    </sc-for>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:12px 16px 0;border-bottom:2px solid var(--color-text);min-height:0">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700)">Spell this word</div>
+      <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:72px;line-height:1.9;padding-bottom:12px;text-align:center">پھرکی</div>
+    </div>
+    <div dir="rtl" style="display:grid;grid-template-columns:repeat(5,1fr);border-bottom:2px solid var(--color-text)">
+      <sc-for list="{{ mSlots }}" as="s" hint-placeholder-count="5">
+        <div lang="ur" style="height:72px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:32px;line-height:1;background:{{ s.bg }};color:{{ s.fg }};box-shadow:{{ s.ring }};border-right:{{ s.br }}"><span style="display:block;transform:translateY(-2px)">{{ s.ch }}</span></div>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;padding:0 16px;height:40px;border-bottom:2px solid var(--color-text);font-size:14px;font-weight:700"><span style="width:8px;height:8px;background:var(--color-accent)"></span>Right — پھ. Next letter.</div>
+    <div dir="rtl" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid var(--color-text)">
+      <sc-for list="{{ mTiles }}" as="t" hint-placeholder-count="8">
+        <div lang="ur" style="height:76px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:34px;line-height:1;background:{{ t.bg }};color:{{ t.fg }};border-right:{{ t.br }};border-top:{{ t.bt }}"><span style="display:block;transform:translateY(-2px)">{{ t.ch }}</span></div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1.4fr 1fr;height:56px">
+    <sc-for list="{{ acts }}" as="a" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:8px;padding:0 12px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:{{ a.bg }};color:{{ a.fg }};border-left:{{ a.bl }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="{{ a.d }}"></path></svg>{{ a.label }}</div>
+    </sc-for>
+  </div>
+</div>
+</div>
+</section>
+<section style="display:flex;gap:56px;padding:56px;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+
+<div id="1b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em;color:#1c1917"><span style="background:#a85a18;color:#fff;padding:3px 8px;margin-right:8px">1b</span>REDESIGN — game screen</div>
+<div style="width:390px;height:844px;display:flex;flex-direction:column;color:#1c1917;background:linear-gradient(rgba(243,238,206,.62),rgba(243,238,206,.62)),#f3eece url(hijjeh/paper.jpg) center/cover;border:1px solid #1c1917;overflow:hidden">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px 4px">
+    <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.55);border:1px solid #1c1917;padding:4px 10px 4px 4px">
+      <img src="hijjeh/phirki-cover.jpg" width="28" height="39" style="display:block;box-shadow:2px 2px 0 #1c1917">
+      <div style="line-height:1.2"><div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#a85a18;font-weight:700">Book · tap to change</div><div style="font-size:13px;font-weight:700">Kaaghaz Ki Phirki <span style="color:rgba(28,25,23,.62);font-weight:400">· 12/57</span></div></div>
+    </div>
+    <div style="display:flex;border:1px solid #1c1917">
+      <div style="width:40px;height:40px;display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:.04em">Free</div>
+      <div style="width:40px;height:40px;display:grid;place-items:center;font-size:11px;font-weight:700;background:#a85a18;color:#fff;border-left:1px solid #1c1917">Book</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:baseline;justify-content:space-between;padding:8px 16px;border-bottom:1px solid rgba(28,25,23,.2);margin:0 16px 0;padding-left:0;padding-right:0">
+    <div style="display:flex;gap:16px;align-items:baseline;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(28,25,23,.62)">
+      <span>Lv <b style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0;color:#1c1917">1</b></span>
+      <span>Score <b style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0;color:#1c1917">120</b></span>
+      <span>Streak <b style="font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:0;color:#4e7a3f">3</b></span>
+    </div>
+    <div style="display:flex;gap:4px;align-items:center" aria-label="Mistakes: 1"><span style="width:10px;height:10px;background:#a01102"></span><span style="width:10px;height:10px;border:1px solid rgba(28,25,23,.4)"></span><span style="width:10px;height:10px;border:1px solid rgba(28,25,23,.4)"></span></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 16px;min-height:0">
+    <div style="font-size:13px;color:rgba(28,25,23,.62)">Look at the word, then tap its letters in order.</div>
+    <div style="position:relative;width:100%;margin-top:34px;border:1px solid #a85a18;border-top:0;background:rgba(255,255,255,.55);text-align:center">
+      <svg viewBox="0 0 100 40" preserveAspectRatio="none" style="position:absolute;left:-1px;bottom:100%;width:calc(100% + 2px);height:34px;overflow:visible"><path d="M0 40 C0 26 30 24 42 13 C46 9 48 4 50 0 C52 4 54 9 58 13 C70 24 100 26 100 40 Z" fill="rgba(255,255,255,.55)"/><path d="M0 40 C0 26 30 24 42 13 C46 9 48 4 50 0 C52 4 54 9 58 13 C70 24 100 26 100 40" fill="none" stroke="#a85a18" vector-effect="non-scaling-stroke"/></svg>
+      <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:64px;line-height:1.9;padding-bottom:14px">پھرکی</div>
+    </div>
+    <div dir="rtl" style="display:flex;gap:8px;margin-top:10px">
+      <sc-for list="{{ slots }}" as="s" hint-placeholder-count="5">
+        <div lang="ur" style="width:52px;height:64px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:30px;line-height:1;background:{{ s.bg }};border:2px solid {{ s.bd }};color:{{ s.fg }};animation:{{ s.anim }}"><span style="display:block;transform:translateY(-2px)">{{ s.ch }}</span></div>
+      </sc-for>
+    </div>
+    <div style="min-height:22px;font-size:14px;font-weight:700;color:#4e7a3f">Right — پھ. Next letter.</div>
+  </div>
+  <div style="border-top:2px solid #a85a18;background:rgba(255,253,247,.8);padding:16px 16px 12px">
+    <div dir="rtl" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="8">
+        <div lang="ur" style="height:64px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:34px;line-height:1;border:1px solid #1c1917;background:rgba(255,255,255,.9);box-shadow:{{ t.sh }};opacity:{{ t.op }}"><span style="display:block;transform:translateY(-2px)">{{ t.ch }}</span></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.6fr 44px;gap:0;margin-top:14px;border:1px solid #1c1917;background:rgba(255,255,255,.55)">
+      <div style="height:48px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700"><span style="width:20px;height:20px;background:url(hijjeh/icons/undo.svg) center/contain no-repeat"></span>Undo</div>
+      <div style="height:48px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;border-left:1px solid rgba(28,25,23,.2)"><span style="width:20px;height:20px;background:url(hijjeh/icons/skip.svg) center/contain no-repeat"></span>Skip</div>
+      <div style="position:relative;height:48px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;border-left:1px solid rgba(28,25,23,.2);color:#a85a18;overflow:hidden"><div style="position:absolute;left:0;bottom:0;height:4px;width:45%;background:#a85a18"></div><span style="width:20px;height:20px;background:url(hijjeh/icons/hint.svg) center/contain no-repeat"></span>Hint · 45%</div>
+      <div style="height:48px;display:grid;place-items:center;font-size:18px;font-weight:700;border-left:1px solid rgba(28,25,23,.2)">⋯</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="1a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em;color:#1c1917"><span style="background:#1c1917;color:#fff;padding:3px 8px;margin-right:8px">1a</span>CURRENT — recreated from source</div>
+<div style="width:390px;min-height:844px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 8px;color:#1c1917;background:linear-gradient(rgba(243,238,206,.62),rgba(243,238,206,.62)),#f3eece url(hijjeh/paper.jpg) center/cover;border:1px solid #1c1917">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px">
+    <div style="display:flex;align-items:center;gap:12px;line-height:1"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#a85a18;transform:translateY(-6px)">ہجے</span><span style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:16px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(28,25,23,.2)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #1c1917;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;letter-spacing:.04em;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;letter-spacing:.04em;background:#a85a18;color:#fff;border-left:1px solid #1c1917">Book</div></div>
+  </div>
+  <div style="height:8px;border-top:1px solid #a85a18;border-bottom:1px solid #a85a18;background:repeating-linear-gradient(135deg,rgba(168,90,24,.55) 0 2px,transparent 2px 6px)"></div>
+  <div style="position:relative;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border:1px solid #a85a18;border-left-width:5px;background:rgba(168,90,24,.08)">
+    <img src="hijjeh/phirki-cover.jpg" width="46" height="65" style="flex:none;box-shadow:2px 2px 0 #1c1917;display:block">
+    <div style="min-width:0;flex:1">
+      <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#a85a18;font-weight:700">Book · tap to change</div>
+      <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;line-height:1.9;color:#a85a18">کاغذ کی پھرکی</div>
+      <div style="font-size:13px;font-weight:700">Kaaghaz Ki Phirki</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(28,25,23,.62)">A poem by Barkat Ali Firaq</div>
+    </div>
+    <div style="text-align:end;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(28,25,23,.62);white-space:nowrap"><b style="display:block;font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1;letter-spacing:0;color:#a85a18">12/57</b>words</div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:14px;padding:14px;border:1px solid #1c1917;background:rgba(243,238,206,.4);box-shadow:5px 5px 0 rgba(168,90,24,.22)">
+    <div style="position:absolute;inset:5px;border:1px solid rgba(168,90,24,.4);pointer-events:none"></div>
+    <div style="position:absolute;top:-1px;right:18px;width:20px;height:26px;background:#a85a18;clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)"></div>
+    <div style="position:relative;margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(28,25,23,.2);background:rgba(255,255,255,.5)">
+      <sc-for list="{{ stats }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:6px 4px 5px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(28,25,23,.62);border-left:{{ p.bl }}">{{ p.k }}<b style="font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.1;letter-spacing:0;color:#1c1917">{{ p.v }}</b></div>
+      </sc-for>
+    </div>
+    <div style="position:relative;display:grid;gap:8px;text-align:center;justify-items:center">
+      <div style="font-size:14px;color:rgba(28,25,23,.62)">Look at the word, then tap its letters in order.</div>
+      <div style="position:relative;width:100%;margin-top:40px;border:1px solid #a85a18;border-top:0;background:rgba(168,90,24,.05);padding:0 12px 4px">
+        <svg viewBox="0 0 100 40" preserveAspectRatio="none" style="position:absolute;left:-1px;bottom:100%;width:calc(100% + 2px);height:40px;overflow:visible"><path d="M0 40 C0 26 30 24 42 13 C46 9 48 4 50 0 C52 4 54 9 58 13 C70 24 100 26 100 40 Z" fill="rgba(250,246,236,.9)"/><path d="M0 40 C0 26 30 24 42 13 C46 9 48 4 50 0 C52 4 54 9 58 13 C70 24 100 26 100 40" fill="none" stroke="#a85a18" vector-effect="non-scaling-stroke"/></svg>
+        <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:50px;line-height:1.9;padding:.05em 0">پھرکی</div>
+      </div>
+      <div dir="rtl" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ progress }}" as="s" hint-placeholder-count="5">
+          <span lang="ur" style="min-width:34px;height:44px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:{{ s.fg }};border-bottom:2px solid {{ s.bd }}"><span style="display:block;line-height:1">{{ s.ch }}</span></span>
+        </sc-for>
+      </div>
+      <div style="min-height:24px;font-size:15px;font-weight:700;color:#4e7a3f">Right — پھ. Next letter.</div>
+      <div style="display:grid;gap:6px;max-width:360px;width:100%">
+        <div style="height:6px;border:1px solid #1c1917;background:rgba(255,255,255,.5)"><div style="height:100%;width:45%;background:#a85a18"></div></div>
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap"><div style="min-height:40px;padding:0 18px;display:flex;align-items:center;border:1px solid #a85a18;color:#a85a18;font-weight:700;letter-spacing:.04em;opacity:.4">Hint</div><div style="font-size:12px;color:rgba(28,25,23,.62)">Hint meter charges with mistakes.</div></div>
+      </div>
+    </div>
+    <div style="position:relative;margin-top:auto;padding-top:14px;border-top:1px solid rgba(28,25,23,.2)">
+      <div dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px">
+        <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="8">
+          <div lang="ur" style="aspect-ratio:1;display:grid;place-items:center;border:1px solid #1c1917;background:rgba(255,255,255,.85);box-shadow:{{ t.sha }};font-family:'Noto Nastaliq Urdu',serif;font-size:28px;opacity:{{ t.op }}"><span style="display:block;line-height:1;transform:translateY(-2px)">{{ t.ch }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #1c1917;background:rgba(255,255,255,.55)">
+    <sc-for list="{{ tools }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;font-size:10.5px;font-weight:700;letter-spacing:.04em;border-left:{{ b.bl }}"><span style="width:22px;height:22px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;padding-top:8px;border-top:1px solid rgba(28,25,23,.2);font-size:12px;color:rgba(28,25,23,.62)">
+    <span>Game design <b style="color:#1c1917;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.02em">Saif Ali</b> <a href="#/about" style="margin-left:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;border-bottom:1px solid currentColor">About</a></span>
+    <span style="display:inline-flex;flex-direction:column;align-items:flex-end;gap:3px;max-width:200px"><img src="hijjeh/bafter-logo.png" height="18" style="display:block;height:18px;width:auto"><span style="font-size:9px;line-height:1.25;text-align:end">Barkat Ali Firaq Trust for Education and Research</span></span>
+  </div>
+</div>
+</div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const go = () => { this.cache = {}; this.ready = true; this.forceUpdate(); };
+    document.fonts.load('40px "Noto Nastaliq Urdu"', 'ابپ').then(go, go);
+  }
+  off(ch) {
+    this.cache = this.cache || {};
+    if (this.cache[ch]) return this.cache[ch];
+    let o = { dx: 0, dy: 0 };
+    if (this.ready) try {
+      const EM = 200, c = (this.cv = this.cv || document.createElement('canvas').getContext('2d'));
+      c.font = EM + 'px "Noto Nastaliq Urdu", serif'; c.textBaseline = 'alphabetic';
+      const m = c.measureText(ch);
+      o = { dx: +((m.width / 2 - (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2) / EM).toFixed(3),
+            dy: +(((m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2 - (m.fontBoundingBoxAscent - m.fontBoundingBoxDescent) / 2) / EM).toFixed(3) };
+      this.cache[ch] = o;
+    } catch (e) {}
+    return o;
+  }
+  renderVals() {
+    const letters = ["پ","ھ","ر","ک","ی"], done = 2;
+    const tl = ["ک","ن","پ","ی","ل","ھ","ب","ر"], used = ["پ","ھ"];
+    const stats = [["Level",1],["Score",120],["Streak",3],["Mistakes",1]].map(([k,v],i)=>({k,v,bl:i?"1px solid rgba(28,25,23,.2)":"0"}));
+    const tools = [["Undo","hijjeh/icons/undo.svg"],["Skip","hijjeh/icons/skip.svg"],["Hide hints","hijjeh/icons/hint.svg"],["Reset","hijjeh/icons/reset.svg"]].map(([label,icon],i)=>({label,icon,bl:i?"1px solid rgba(28,25,23,.2)":"0"}));
+    const R="2px solid var(--color-text)";
+    const mstats = [["Level",1],["Score",120],["Streak",3],["Miss",1]].map(([k,v],i)=>({k,v,bl:i?R:"0",c:k==="Miss"?"var(--color-accent-700)":"var(--color-text)"}));
+    const acts = [["Undo","M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"],["Skip","M5 4l10 8-10 8zM19 5v14"],["Hint · 45%","M9 18h6M10 22h4M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"],["Reset","M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5"]].map(([label,d],i)=>({label,d,bl:i?R:"0",bg:i===2?"var(--color-accent)":"var(--color-bg)",fg:i===2?"#fff":"var(--color-text)"}));
+    const about = [
+      ["The game",["Hijjeh (ہجے) means spelling. It is a small game for practising the spelling of Urdu words, one letter at a time: a word appears, and you tap its letters in the right order.","It is made as a companion to the Learning While Living readers. Each book has its own word list, taken from its poem, so what children play with is what they have just read aloud."],["Free play: words from a graded list, from single letters up to longer words.","Book mode: choose a book and play only the words of its poem, in that book’s own colours.","Three correct words in a row raise the level, and harder levels add look-alike letters to tell apart."]],
+      ["Learning While Living",["Learning does not begin and end in the classroom. Much of it happens in ordinary life: in talk at home, in stories before sleep, in the shared curiosity between a child and a parent.","The series was conceived by BAFTER to bring learning and life back together, through books meant to be read aloud, revisited, memorised and enjoyed as a family."],[]],
+      ["Barkat Ali Firaq",["The poems in these books are by Barkat Ali Firaq, who took part in the Indian struggle for independence and worked for adult and continuing education. He gave twenty years to building Jamia Millia Islamia under Dr Zakir Husain.","His poems for children hold the idea of learning woven into life."],[]],
+      ["BAFTER",["The Barkat Ali Firaq Trust for Education and Research is a registered society, established in 2005 in New Delhi, working in publishing, courses and talks, and archiving material from the independence era.",""],[]]
+    ].map(([h,p,list],i)=>({n:"0"+(i+1),h,p1:p[0],p2:p[1],list}));
+    const books = [["بڑھیا اور چڑیا کی کہانی","Budhiya aur Chidiya ki Kahaani","hijjeh/budhiya-cover.jpg","#9a4326","block"],["کاغذ کی پھرکی","Kaaghaz Ki Phirki","hijjeh/phirki-cover.jpg","#a85a18","none"],["سب کا پیارا","Sab Ka Pyaara","hijjeh/pyaara-cover.jpg","#b0405a","none"]].map(([ur,en,img,c,buy])=>({ur,en,img,c,buy}));
+    const T = o => JSON.parse(JSON.stringify(o).split('#4e7a3f').join('#1d1d1f').split('rgba(28,25,23').join('rgba(29,29,31').split('#1c1917').join('#1d1d1f'));
+    const t3 = tl.map(ch=>{const u=used.includes(ch);return {ch,...this.off(ch),bg:u?"rgba(28,25,23,.06)":"#fff",fg:u?"rgba(28,25,23,.3)":"#1c1917"};});
+    const pr = letters.map((ch,i)=>({ch,...this.off(ch),fg:i<done?"#4e7a3f":"rgba(28,25,23,.62)",bd:i<done?"#4e7a3f":"rgba(28,25,23,.2)"}));
+    const T5 = o => JSON.parse(JSON.stringify(o).split('#4e7a3f').join('#3e8087').split('rgba(28,25,23').join('rgba(31,43,45').split('#1c1917').join('#1f2b2d'));
+    const T6 = o => JSON.parse(JSON.stringify(o).split('#4e7a3f').join('#55705e').split('rgba(28,25,23').join('rgba(40,2,9').split('#1c1917').join('#280209'));
+    return {
+      tiles6: T6(t3), progress6: JSON.parse(JSON.stringify(T6(pr)).split('#55705e').join('#1f6fe0')), stats6: T6(stats), tools6: T6(tools),
+      tiles5: T5(t3), progress5: T5(pr), stats5: T5(stats), tools5: T5(tools),
+      tiles4: T(t3), progress4: T(pr), stats4: T(stats), tools4: T(tools),
+      about, books,
+      tiles3: tl.map(ch=>{const u=used.includes(ch);return {ch,...this.off(ch),bg:u?"rgba(28,25,23,.06)":"#fff",fg:u?"rgba(28,25,23,.3)":"#1c1917"};}),
+      mStats: mstats, acts,
+      mSlots: letters.map((ch,i)=>{const f=i<done,a=i===done;return {ch:f?ch:"",bg:f?"var(--color-text)":"var(--color-bg)",fg:"var(--color-bg)",ring:a?"inset 0 0 0 4px var(--color-accent)":"none",br:i<4?R:"0"};}),
+      mTiles: tl.map((ch,i)=>{const u=used.includes(ch);return {ch,bg:u?"var(--color-neutral-300)":"var(--color-bg)",fg:u?"var(--color-neutral-500)":"var(--color-text)",br:i%4!==3?R:"0",bt:i>3?R:"0"};}),
+      tools, stats,
+      progress: letters.map((ch,i)=>({ch,...this.off(ch), fg:i<done?"#4e7a3f":"rgba(28,25,23,.62)", bd:i<done?"#4e7a3f":"rgba(28,25,23,.2)"})),
+      slots: letters.map((ch,i)=>{
+        const f=i<done, a=i===done;
+        return {ch:f?ch:"", bg:f?"rgba(78,122,63,.12)":"rgba(255,255,255,.5)", bd:f?"#4e7a3f":a?"#a85a18":"rgba(28,25,23,.25)", fg:"#4e7a3f", anim:a?"pulse 1.6s ease-in-out infinite":"none"};
+      }),
+      tiles: tl.map(ch=>{const u=used.includes(ch);return {ch, op:u?0.25:1, sh:u?"none":"3px 3px 0 #a85a18", sha:u?"none":"3px 3px 0 #a85a18"};})
+    };
+  }
+}
+</script>
+</body>
+</html>

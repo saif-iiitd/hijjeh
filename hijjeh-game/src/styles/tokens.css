@@ -1,15 +1,20 @@
-/* Design tokens. --accent / --done / --paper-tint are overridden per book at runtime (see useGame). */
+/* Design tokens — "Origami" direction.
+   --accent, --done and --paper-tint are overridden per book at runtime (see useGame), so every book
+   keeps the colours of its cover. --brand (Hijjeh red) never changes. */
 
 :root{
-  --ink:#1c1917;
-  --ink-soft:rgba(28,25,23,0.62);
-  --rule:rgba(28,25,23,0.2);
-  --accent:#a01102;          /* BAFTER red */
-  --done:#1f6f5c;            /* Mughal-tile green */
-  --good:#1f6f5c;
-  --bad:#a01102;
+  --ink:#280209;                       /* deep maroon-black text and rules */
+  --ink-soft:rgba(40,2,9,0.72);
+  --rule:rgba(40,2,9,0.25);
+  --brand:#d81f00;                     /* Hijjeh red: logo mark, mode switch, hint meter, links */
+  --accent:#f5a000;                    /* amber; replaced by the loaded book's accent */
+  --done:#1f6fe0;                      /* correct letters; replaced by the loaded book's colour */
+  --good:#55705e;
+  --bad:#d81f00;
+  --panel:rgba(250,246,236,0.92);      /* the game/about card */
+  --gable-fill:#faf5e8;                /* inside of the gable word frame */
+  --chip:rgba(255,255,255,0.55);       /* stat strip and toolbar */
   --tap:52px;
   --ui:Andika, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  --display:"Cormorant Garamond", "EB Garamond", Georgia, serif;
-  --urdu:"Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
+  --urdu:"Noto Nastaliq Urdu", serif;
 }

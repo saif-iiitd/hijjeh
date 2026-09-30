@@ -54,7 +54,7 @@ export function useGame() {
   useEffect(() => {
     if (timeLeft == null) return;
     if (timeLeft <= 0) {
-      setFeedback({ text: "⏰ Time up! Try again.", tone: "bad" });
+      setFeedback({ text: "Time is up — try again.", tone: "bad" });
       setTimeLeft(null);
       registerMistake(true);
       return;
@@ -132,7 +132,7 @@ export function useGame() {
     setPicked(newPicked);
 
     if (letter !== expected) {
-      setFeedback({ text: "❌ Not quite. Try again.", tone: "bad" });
+      setFeedback({ text: "Not quite — try again.", tone: "bad" });
       registerMistake(false);
 
       if (round.meta.partialResetOnMistake) {
@@ -148,7 +148,8 @@ export function useGame() {
       return;
     }
 
-    setFeedback({ text: "✅ Good!", tone: "good" });
+    const isLast = newPicked.length === round.letters.length;
+    if (!isLast) setFeedback({ text: `Right — ${letter}. Next letter.`, tone: "good" });
 
     if (newPicked.length === round.letters.length) {
       const basePoints = 10 + level * 2;
@@ -161,7 +162,7 @@ export function useGame() {
 
       const shouldLevelUp = (streak + 1) % 3 === 0;
       setFeedback({
-        text: `🎉 Word decoded! +${gained} points${shouldLevelUp ? " — Level up!" : ""}`,
+        text: `Word decoded! +${gained} points${shouldLevelUp ? " — Level up!" : ""}`,
         tone: "good"
       });
 

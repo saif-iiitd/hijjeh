@@ -1,0 +1,39 @@
+{
+  "pkg": "hijjeh",
+  "globalName": "Hijjeh",
+  "shape": "package",
+  "buildCmd": "npm run build:package",
+  "cssEntry": "dist-lib/hijjeh.css",
+  "extraFonts": [
+    "node_modules/@fontsource/andika/latin-400.css",
+    "node_modules/@fontsource/andika/latin-700.css",
+    "node_modules/@fontsource/cormorant-garamond/latin-500.css",
+    "node_modules/@fontsource/cormorant-garamond/latin-600.css",
+    "node_modules/@fontsource/cormorant-garamond/latin-700.css",
+    "node_modules/@fontsource/cormorant-garamond/latin-500-italic.css",
+    "node_modules/@fontsource/noto-nastaliq-urdu/arabic-400.css",
+    "node_modules/@fontsource/noto-nastaliq-urdu/arabic-700.css"
+  ],
+  "docsMap": {
+    "Masthead": ".design-sync/docs/Shell.md",
+    "Lattice": ".design-sync/docs/Shell.md",
+    "Colophon": ".design-sync/docs/Shell.md",
+    "Toolbar": ".design-sync/docs/Shell.md",
+    "TargetWord": ".design-sync/docs/Play.md",
+    "LetterProgress": ".design-sync/docs/Play.md",
+    "Tiles": ".design-sync/docs/Play.md",
+    "Tile": ".design-sync/docs/Play.md",
+    "Glyph": ".design-sync/docs/Play.md",
+    "HintMeter": ".design-sync/docs/Play.md",
+    "StatsBar": ".design-sync/docs/Play.md",
+    "BookBanner": ".design-sync/docs/Book.md",
+    "App": ".design-sync/docs/Game.md"
+  },
+  "overrides": {
+    "App": {
+      "cardMode": "single",
+      "viewport": "430x1200"
+    }
+  }
+}
+
