@@ -1,6 +1,6 @@
 // Expose data on window so index.html can read it easily without a bundler.
 
-window.WORD_BANK = [
+window.FREE_BANK = [
   { word: "ب", letters: ["ب"], level: 1, tags: ["single"] },
   { word: "ا", letters: ["ا"], level: 1, tags: ["single", "non-joiner"] },
   { word: "با", letters: ["ب", "ا"], level: 2, tags: ["simple"] },
@@ -25,7 +25,7 @@ window.WORD_BANK = [
 
 window.LETTER_POOL = [
   "ا","ب","پ","ت","ث","ج","چ","ح","خ","د","ذ","ر","ز","ژ","س","ش","ص","ض","ط","ظ","ع","غ",
-  "ف","ق","ک","گ","ل","م","ن","و","ہ","ی"
+  "ف","ق","ک","گ","ل","م","ن","و","ہ","ی","ٹ","ڑ","ھ","ں","ے"
 ];
 
 window.NON_JOINERS = ["ا","د","ذ","ر","ز","ژ","و"];

@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hijjeh - Urdu Spelling Game</title>
+    <meta name="theme-color" content="#f4f1e8" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <link
@@ -28,7 +29,10 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- Word bank -->
+    <script src="./words.js"></script>
     <script src="./bacWords.js"></script>
+    <script src="./phirkiWords.js"></script>
+    <script src="./pyaaraWords.js"></script>
   </head>
 
   <body>
@@ -37,7 +41,8 @@
     <script type="text/babel">
 const { useEffect, useRef, useState } = React;
 
-      const WORD_BANK = window.WORD_BANK;
+      const FREE_BANK = window.FREE_BANK;
+      const BOOKS = window.BOOKS || [];
       const LETTER_POOL = window.LETTER_POOL;
       const NON_JOINERS = new Set(window.NON_JOINERS);
 
@@ -58,8 +63,8 @@ const { useEffect, useRef, useState } = React;
         return Math.max(min, Math.min(max, n));
       }
 
-      function buildRound(level, seenWordSet) {
-        const eligible = WORD_BANK.filter(w => w.level <= level);
+      function buildRound(level, seenWordSet, bank) {
+        const eligible = bank.filter(w => w.level <= level);
         const unSeen = eligible.filter(w => !seenWordSet.has(w.word));
         const chosen = unSeen.length > 0 ? pickRandom(unSeen) : pickRandom(eligible);
 
@@ -108,15 +113,90 @@ const { useEffect, useRef, useState } = React;
         };
       }
 
+      // ---- Centred Urdu glyphs -------------------------------------------------
+      // Nastaliq letters sit at very different heights and widths inside their line box, so a plain
+      // centred <span> looks off-centre (ر و د hang low, ھ ہ float). We measure each letter's actual
+      // ink box once with canvas and nudge it so its ink is centred in the tile.
+      const URDU_FONT = '"Noto Nastaliq Urdu"';
+      const glyphCache = new Map();
+      let measureCtx = null;
+
+      function glyphOffset(ch) {
+        if (glyphCache.has(ch)) return glyphCache.get(ch);
+        let off = { dx: 0, dy: 0 };
+        try {
+          measureCtx = measureCtx || document.createElement("canvas").getContext("2d");
+          const EM = 200;
+          measureCtx.font = `${EM}px ${URDU_FONT}, serif`;
+          measureCtx.textAlign = "left";
+          measureCtx.textBaseline = "alphabetic";
+          const m = measureCtx.measureText(ch);
+          if (m.fontBoundingBoxAscent != null && m.actualBoundingBoxAscent != null) {
+            const inkCx = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+            const inkUp = (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+            off = {
+              dx: (m.width / 2 - inkCx) / EM,
+              dy: (inkUp - (m.fontBoundingBoxAscent - m.fontBoundingBoxDescent) / 2) / EM
+            };
+          }
+        } catch (e) {}
+        glyphCache.set(ch, off);
+        return off;
+      }
+
+      function useUrduFont() {
+        const [ready, setReady] = useState(false);
+        useEffect(() => {
+          let alive = true;
+          const done = () => { if (alive) { glyphCache.clear(); setReady(true); } };
+          if (document.fonts && document.fonts.load) {
+            document.fonts.load(`40px ${URDU_FONT}`, "ابپ").then(done, done);
+          } else {
+            done();
+          }
+          return () => { alive = false; };
+        }, []);
+        return ready;
+      }
+
+      function Glyph({ ch, ready }) {
+        const { dx, dy } = ready ? glyphOffset(ch) : { dx: 0, dy: 0 };
+        return (
+          <span className="glyph" style={{ transform: `translate(${dx}em, ${dy}em)` }}>{ch}</span>
+        );
+      }
+
+      function getInitialMode() {
+        const fallback = { mode: "free", bookId: BOOKS[0] ? BOOKS[0].id : null };
+        let saved = null;
+        try { saved = JSON.parse(localStorage.getItem("hijjeh-mode")); } catch (e) {}
+        // ?book=<id> (e.g. from a QR code in a printed book) wins over the saved choice
+        const q = new URLSearchParams(window.location.search);
+        const wanted = q.get("book");
+        if (wanted && BOOKS.some(b => b.id === wanted)) return { mode: "book", bookId: wanted };
+        if (q.get("mode") === "free") return { mode: "free", bookId: fallback.bookId };
+        if (saved && (saved.mode === "free" || BOOKS.some(b => b.id === saved.bookId))) {
+          return { mode: saved.mode, bookId: saved.bookId || fallback.bookId };
+        }
+        return fallback;
+      }
+
       function App() {
+        const initial = React.useMemo(getInitialMode, []);
+        const [mode, setMode] = useState(initial.mode);
+        const [bookId, setBookId] = useState(initial.bookId);
+        const book = mode === "book" ? BOOKS.find(b => b.id === bookId) : null;
+        const bank = book ? book.words : FREE_BANK;
+
         const [level, setLevel] = useState(1);
         const [score, setScore] = useState(0);
         const [streak, setStreak] = useState(0);
         const [mistakes, setMistakes] = useState(0);
-	const [showHints, setShowHints] = useState(true);
+        const [showHints, setShowHints] = useState(true);
 
         const seenWordsRef = useRef(new Set());
-        const [round, setRound] = useState(() => buildRound(1, seenWordsRef.current));
+        const nextRoundTimerRef = useRef(null);
+        const [round, setRound] = useState(() => buildRound(1, seenWordsRef.current, bank));
 
         const [picked, setPicked] = useState([]);
         const [usedTileCounts, setUsedTileCounts] = useState({});
@@ -187,10 +267,11 @@ const { useEffect, useRef, useState } = React;
           return () => window.removeEventListener("resize", remeasure);
         }, [picked.length]);
 
-        function startNewRound(nextLevel = level, carrySeen = true) {
+        function startNewRound(nextLevel = level, carrySeen = true, nextBank = bank) {
+          clearTimeout(nextRoundTimerRef.current);
           if (carrySeen) seenWordsRef.current.add(round.word);
 
-          const nr = buildRound(nextLevel, seenWordsRef.current);
+          const nr = buildRound(nextLevel, seenWordsRef.current, nextBank);
 
           setRound(nr);
           setPicked([]);
@@ -199,7 +280,8 @@ const { useEffect, useRef, useState } = React;
           setHintMeter(0);
         }
 
-        function resetProgress() {
+        function resetProgress(nextBank = bank) {
+          clearTimeout(nextRoundTimerRef.current);
           seenWordsRef.current = new Set();
 
           setLevel(1);
@@ -207,13 +289,22 @@ const { useEffect, useRef, useState } = React;
           setStreak(0);
           setMistakes(0);
 
-          const nr = buildRound(1, seenWordsRef.current);
+          const nr = buildRound(1, seenWordsRef.current, nextBank);
 
           setRound(nr);
           setPicked([]);
           setUsedTileCounts({});
           setFeedback({ text: "Tap the letters to decode the word.", tone: "" });
           setHintMeter(0);
+        }
+
+        function switchMode(nextMode, nextBookId = bookId) {
+          const nextBook = nextMode === "book" ? BOOKS.find(b => b.id === nextBookId) : null;
+          if (nextMode === "book" && !nextBook) return;
+          setMode(nextMode);
+          setBookId(nextBookId);
+          resetProgress(nextBook ? nextBook.words : FREE_BANK);
+          try { localStorage.setItem("hijjeh-mode", JSON.stringify({ mode: nextMode, bookId: nextBookId })); } catch (e) {}
         }
 
         function canUseTile(letter) {
@@ -279,7 +370,7 @@ const { useEffect, useRef, useState } = React;
 
             if (shouldLevelUp) setLevel(newLevel);
 
-            setTimeout(() => startNewRound(newLevel, true), 650);
+            nextRoundTimerRef.current = setTimeout(() => startNewRound(newLevel, true), 650);
           }
         }
 
@@ -322,135 +413,196 @@ const { useEffect, useRef, useState } = React;
           startNewRound(level, true);
         }
 
-        return (
-          <div className="app compact-ui">
-            <div className="header"><i>Hijjeh</i> - Urdu Spelling Game</div>
+        useEffect(() => {
+          // Theme lives on <html> so the page background can follow the book too.
+          const root = document.documentElement;
+          root.dataset.mode = book ? "book" : "free";
+          for (const [prop, val] of [["--accent", book && book.accent], ["--done", book && (book.done || book.accent)], ["--paper-tint", book && book.paper]]) {
+            if (val) root.style.setProperty(prop, val); else root.style.removeProperty(prop);
+          }
+        }, [book]);
 
-            <div className="topbar sidebar">
+        const seenCount = book ? book.words.filter(w => seenWordsRef.current.has(w.word)).length : 0;
+        const fontsReady = useUrduFont();
+
+        return (
+          <div className="app" data-mode={book ? "book" : "free"}>
+            <header className="masthead">
+              <div className="brand">
+                <span className="brandUr" lang="ur">ہجے</span>
+                <span className="brandEn">Hijjeh</span>
+              </div>
+
+              <div className="modeSwitch" role="tablist" aria-label="Game mode">
+                <button
+                  role="tab"
+                  aria-selected={!book}
+                  onClick={() => book && switchMode("free")}
+                >
+                  Free play
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={!!book}
+                  disabled={BOOKS.length === 0}
+                  onClick={() => !book && switchMode("book", bookId)}
+                >
+                  Book
+                </button>
+              </div>
+            </header>
+
+            <div className="orn" aria-hidden="true" />
+
+            {book && (
+              <section className="bookBanner" aria-label="Loaded book">
+                {book.cover && (
+                  <img className="bookCover" src={book.cover} alt="" width="46" height="65" />
+                )}
+                <div className="bookText">
+                  <div className="bookKicker">{BOOKS.length > 1 ? "Book · tap to change" : "Book loaded"}</div>
+                  <div className="bookTitle" lang="ur">{book.title}</div>
+                  {book.titleEn && <div className="bookTitleEn">{book.titleEn}</div>}
+                  {book.author && <div className="bookAuthor">A poem by {book.author}</div>}
+                </div>
+                {BOOKS.length > 1 && (
+                  <select
+                    className="bookSelect"
+                    value={book.id}
+                    onChange={e => switchMode("book", e.target.value)}
+                    aria-label="Choose book"
+                  >
+                    {BOOKS.map(b => (
+                      <option key={b.id} value={b.id}>{b.titleEn || b.title}</option>
+                    ))}
+                  </select>
+                )}
+                <div className="bookProgress">
+                  <strong>{seenCount}/{book.words.length}</strong>
+                  words
+                </div>
+              </section>
+            )}
+
+            <main className="page">
               <div className="stats">
-                <div className="pill">
-                  Level <strong>{level}</strong>
-                </div>
-                <div className="pill">
-                  Score <strong>{score}</strong>
-                </div>
-                <div className="pill">
-                  Streak <strong>{streak}</strong>
-                </div>
-                <div className="pill">
-                  Mistakes <strong>{mistakes}</strong>
-                </div>
+                <div className="pill">Level <strong>{level}</strong></div>
+                <div className="pill">Score <strong>{score}</strong></div>
+                <div className="pill">Streak <strong>{streak}</strong></div>
+                <div className="pill">Mistakes <strong>{mistakes}</strong></div>
                 {timeLeft != null && (
-                  <div className="pill">
-                    Time <strong>{timeLeft}s</strong>
+                  <div className="pill">Time <strong>{timeLeft}s</strong></div>
+                )}
+              </div>
+
+              <div className="targetWrap">
+                <div className="label">
+                  Look at the word, then tap its letters in order.
+                </div>
+
+                <div className="stage">
+                  <svg className="archCap" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+                    <path className="archFill" d="M0 40 C0 26 30 24 42 13 C46 9 48 4 50 0 C52 4 54 9 58 13 C70 24 100 26 100 40 Z" />
+                    <path className="archLine" d="M0 40 C0 26 30 24 42 13 C46 9 48 4 50 0 C52 4 54 9 58 13 C70 24 100 26 100 40" vectorEffect="non-scaling-stroke" />
+                  </svg>
+                  <div
+                    className={"targetWord" + (showWord ? " show" : "")}
+                    lang="ur"
+                    title={round.tags?.join(", ")}
+                  >
+                    {round.word}
+                  </div>
+                </div>
+
+                <div
+                  className={"letterProgress " + (showHints ? "showLetters" : "hideLetters")}
+                  aria-label="Spelling progress"
+                  lang="ur"
+                >
+                  {round.letters.map((letter, idx) => (
+                    <span
+                      key={idx}
+                      className={"progressLetter " + (idx < picked.length ? "done" : "")}
+                    >
+                      <Glyph ch={letter} ready={fontsReady} />
+                    </span>
+                  ))}
+                </div>
+
+                <div className={"feedback " + (feedback.tone || "")} aria-live="polite">
+                  {feedback.text}
+                </div>
+
+                {showHints && round.meta.hintsEnabled && (
+                  <div className="hintWrap">
+                    <div className="hintBar" aria-label="Hint meter">
+                      <div className="hintFill" style={{ width: `${hintMeter}%` }} />
+                    </div>
+                    <div className="hintRow">
+                      <button onClick={revealHint} disabled={hintMeter < 70}>
+                        Hint
+                      </button>
+                      <div className="tiny">Hint meter charges with mistakes.</div>
+                    </div>
                   </div>
                 )}
               </div>
 
-              <div className="controls">
-                <button onClick={undo} aria-label="Undo" title="Undo">
-                  Undo
-                </button>
-                <button onClick={skip} aria-label="Skip" title="Skip">
-                  Skip
-                </button>
-                <button
-                  className="primary"
-                  onClick={resetProgress}
-                  aria-label="Reset"
-                  title="Reset"
-                >
-                  Reset
-                </button>
+              <div className={"tilesArea" + (showTiles ? " show" : "")}>
+                <div className="tiles" role="list" lang="ur">
+                  {round.tiles.map((l, idx) => {
+                    const used = usedTileCounts[l] || 0;
+                    const available = round.tiles.filter(t => t === l).length;
+                    const isUsedUp = used >= available;
 
-<button
-  onClick={() => setShowHints(h => !h)}
-  aria-label={showHints ? "Hide hints" : "Show hints"}
-  title={showHints ? "Hide hints" : "Show hints"}
->
-  {showHints ? "Hide hints" : "Show hints"}
-</button>
-
-              </div>
-            </div>
-
-            <div className="main">
-              <div className="canvas card">
-                <div className="targetWrap">
-                  <div className="label">
-                    Look at the target word below. Spell it out by tapping the letters below.
-                  </div>
-
-<div
-  className={"targetWord" + (showWord ? " show" : "")}
-  title={round.tags?.join(", ")}
->
-  {round.word}
-</div>
-
-<div className={"letterProgress " + (showHints ? "showLetters" : "hideLetters")} aria-label="Spelling progress">
-  {round.letters.map((letter, idx) => (
-    <span
-      key={idx}
-      className={"progressLetter " + (idx < picked.length ? "done" : "")}
-    >
-      {letter}
-    </span>
-  ))}
-</div>
-
-<div className="selectionRow">
-                    <div className={"feedback " + (feedback.tone || "")}>
-                      {feedback.text}
-                    </div>
-
-                    {showHints && round.meta.hintsEnabled && (
-                      <div className="hintWrap">
-                        <div className="hintBar" aria-label="Hint meter">
-                          <div
-                            className="hintFill"
-                            style={{ width: `${hintMeter}%` }}
-                          />
-                        </div>
-
-                        <div className="hintRow">
-                          <button onClick={revealHint} disabled={hintMeter < 70}>
-                            Hint
-                          </button>
-                          <div className="tiny">Hint meter charges with mistakes.</div>
-                        </div>
+                    return (
+                      <div
+                        key={idx + "-" + l}
+                        className={"tile " + (isUsedUp ? "used" : "")}
+                        onClick={() => tapTile(l)}
+                        role="listitem"
+                        aria-label={"Letter " + l}
+                        title={NON_JOINERS.has(l) ? "Non-joining letter" : "Letter"}
+                        style={{
+                          transitionDelay: showTiles ? `${idx * 30}ms` : "0ms"
+                        }}
+                      >
+                        <Glyph ch={l} ready={fontsReady} />
                       </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className={"tilesArea" + (showTiles ? " show" : "")}>
-                  <div className="tiles" role="list">
-                    {round.tiles.map((l, idx) => {
-                      const used = usedTileCounts[l] || 0;
-                      const available = round.tiles.filter(t => t === l).length;
-                      const isUsedUp = used >= available;
-
-                      return (
-                        <div
-                          key={idx + "-" + l}
-                          className={"tile " + (isUsedUp ? "used" : "")}
-                          onClick={() => tapTile(l)}
-                          role="listitem"
-                          aria-label={"Letter " + l}
-                          title={NON_JOINERS.has(l) ? "Non-joining letter" : "Letter"}
-                          style={{
-                            transitionDelay: showTiles ? `${idx * 30}ms` : "0ms"
-                          }}
-                        >
-                          {l}
-                        </div>
-                      );
-                    })}
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
-            </div>
+            </main>
+
+            <nav className="toolbar" aria-label="Game controls">
+              <button className="btn-undo" onClick={undo}>Undo</button>
+              <button className="btn-skip" onClick={skip}>Skip</button>
+              <button
+                className="btn-hints"
+                onClick={() => setShowHints(h => !h)}
+                aria-pressed={showHints}
+              >
+                {showHints ? "Hide hints" : "Show hints"}
+              </button>
+              <button className="btn-reset" onClick={() => resetProgress()}>Reset</button>
+            </nav>
+
+            <footer className="colophon">
+              <span className="credit">
+                Game design <strong>Saif Ali</strong>
+              </span>
+              <a
+                className="affil"
+                href="https://bafter.wordpress.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="BAFTER — Barkat Ali Firaq Trust for Education and Research (opens the BAFTER website)"
+              >
+                <span>Affiliated organisation</span>
+                <img src="assets/bafter-logo.png" alt="B.A.F.T.E.R" height="18" />
+              </a>
+            </footer>
           </div>
         );
       }
