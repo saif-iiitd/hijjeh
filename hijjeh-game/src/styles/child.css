@@ -108,11 +108,9 @@
 .app[data-look="child"] .bookKicker{ display:none; }
 .app[data-look="child"] .bookTitle{ font-size:18px; line-height:1.9; color:var(--accent); }
 .app[data-look="child"] .bookBadge{
-  padding:6px 12px; border-radius:14px; background:var(--accent); color:#fff; text-align:center; font-size:11px; letter-spacing:0; text-transform:none; line-height:1.2;
+  padding:3px 9px; border-radius:10px; background:var(--accent); color:#fff; text-align:center; font-size:11px; letter-spacing:0; text-transform:none; line-height:1.2;
 }
-.app[data-look="child"] .bookBadge strong{ font-size:20px; color:#fff; }
-.app[data-look="child"] .badgeChange{ display:block; }
-.app[data-look="child"] .badgeWords{ display:none; }
+.app[data-look="child"] .bookBadge strong{ font-size:13px; color:#fff; }
 .app[data-look="child"] .buyLink{ border-radius:8px; }
 .app[data-look="child"] .freeCard{
   display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:20px; background:rgba(31,111,224,.14);

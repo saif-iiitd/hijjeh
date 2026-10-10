@@ -1,28 +1,23 @@
 /**
- * Top of the screen: the Hijjeh mark, the Child / Grown-up look toggle, and (in the child look) the score
- * and three stars, then the Free play / Choose Book switch on its own row below.
- * On the About page neither side of the switch is selected (pass `inBookMode={null}`).
+ * Top of the screen: the Hijjeh mark, the Child / Grown-up look toggle, the score and three stars, and the
+ * "i" button for the About page. (Choosing a book or Free play is the dropdown card below, not part of this.)
  *
  * @param {Object} props
- * @param {boolean | null} props.inBookMode   True = book side selected, false = Free play selected, null = neither.
- * @param {boolean} props.hasBooks            False disables the book side (no books installed).
- * @param {() => void} props.onFree           Called when the player picks Free play.
- * @param {() => void} props.onBook           Called when the player taps the book side (switches to book mode, or opens the picker if already there).
  * @param {"child" | "adult"} [props.look]    Which look is on; the toggle offers the other one.
  * @param {() => void} [props.onToggleLook]   Called when the look toggle is tapped.
  * @param {number} [props.score]              Shown in the child look.
  * @param {number} [props.levelProgress]      Completed words towards the next level; this many stars are lit.
  * @param {number} [props.wordsPerLevel]      How many stars there are (words per level).
+ * @param {boolean} [props.aboutOpen]         The About page is showing; the "i" button then returns to the game.
  */
 export function Masthead({
-  inBookMode, hasBooks, onFree, onBook,
-  look = "child", onToggleLook, score = 0, levelProgress = 0, wordsPerLevel = 3
+  look = "child", onToggleLook, score = 0, levelProgress = 0, wordsPerLevel = 3, aboutOpen = false
 }) {
   return (
     <>
       <header className="masthead">
         <div className="brand">
-          <span className="brandUr" lang="ur">ہجے</span>
+          <span className="brandMark" aria-hidden="true"><span className="brandUr" lang="ur">ہجے</span></span>
           <span className="brandEn">Hijjeh</span>
         </div>
 
@@ -38,17 +33,14 @@ export function Masthead({
               <span key={i} className={"star" + (i < levelProgress ? " lit" : "")} />
             ))}
           </span>
+          <a
+            className="infoBtn"
+            href={aboutOpen ? "#/" : "#/about"}
+            aria-label={aboutOpen ? "Back to the game" : "About Hijjeh"}
+            title={aboutOpen ? "Back to the game" : "About Hijjeh"}
+          >i</a>
         </div>
       </header>
-
-      <div className="modeSwitch" role="tablist" aria-label="Game mode">
-        <button role="tab" className="modeBook" aria-selected={inBookMode === true} disabled={!hasBooks} onClick={onBook}>
-          Choose Book
-        </button>
-        <button role="tab" className="modeFree" aria-selected={inBookMode === false} onClick={() => inBookMode !== false && onFree()}>
-          Free play
-        </button>
-      </div>
     </>
   );
 }

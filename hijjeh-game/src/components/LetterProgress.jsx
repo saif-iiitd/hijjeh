@@ -17,7 +17,7 @@ import { tileVars } from "../game/palette.js";
  */
 export function LetterProgress({ letters, tiles = [], pickedCount, won = false, showHints, fontReady, hit }) {
   return (
-    <div className={"letterProgress " + (showHints ? "showLetters" : "hideLetters")} aria-label="Spelling progress" lang="ur">
+    <div className={"letterProgress " + (showHints ? "showLetters" : "hideLetters")} aria-label="Spelling progress" lang="ur" style={{ "--n": letters.length }}>
       {letters.map((letter, idx) => {
         const filled = idx < pickedCount;
         const next = idx === pickedCount && !won;

@@ -1,6 +1,23 @@
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Glyph } from "./Glyph.jsx";
 import { NON_JOINERS } from "../data/letters.js";
 import { tileVars } from "../game/palette.js";
+
+const GAP = 8;   // roughly the tile gap used in the styles; only needed to compare layouts
+
+/** The columns/rows (4–7 columns) that give the largest square tiles for `n` tiles in a tray `size` ({ w, h }). */
+function bestGrid(n, size) {
+  const fallback = { cols: n <= 8 ? 4 : n <= 15 ? 5 : 6, rows: 0 };
+  let best = null;
+  for (let cols = 4; cols <= 7; cols++) {
+    const rows = Math.ceil(n / cols);
+    const tile = size && size.w > 0 && size.h > 0
+      ? Math.min((size.w - (cols - 1) * GAP) / cols, (size.h - (rows - 1) * GAP) / rows)
+      : -cols;                       // no measurement yet: prefer fewer columns
+    if (!best || tile > best.tile + 0.5) best = { cols, rows, tile };
+  }
+  return best ? { cols: best.cols, rows: best.rows } : { cols: fallback.cols, rows: Math.ceil(n / fallback.cols) };
+}
 
 /**
  * One tappable letter tile. In the child look it takes one of six colours from its position in the tray and
@@ -51,10 +68,22 @@ export function Tile({ letter, index, used, onTap, delayMs = 0, fontReady, hit, 
  * @param {import("react").ReactNode} [props.children]    Content shown above the tiles.
  */
 export function Tiles({ tiles, usedTileCounts, show, onTap, fontReady, hit, bump, hintPulse, children }) {
+  // The tray is a fixed-size area and the tiles shrink to fit it, so more letters never make the page taller.
+  // Measure the tray and use the number of columns (4–7) that makes the tiles biggest.
+  const gridRef = useRef(null);
+  const [size, setSize] = useState(null);
+  useLayoutEffect(() => {
+    const el = gridRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return undefined;
+    const ro = new ResizeObserver(([entry]) => setSize({ w: entry.contentRect.width, h: entry.contentRect.height }));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const { cols, rows } = useMemo(() => bestGrid(tiles.length, size), [tiles.length, size]);
   return (
     <div className={"tilesArea" + (show ? " show" : "")}>
       {children}
-      <div className="tiles" role="list" lang="ur">
+      <div className="tiles" ref={gridRef} role="list" lang="ur" style={{ "--cols": cols, "--rows": rows }}>
         {tiles.map((l, idx) => {
           const available = tiles.filter(t => t === l).length;
           const usedCount = usedTileCounts[l] || 0;

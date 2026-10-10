@@ -9,12 +9,13 @@ import { glyphOffset } from "../game/glyph.js";
  * @param {Object} props
  * @param {string} props.ch          The single letter to show.
  * @param {boolean} [props.ready]    True once the Urdu font has loaded (see `useUrduFont`); before that no nudge is applied.
+ * @param {import("react").ReactNode} [props.children]   Shown instead of `ch` (same text, split into styled parts); `ch` is still what is measured.
  */
-export function Glyph({ ch, ready = true }) {
+export function Glyph({ ch, ready = true, children }) {
   const { dx, dy } = ready ? glyphOffset(ch) : { dx: 0, dy: 0 };
   return (
     <span className="glyph" style={{ transform: `translate(${dx}em, ${dy}em)` }}>
-      {ch}
+      {children ?? ch}
     </span>
   );
 }

@@ -5,7 +5,7 @@ const num = i => String(i + 1).padStart(2, "0");
 
 /**
  * The About page: back button, title, numbered sections (the game, the series, the poet, BAFTER) and
- * "The books" with each cover and, where set, a Buy on Amazon button, and "Credits" with the full
+ * "The books" with each cover and, where set, a Get the Book button, and "Credits" with the full
  * names of Saif Ali and the two organisations. Wording lives in `src/data/about.js`. The app shows it in place of the game when the address ends in `#/about`.
  *
  * @param {Object} props
@@ -51,7 +51,7 @@ export function AboutPage({ books, onBack }) {
                   <div className="aboutBookEn">{b.titleEn}</div>
                   {b.author && <div className="aboutBookBy">A poem by {b.author}</div>}
                   {b.buyUrl && (
-                    <a className="buyLink" href={b.buyUrl} target="_blank" rel="noopener noreferrer">Buy on Amazon ↗</a>
+                    <a className="buyLink" href={b.buyUrl} target="_blank" rel="noopener noreferrer">Get the Book ↗</a>
                   )}
                 </div>
               </div>

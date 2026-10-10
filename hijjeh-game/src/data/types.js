@@ -18,7 +18,7 @@
  * @property {string} [subtitleEn]    English subtitle.
  * @property {string} [author]        Author, shown as "A poem by …".
  * @property {string} [cover]         URL of the cover thumbnail.
- * @property {string} [buyUrl]        Where to buy the book; shows a "Buy on Amazon" link when set.
+ * @property {string} [buyUrl]        Where to buy the book; shows a "Get the Book" link when set.
  * @property {string} accent          Theme colour (banner, frame, ribbon, tile shadow); a CSS colour.
  * @property {string} [done]          Colour for correctly picked letters; defaults to `accent`.
  * @property {string} [paper]         Page tint taken from the cover background.

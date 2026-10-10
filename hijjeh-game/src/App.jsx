@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUrduFont } from "./game/glyph.js";
 import { useGame } from "./game/useGame.js";
 import { goToGame, useAboutRoute } from "./game/useHashRoute.js";
+import { FREE_PLAY } from "./components/BookPicker.jsx";
 import {
   AboutPage, BookBanner, BookPicker, Colophon, FreeCard, HintMeter, LetterProgress, Masthead,
   RewardOverlay, StatsBar, TargetWord, Tiles, Toolbar
@@ -15,26 +16,25 @@ export default function App() {
   const { book, round } = g;
   const child = g.look === "child";
 
-  // Picking a mode from the About page returns to the game in that mode.
-  const pickFree = () => { g.switchMode("free"); goToGame(); };
-  const pickBook = () => { g.switchMode("book", g.bookId); goToGame(); };
-  // On the book side of the switch: switch to book mode, or open the picker if already there.
-  const bookTap = showAbout ? pickBook : () => (book ? setPicking(true) : g.switchMode("book", g.bookId));
+  // The book / Free play card opens one picker for both.
+  const openPicker = () => setPicking(true);
+  const onPick = id => {
+    if (id === FREE_PLAY) g.switchMode("free");
+    else g.switchMode("book", id);
+    setPicking(false);
+  };
 
   const bumpKey = g.bump ? `${g.bump.kind}-${g.bump.n % 2 ? "a" : "b"}` : undefined;
 
   return (
-    <div className="app" data-mode={book ? "book" : "free"} data-look={g.look}>
+    <div className="app" data-mode={book ? "book" : "free"} data-look={g.look} data-view={showAbout ? "about" : "game"}>
       <Masthead
-        inBookMode={showAbout ? null : !!book}
-        hasBooks={g.books.length > 0}
-        onFree={showAbout ? pickFree : () => g.switchMode("free")}
-        onBook={bookTap}
         look={g.look}
         onToggleLook={g.toggleLook}
         score={g.score}
         levelProgress={g.levelProgress}
         wordsPerLevel={g.wordsPerLevel}
+        aboutOpen={showAbout}
       />
 
       {showAbout ? (
@@ -42,8 +42,9 @@ export default function App() {
       ) : (
         <>
           {book
-            ? <BookBanner book={book} seenCount={g.seenCount} onOpen={() => setPicking(true)} />
-            : <FreeCard level={g.level} />}
+            ? <BookBanner book={book} seenCount={g.seenCount} onOpen={openPicker} />
+            : <FreeCard level={g.level} onOpen={openPicker} />}
+          <hr className="gameRule" />
 
           <main className="page">
             <StatsBar level={g.level} score={g.score} streak={g.streak} mistakes={g.mistakes} timeLeft={g.timeLeft} />
@@ -54,6 +55,8 @@ export default function App() {
               <TargetWord
                 word={round.word}
                 tags={round.tags}
+                letters={round.letters}
+                pickedCount={g.picked.length}
                 show={g.showWord}
                 centred={child}
                 fontReady={fontReady}
@@ -103,7 +106,7 @@ export default function App() {
         </>
       )}
 
-      <Colophon onAboutPage={showAbout} />
+      {showAbout && <Colophon onAboutPage />}
 
       {child && !showAbout && <RewardOverlay reward={g.reward} characters={book?.id === "budhiya"} />}
 
@@ -112,7 +115,7 @@ export default function App() {
           books={g.books}
           currentId={book ? book.id : null}
           seenCount={g.seenCount}
-          onPick={id => { g.switchMode("book", id); setPicking(false); }}
+          onPick={onPick}
           onClose={() => setPicking(false)}
         />
       )}

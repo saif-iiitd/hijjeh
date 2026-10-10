@@ -4,6 +4,7 @@
 import "./styles/tokens.css";
 import "./styles/app.css";
 import "./styles/child.css";
+import "./styles/fit.css";
 
 export * from "./components/index.js";
 export { default as App } from "./App.jsx";

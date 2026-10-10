@@ -3,6 +3,7 @@ import "./fonts.js";
 import "./styles/tokens.css";
 import "./styles/app.css";
 import "./styles/child.css";
+import "./styles/fit.css";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(<App />);
