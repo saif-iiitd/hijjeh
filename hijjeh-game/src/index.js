@@ -3,6 +3,7 @@
 // yourself (the app does this in src/fonts.js).
 import "./styles/tokens.css";
 import "./styles/app.css";
+import "./styles/child.css";
 
 export * from "./components/index.js";
 export { default as App } from "./App.jsx";

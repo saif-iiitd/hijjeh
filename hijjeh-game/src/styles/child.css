@@ -1,0 +1,228 @@
+/* The child look ("7a" in the design handoff). Everything is scoped to .app[data-look="child"], so the
+   grown-up look in app.css is untouched. Flat: no borders, no shadows. Rounded. Colours from the handoff;
+   the loaded book's colour (--accent) tints its card, badge, next slot and ribbon. */
+
+/* ----- keyframes (from the handoff; the a/b copies let the same animation replay on the next tap) ----- */
+@keyframes pop7a{0%{transform:scale(1)}40%{transform:scale(1.28) rotate(-4deg)}100%{transform:scale(1)}}
+@keyframes pop7b{0%{transform:scale(1)}40%{transform:scale(1.28) rotate(-4deg)}100%{transform:scale(1)}}
+@keyframes wob7a{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}50%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+@keyframes wob7b{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}50%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+@keyframes hop7a{0%,100%{transform:translateY(0)}35%{transform:translateY(-14px) rotate(-8deg)}65%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+@keyframes hop7b{0%,100%{transform:translateY(0)}35%{transform:translateY(-14px) rotate(-8deg)}65%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+@keyframes cf7a{0%{transform:translate(0,0) rotate(0);opacity:1}30%{transform:translate(-30px,-80px) rotate(120deg)}100%{transform:translate(-60px,170px) rotate(420deg);opacity:0}}
+@keyframes cf7b{0%{transform:translate(0,0) rotate(0);opacity:1}30%{transform:translate(10px,-100px) rotate(-90deg)}100%{transform:translate(20px,180px) rotate(-380deg);opacity:0}}
+@keyframes cf7c{0%{transform:translate(0,0) rotate(0);opacity:1}30%{transform:translate(40px,-70px) rotate(150deg)}100%{transform:translate(70px,160px) rotate(480deg);opacity:0}}
+@keyframes flyy7{0%,100%{transform:translateY(0) rotate(-6deg)}25%{transform:translateY(-26px) rotate(6deg)}50%{transform:translateY(8px) rotate(-8deg)}75%{transform:translateY(-18px) rotate(5deg)}}
+@keyframes blow7{0%{transform:translate(-40px,0) rotate(0);opacity:0}10%{opacity:1}30%{transform:translate(120px,-30px) rotate(160deg)}60%{transform:translate(260px,26px) rotate(360deg)}90%{opacity:1}100%{transform:translate(470px,-10px) rotate(560deg);opacity:0}}
+@keyframes fly7{0%{transform:translateX(420px)}100%{transform:translateX(-110px)}}
+@keyframes walk7{0%{transform:translateX(410px)}100%{transform:translateX(-170px)}}
+@keyframes bob7{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-7px) rotate(1.5deg)}}
+@keyframes hopb7{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(-10deg)}}
+@keyframes loop7{0%{transform:translate(420px,90px) rotate(0)}18%{transform:translate(230px,170px) rotate(-10deg)}28%{transform:translate(150px,110px) rotate(-120deg)}36%{transform:translate(210px,60px) rotate(-240deg)}44%{transform:translate(250px,130px) rotate(-360deg)}54%{transform:translate(200px,236px) rotate(-360deg)}60%{transform:translate(175px,206px) rotate(-372deg)}66%{transform:translate(150px,236px) rotate(-360deg)}72%{transform:translate(125px,206px) rotate(-348deg)}78%{transform:translate(100px,236px) rotate(-360deg)}100%{transform:translate(-110px,120px) rotate(-366deg)}}
+@keyframes arrive7{0%{transform:translateX(410px);opacity:1}26%{transform:translateX(150px)}90%{transform:translateX(150px);opacity:1}100%{transform:translateX(150px);opacity:0}}
+/* the bird lands at the woman's hand; anchored from the bottom (the handoff used a fixed top offset) */
+@keyframes perch7{0%{transform:translate(-80px,-220px);opacity:1}14%{transform:translate(40px,-140px)}26%{transform:translate(104px,0)}90%{transform:translate(104px,0);opacity:1}100%{transform:translate(104px,0);opacity:0}}
+@keyframes chirp7{0%,100%{transform:rotate(0)}30%{transform:rotate(-12deg) translateY(-3px)}60%{transform:rotate(4deg)}}
+@keyframes note7{0%{transform:translate(0,0) rotate(0);opacity:0}15%{opacity:1}100%{transform:translate(-46px,-70px) rotate(-20deg);opacity:0}}
+@keyframes rise7{0%{opacity:0;transform:translate(-50%,20px) scale(.6)}12%{opacity:1;transform:translate(-50%,0) scale(1.08)}20%,85%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-20px) scale(1)}}
+@keyframes nextSlot{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 0%,transparent)}}
+@keyframes hintTile{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+/* ----- the screen ----- */
+.app[data-look="child"]{
+  --ink:#280209;
+  --panel:rgba(250,246,236,.92);
+  --blue:#1f6fe0;
+  --blue-dk:#1553ad;
+  max-width:430px;
+  min-height:100vh;
+  min-height:100dvh;
+  margin:0 auto;
+  padding:12px max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+  gap:12px;
+  position:relative;
+  overflow:hidden;            /* clips the reward scene to the screen */
+  border:0;
+  background:#f1e9d6;
+  color:var(--ink);
+}
+@media (min-width:900px){
+  .app[data-look="child"]{ margin:0 auto; min-height:100dvh; }
+}
+
+/* the page card and message block dissolve so every piece becomes one column on the screen, in the handoff's order */
+.app[data-look="child"] .page:not(.aboutPage),
+.app[data-look="child"] .targetWrap{ display:contents; }
+.app[data-look="child"] .page:not(.aboutPage)::before,
+.app[data-look="child"] .page:not(.aboutPage)::after{ display:none; }
+/* the About page stays a card, softened to match */
+.app[data-look="child"] .aboutPage{ order:3; border:0; border-radius:24px; background:var(--panel); }
+.app[data-look="child"] .aboutPage::before{ display:none; }
+.app[data-look="child"] .aboutBack{ border-radius:999px; }
+.app[data-look="child"] .aboutBook{ border-radius:16px; border-inline-start-width:0; }
+.app[data-look="child"] .aboutBook img{ border-radius:6px; }
+.app[data-look="child"] .aboutCredit{ border-radius:14px; }
+.app[data-look="child"] .masthead{ order:1; padding:0; }
+.app[data-look="child"] .modeSwitch{ order:2; }
+.app[data-look="child"] .bookBanner,
+.app[data-look="child"] .freeCard{ order:3; }
+.app[data-look="child"] .gable{ order:4; }
+.app[data-look="child"] .feedback{ order:5; }
+.app[data-look="child"] .letterProgress{ order:6; }
+.app[data-look="child"] .tilesArea{ order:7; }
+.app[data-look="child"] .toolbar{ order:8; }
+.app[data-look="child"] .colophon{ order:9; }
+.app[data-look="child"] .stats,
+.app[data-look="child"] .label,
+.app[data-look="child"] .hintWrap{ display:none; }
+
+/* ----- header ----- */
+.app[data-look="child"] .brandUr{ font-size:28px; }
+.app[data-look="child"] .brandEn{ padding-left:0; border-left:0; }
+.app[data-look="child"] .lookToggle{
+  min-height:32px; padding:0 10px; border:0; border-radius:999px; background:rgba(40,2,9,.08); font-size:12px;
+}
+.app[data-look="child"] .scorePill{
+  display:inline-block; padding:4px 12px; border-radius:999px; background:var(--blue); color:#fff; font-size:15px; font-weight:700;
+}
+.app[data-look="child"] .stars{ display:flex; gap:2px; }
+.app[data-look="child"] .star{
+  width:20px; height:20px; background:rgba(40,2,9,.15);
+  clip-path:polygon(50% 0,62% 36%,100% 38%,70% 60%,81% 100%,50% 76%,19% 100%,30% 60%,0 38%,38% 36%);
+}
+.app[data-look="child"] .star.lit{ background:#f5a000; }
+
+/* ----- mode switch ----- */
+.app[data-look="child"] .modeSwitch{ gap:6px; padding:5px; border:0; border-radius:20px; background:rgba(40,2,9,.07); }
+.app[data-look="child"] .modeSwitch button{ min-height:44px; border:0; border-radius:15px; font-size:15px; }
+.app[data-look="child"] .modeSwitch button + button{ border-left:0; }
+.app[data-look="child"] .modeSwitch button[aria-selected="true"].modeBook{ background:var(--accent); color:#fff; }
+.app[data-look="child"] .modeSwitch button[aria-selected="true"].modeFree{ background:var(--blue); color:#fff; }
+
+/* ----- book card and free-play card ----- */
+.app[data-look="child"] .bookBanner{
+  gap:12px; padding:10px 14px 10px 10px; border:0; border-radius:20px;
+  background:color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.app[data-look="child"] .bookCover{ border-radius:8px; width:42px; height:59px; object-fit:cover; box-shadow:none; }
+.app[data-look="child"] .bookKicker{ display:none; }
+.app[data-look="child"] .bookTitle{ font-size:18px; line-height:1.9; color:var(--accent); }
+.app[data-look="child"] .bookBadge{
+  padding:6px 12px; border-radius:14px; background:var(--accent); color:#fff; text-align:center; font-size:11px; letter-spacing:0; text-transform:none; line-height:1.2;
+}
+.app[data-look="child"] .bookBadge strong{ font-size:20px; color:#fff; }
+.app[data-look="child"] .badgeChange{ display:block; }
+.app[data-look="child"] .badgeWords{ display:none; }
+.app[data-look="child"] .buyLink{ border-radius:8px; }
+.app[data-look="child"] .freeCard{
+  display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:20px; background:rgba(31,111,224,.14);
+}
+.app[data-look="child"] .freeText{ flex:1; min-width:0; }
+.app[data-look="child"] .freeTitle{ font-size:15px; font-weight:700; line-height:1.3; }
+.app[data-look="child"] .freeSub{ font-size:13px; line-height:1.35; }
+.app[data-look="child"] .freeBadge{ text-align:center; padding:6px 12px; border-radius:14px; background:var(--blue); color:#fff; font-size:11px; font-weight:700; line-height:1.2; }
+.app[data-look="child"] .freeBadge strong{ display:block; font-size:20px; }
+
+/* ----- word card ----- */
+.app[data-look="child"] .gable{
+  position:relative; height:150px; margin:0; padding:0; display:grid; place-items:center;
+  border-radius:24px; background:#faf5e8; clip-path:none; overflow:hidden;
+}
+.app[data-look="child"] .gableInner{ background:none; clip-path:none; padding:0; }
+.app[data-look="child"] .targetWord{ font-size:56px; line-height:1; padding:0; }
+.confetti{ position:absolute; inset:0; overflow:hidden; pointer-events:none; border-radius:24px; }
+.confetti span{ position:absolute; top:40%; width:9px; height:9px; }
+
+/* ----- message line ----- */
+.app[data-look="child"] .feedback{ min-height:22px; text-align:center; font-size:15px; font-weight:700; color:var(--blue); }
+.app[data-look="child"] .feedback.good{ color:var(--blue); }
+.app[data-look="child"] .feedback.bad{ color:#c4601a; }                 /* orange, never red */
+.app[data-look="child"] .feedback[data-bump="ok-a"]{ animation:hop7a .6s ease; }
+.app[data-look="child"] .feedback[data-bump="ok-b"]{ animation:hop7b .6s ease; }
+.app[data-look="child"] .feedback[data-bump="no-a"]{ animation:wob7a .5s ease; }
+.app[data-look="child"] .feedback[data-bump="no-b"]{ animation:wob7b .5s ease; }
+
+/* ----- answer slots ----- */
+.app[data-look="child"] .letterProgress{ gap:8px; }
+.app[data-look="child"] .progressLetter{
+  width:52px; height:56px; min-width:0; padding:0; border:0; border-radius:16px; font-size:26px;
+  background:rgba(40,2,9,.08); color:transparent;
+}
+.app[data-look="child"] .progressLetter.next{
+  background:color-mix(in srgb, var(--accent) 35%, transparent);
+  animation:nextSlot 1.6s ease-in-out infinite;
+}
+.app[data-look="child"] .progressLetter.done{ background:var(--tbg, var(--blue)); color:var(--tfg, #fff); border:0; transform:none; animation:none; }
+.app[data-look="child"] .progressLetter[data-glow="a"]{ animation:pop7a .45s ease; }
+.app[data-look="child"] .progressLetter[data-glow="b"]{ animation:pop7b .45s ease; }
+
+/* ----- tray and tiles ----- */
+.app[data-look="child"] .tilesArea{
+  flex:1; margin:0; display:flex; flex-direction:column; justify-content:flex-end; gap:12px;
+  padding:16px 12px 14px; border:0; border-radius:28px; background:var(--panel);
+}
+.app[data-look="child"] .tiles{ grid-template-columns:repeat(4, 1fr); gap:10px; max-width:none; margin:0; }
+.app[data-look="child"] .tile{
+  min-height:0; border:0; border-bottom:7px solid var(--tdk); border-radius:20px; background:var(--tbg); color:var(--tfg);
+  box-shadow:none; font-size:32px;
+}
+.app[data-look="child"] .tilesArea.show .tile:active{ transform:none; box-shadow:none; }
+@media (hover:hover){ .app[data-look="child"] .tilesArea.show .tile:hover{ outline:0; background:var(--tbg); filter:brightness(1.06); } }
+.app[data-look="child"] .tilesArea.show .tile.used{
+  background:var(--tbg); color:var(--tfg); border-bottom-width:2px; opacity:.3; filter:none; outline:0;
+}
+.app[data-look="child"] .tile[data-hit]{ animation:none; }                         /* the child look pops instead of glowing */
+.app[data-look="child"] .tile[data-bump="ok-a"]{ animation:pop7a .45s ease; }
+.app[data-look="child"] .tile[data-bump="ok-b"]{ animation:pop7b .45s ease; }
+.app[data-look="child"] .tile[data-bump="no-a"]{ animation:wob7a .45s ease; }
+.app[data-look="child"] .tile[data-bump="no-b"]{ animation:wob7b .45s ease; }
+.app[data-look="child"] .tile[data-hint]{ animation:hintTile .7s ease-in-out infinite; outline:3px solid #280209; outline-offset:2px; }
+.nextBtn{
+  min-height:52px; border:0; border-bottom:5px solid #1553ad; border-radius:18px; background:#1f6fe0; color:#fff;
+  font-size:17px; font-weight:700; cursor:pointer;
+}
+
+/* ----- toolbar ----- */
+.app[data-look="child"] .toolbar{ gap:8px; background:none; }
+.app[data-look="child"] .toolbar button{ min-height:64px; gap:4px; border:0; border-radius:18px; font-size:12px; }
+.app[data-look="child"] .toolbar button + button{ border-inline-start:0; }
+.app[data-look="child"] .toolbar button::before{ width:26px; height:26px; }
+.app[data-look="child"] .btn-undo{ background:rgba(31,111,224,.22); }
+.app[data-look="child"] .btn-skip{ background:rgba(255,138,61,.3); }
+.app[data-look="child"] .btn-hints{ background:rgba(245,160,0,.32); }
+.app[data-look="child"] .btn-reset{ background:rgba(255,122,107,.3); }
+@media (hover:hover){ .app[data-look="child"] .toolbar button:hover{ filter:brightness(.96); background-color:inherit; } }
+
+/* ----- footer ----- */
+.app[data-look="child"] .colophon{ margin:0 -14px; border-top:0; background:var(--panel); grid-template-columns:auto 1fr; align-items:center; }
+.app[data-look="child"] .colophon > *{ padding:8px 12px; gap:4px; }
+.app[data-look="child"] .affil{ border-inline-start:1px solid var(--rule); border-top:0; }
+.app[data-look="child"] .logos{ --logo-h:11px; gap:8px; flex-wrap:nowrap; }
+.app[data-look="child"] .logos a{ padding:4px 6px; border-radius:8px; border-color:transparent; }
+
+/* ----- book picker ----- */
+.app[data-look="child"] .picker{
+  width:min(100%, 430px); padding:18px 14px 22px; border:0; border-radius:28px 28px 0 0; background:#faf5e8;
+}
+.app[data-look="child"] .pickerClose{ border:0; border-radius:50%; background:rgba(40,2,9,.08); }
+.app[data-look="child"] .pickerRow{ border:0; border-radius:20px; background:#fff; }
+.app[data-look="child"] .pickerRow.current{ background:color-mix(in srgb, var(--accent) 35%, #fff); }
+.app[data-look="child"] .pickerRow img{ border-radius:8px; }
+
+/* ----- reward scene ----- */
+.rewardLayer{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:5; }
+.rewardLayer .leaf{ position:absolute; left:0; }
+.rewardLayer .rw{ position:absolute; left:0; }
+.rewardLayer img{ display:block; height:auto; }
+.rewardLayer .womanBob{ transform-origin:50% 100%; }
+.rewardLayer .note{ position:absolute; font-weight:700; }
+.rewardBadgeWrap{ position:absolute; left:50%; top:120px; transform:translateX(-50%); animation:rise7 4.2s ease both; }
+.rewardBadge{ padding:10px 22px; border-radius:999px; background:#d81f00; color:#fff; font-size:22px; font-weight:700; white-space:nowrap; }
+
+@media (prefers-reduced-motion:reduce){
+  .rewardLayer{ display:none; }
+  .app[data-look="child"] .tile,
+  .app[data-look="child"] .progressLetter,
+  .app[data-look="child"] .feedback,
+  .confetti span{ animation:none !important; }
+}

@@ -1,27 +1,34 @@
 import { Glyph } from "./Glyph.jsx";
 import { NON_JOINERS } from "../data/letters.js";
+import { tileVars } from "../game/palette.js";
 
 /**
- * One tappable letter tile: a square card with a hard offset shadow.
+ * One tappable letter tile. In the child look it takes one of six colours from its position in the tray and
+ * has a darker raised bottom edge; in the grown-up look it is a plain white square with a hard shadow.
  *
  * @param {Object} props
  * @param {string} props.letter            The letter on the tile.
+ * @param {number} props.index             The tile's position in the tray (picks its colour).
  * @param {boolean} [props.used]           Greys the tile out (every copy of this letter has been used).
- * @param {(letter: string) => void} props.onTap   Called with the letter when tapped.
+ * @param {(letter: string, index: number) => void} props.onTap   Called with the letter and position when tapped.
  * @param {number} [props.delayMs]         Entrance delay, to stagger a row of tiles.
  * @param {boolean} [props.fontReady]      True once the Urdu font has loaded.
- * @param {"a" | "b"} [props.hit]         Glows the tile once, as the reward for a correct pick; alternate "a"/"b" to replay.
+ * @param {"a" | "b"} [props.hit]          Glows the tile once as the reward for a correct pick (alternate to replay).
+ * @param {string} [props.bump]            "ok-a" / "ok-b" pops the tile, "no-a" / "no-b" wobbles it (alternate to replay).
+ * @param {boolean} [props.hint]           Pulses the tile: it is the next letter.
  */
-export function Tile({ letter, used, onTap, delayMs = 0, fontReady, hit }) {
+export function Tile({ letter, index, used, onTap, delayMs = 0, fontReady, hit, bump, hint }) {
   return (
     <div
       className={"tile " + (used ? "used" : "")}
       data-hit={hit}
-      onClick={() => onTap(letter)}
+      data-bump={bump}
+      data-hint={hint ? "" : undefined}
+      onClick={() => onTap(letter, index)}
       role="listitem"
       aria-label={"Letter " + letter}
       title={NON_JOINERS.has(letter) ? "Non-joining letter" : "Letter"}
-      style={{ transitionDelay: `${delayMs}ms` }}
+      style={{ transitionDelay: `${delayMs}ms`, ...tileVars(index) }}
     >
       <Glyph ch={letter} ready={fontReady} />
     </div>
@@ -29,31 +36,46 @@ export function Tile({ letter, used, onTap, delayMs = 0, fontReady, hit }) {
 }
 
 /**
- * The board of letter tiles the child taps to spell the word. A letter greys out once every copy of
- * it on the board has been used. Read right-to-left.
+ * The board of letter tiles the child taps to spell the word. A letter greys out once every copy of it on the
+ * board has been used. Read right-to-left. Anything passed as children (the "Next word" button) sits above the tiles.
  *
  * @param {Object} props
  * @param {string[]} props.tiles                          The letters on the board (may repeat).
  * @param {Record<string, number>} props.usedTileCounts   How many copies of each letter are used so far.
  * @param {boolean} props.show                            Fades the board in when true.
- * @param {(letter: string) => void} props.onTap          Called with the tapped letter.
+ * @param {(letter: string, index: number) => void} props.onTap   Called with the tapped letter and its position.
  * @param {boolean} [props.fontReady]                     True once the Urdu font has loaded.
- * @param {{ letter: string, n: number } | null} [props.hit]  The last correct pick; that tile glows.
+ * @param {{ letter: string, n: number } | null} [props.hit]      The last correct pick; that tile glows.
+ * @param {{ idx: number, kind: "ok" | "no", n: number } | null} [props.bump]   The last tap; that tile pops or wobbles.
+ * @param {{ letter: string } | null} [props.hintPulse]   A hint: the first unused copy of this letter pulses.
+ * @param {import("react").ReactNode} [props.children]    Content shown above the tiles.
  */
-export function Tiles({ tiles, usedTileCounts, show, onTap, fontReady, hit }) {
+export function Tiles({ tiles, usedTileCounts, show, onTap, fontReady, hit, bump, hintPulse, children }) {
   return (
     <div className={"tilesArea" + (show ? " show" : "")}>
+      {children}
       <div className="tiles" role="list" lang="ur">
         {tiles.map((l, idx) => {
           const available = tiles.filter(t => t === l).length;
           const usedCount = usedTileCounts[l] || 0;
           const used = usedCount >= available;
-          // The copy of this letter that was just used is the one that glows.
-          const copy = tiles.slice(0, idx).filter(t => t === l).length;
+          const copy = tiles.slice(0, idx).filter(t => t === l).length;   // which copy of this letter this tile is
           const isHit = !!hit && hit.letter === l && copy === usedCount - 1;
+          const isHint = !!hintPulse && hintPulse.letter === l && copy === usedCount;
+          const isBump = !!bump && bump.idx === idx;
           return (
-            <Tile key={idx + "-" + l} letter={l} used={used} onTap={onTap} delayMs={show ? idx * 30 : 0} fontReady={fontReady}
-              hit={isHit ? (hit.n % 2 ? "a" : "b") : undefined} />
+            <Tile
+              key={idx + "-" + l}
+              letter={l}
+              index={idx}
+              used={used}
+              onTap={onTap}
+              delayMs={show ? idx * 30 : 0}
+              fontReady={fontReady}
+              hit={isHit ? (hit.n % 2 ? "a" : "b") : undefined}
+              bump={isBump ? `${bump.kind}-${bump.n % 2 ? "a" : "b"}` : undefined}
+              hint={isHint}
+            />
           );
         })}
       </div>

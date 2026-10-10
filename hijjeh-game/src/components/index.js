@@ -1,6 +1,9 @@
 export { Glyph } from "./Glyph.jsx";
 export { Masthead } from "./Masthead.jsx";
 export { BookBanner } from "./BookBanner.jsx";
+export { BookPicker } from "./BookPicker.jsx";
+export { FreeCard } from "./FreeCard.jsx";
+export { RewardOverlay } from "./RewardOverlay.jsx";
 export { StatsBar } from "./StatsBar.jsx";
 export { TargetWord } from "./TargetWord.jsx";
 export { LetterProgress } from "./LetterProgress.jsx";

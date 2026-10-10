@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/modernist-8ca47095-2303-4966-b5f5-0078bf925978/styles.css">
+<script src="_ds/modernist-8ca47095-2303-4966-b5f5-0078bf925978/_ds_bundle.js"></script>
+<style>
+@font-face{font-family:'Noto Nastaliq Urdu';src:url(hijjeh/fonts/nastaliq.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Andika';font-weight:400;src:url(hijjeh/fonts/andika-400.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Andika';font-weight:700;src:url(hijjeh/fonts/andika-700.woff2) format('woff2');font-display:swap}
+body{margin:0;background:#e9e6de}
+*{box-sizing:border-box;border-radius:0}
+[id="3a"] *,[id="3b"] *,[id="4a"] *,[id="4b"] *,[id="5a"] *,[id="5b"] *,[id="6a"] *,[id="6b"] *{font-family:Andika,system-ui,sans-serif}[id="3a"] [lang="ur"],[id="3a"] [lang="ur"] *,[id="3b"] [lang="ur"],[id="3b"] [lang="ur"] *,[id="4a"] [lang="ur"],[id="4a"] [lang="ur"] *,[id="4b"] [lang="ur"],[id="4b"] [lang="ur"] *,[id="5a"] [lang="ur"],[id="5a"] [lang="ur"] *,[id="5b"] [lang="ur"],[id="5b"] [lang="ur"] *,[id="6a"] [lang="ur"],[id="6a"] [lang="ur"] *,[id="6b"] [lang="ur"],[id="6b"] [lang="ur"] *{font-family:"Noto Nastaliq Urdu",serif}
+a{color:#a85a18}a:hover{color:#1c1917}
+@keyframes pop7a{0%{transform:scale(1)}40%{transform:scale(1.28) rotate(-4deg)}100%{transform:scale(1)}}
+@keyframes pop7b{0%{transform:scale(1)}40%{transform:scale(1.28) rotate(-4deg)}100%{transform:scale(1)}}
+@keyframes wob7a{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}50%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+@keyframes wob7b{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}50%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+@keyframes hop7a{0%,100%{transform:translateY(0)}35%{transform:translateY(-14px) rotate(-8deg)}65%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+@keyframes hop7b{0%,100%{transform:translateY(0)}35%{transform:translateY(-14px) rotate(-8deg)}65%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+@keyframes cf7a{0%{transform:translate(0,0) rotate(0);opacity:1}30%{transform:translate(-30px,-80px) rotate(120deg)}100%{transform:translate(-60px,170px) rotate(420deg);opacity:0}}
+@keyframes cf7b{0%{transform:translate(0,0) rotate(0);opacity:1}30%{transform:translate(10px,-100px) rotate(-90deg)}100%{transform:translate(20px,180px) rotate(-380deg);opacity:0}}
+@keyframes cf7c{0%{transform:translate(0,0) rotate(0);opacity:1}30%{transform:translate(40px,-70px) rotate(150deg)}100%{transform:translate(70px,160px) rotate(480deg);opacity:0}}
+@keyframes sway7{0%,100%{transform:rotate(0)}25%{transform:rotate(-3.5deg)}75%{transform:rotate(3.5deg)}}
+@keyframes flyx7{0%{transform:translateX(-90px)}100%{transform:translateX(480px)}}
+@keyframes flyy7{0%,100%{transform:translateY(0) rotate(-6deg)}25%{transform:translateY(-26px) rotate(6deg)}50%{transform:translateY(8px) rotate(-8deg)}75%{transform:translateY(-18px) rotate(5deg)}}
+@keyframes blow7{0%{transform:translate(-40px,0) rotate(0);opacity:0}10%{opacity:1}30%{transform:translate(120px,-30px) rotate(160deg)}60%{transform:translate(260px,26px) rotate(360deg)}90%{opacity:1}100%{transform:translate(470px,-10px) rotate(560deg);opacity:0}}
+@keyframes fly7{0%{transform:translateX(420px)}100%{transform:translateX(-110px)}}
+@keyframes walk7{0%{transform:translateX(410px)}100%{transform:translateX(-170px)}}
+@keyframes bob7{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-7px) rotate(1.5deg)}}
+@keyframes hopb7{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(-10deg)}}
+@keyframes loop7{0%{transform:translate(420px,90px) rotate(0)}18%{transform:translate(230px,170px) rotate(-10deg)}28%{transform:translate(150px,110px) rotate(-120deg)}36%{transform:translate(210px,60px) rotate(-240deg)}44%{transform:translate(250px,130px) rotate(-360deg)}54%{transform:translate(200px,236px) rotate(-360deg)}60%{transform:translate(175px,206px) rotate(-372deg)}66%{transform:translate(150px,236px) rotate(-360deg)}72%{transform:translate(125px,206px) rotate(-348deg)}78%{transform:translate(100px,236px) rotate(-360deg)}100%{transform:translate(-110px,120px) rotate(-366deg)}}
+@keyframes arrive7{0%{transform:translateX(410px);opacity:1}26%{transform:translateX(150px)}90%{transform:translateX(150px);opacity:1}100%{transform:translateX(150px);opacity:0}}
+@keyframes perch7{0%{transform:translate(-80px,420px);opacity:1}14%{transform:translate(40px,500px)}26%{transform:translate(104px,640px)}90%{transform:translate(104px,640px);opacity:1}100%{transform:translate(104px,640px);opacity:0}}
+@keyframes chirp7{0%,100%{transform:rotate(0)}30%{transform:rotate(-12deg) translateY(-3px)}60%{transform:rotate(4deg)}}
+@keyframes note7{0%{transform:translate(0,0) rotate(0);opacity:0}15%{opacity:1}100%{transform:translate(-46px,-70px) rotate(-20deg);opacity:0}}
+@keyframes up7{0%{transform:translateY(110%)}15%,85%{transform:translateY(0)}100%{transform:translateY(110%)}}
+@keyframes rise7{0%{opacity:0;transform:translate(-50%,20px) scale(.6)}12%{opacity:1;transform:translate(-50%,0) scale(1.08)}20%,85%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-20px) scale(1)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(168,90,24,.35)}50%{box-shadow:0 0 0 6px rgba(168,90,24,0)}}
+</style>
+</helmet>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+<div id="7a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#d81f00;color:#fff;padding:3px 8px;margin-right:8px">7a</span>ORIGAMI — for children (tap the letters)</div>
+<div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700"><span style="margin-right:4px">Preview reward</span>
+  <sc-for list="{{ demo7 }}" as="d" hint-placeholder-count="6"><div onClick="{{ d.tap }}" style="cursor:pointer;width:30px;height:30px;display:grid;place-items:center;border-radius:8px;background:{{ d.bg }};color:{{ d.fg }}">{{ d.label }}</div></sc-for>
+</div>
+<div style="width:390px;min-height:844px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:12px 14px 0;color:#280209;background:#f1e9d6;font-family:Andika,system-ui,sans-serif">
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5">
+    <sc-for list="{{ blow7 }}" as="l" hint-placeholder-count="0"><span style="position:absolute;left:0;top:{{ l.top }}px;width:{{ l.w }}px;height:{{ l.h }}px;background:{{ l.bg }};border-radius:{{ l.br }};clip-path:{{ l.clip }};animation:blow7 {{ l.dur }}s ease-in-out {{ l.delay }}s both"></span></sc-for>
+    <sc-if value="{{ rw7 }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ aFly7 }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;top:220px;animation:fly7 3.8s linear .3s both"><div style="animation:flyy7 .9s ease-in-out infinite"><img src="hijjeh/bird-glyph.png" width="64" style="display:block;width:64px;height:auto"></div></div></sc-if>
+      <sc-if value="{{ aLoop7 }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;top:0;animation:loop7 5s ease-in-out .2s both"><img src="hijjeh/bird-glyph.png" width="64" style="display:block;width:64px;height:auto"></div></sc-if>
+      <sc-if value="{{ aWalk7 }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;bottom:6px;animation:walk7 5.2s linear .2s both"><div style="transform-origin:50% 100%;animation:bob7 .55s ease-in-out infinite"><img src="hijjeh/woman-glyph-final.png" width="120" style="display:block;width:120px;height:auto"></div></div></sc-if>
+      <sc-if value="{{ aChase7 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;bottom:150px;animation:walk7 4.6s linear .1s both"><div style="animation:hopb7 .5s ease-in-out infinite"><img src="hijjeh/bird-glyph.png" width="58" style="display:block;width:58px;height:auto"></div></div>
+        <div style="position:absolute;left:0;bottom:6px;animation:walk7 5.2s linear .9s both"><div style="transform-origin:50% 100%;animation:bob7 .42s ease-in-out infinite"><img src="hijjeh/woman-glyph-final.png" width="120" style="display:block;width:120px;height:auto"></div></div>
+      </sc-if>
+      <sc-if value="{{ aSing7 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;bottom:6px;animation:arrive7 6.4s ease-out both"><div style="transform-origin:50% 100%;animation:bob7 .55s ease-in-out 3"><img src="hijjeh/woman-glyph-final.png" width="120" style="display:block;width:120px;height:auto"></div></div>
+        <div style="position:absolute;left:0;top:0;animation:perch7 6.4s ease-out both">
+          <div style="transform-origin:70% 100%;animation:chirp7 .6s ease-in-out 1.8s infinite"><img src="hijjeh/bird-glyph.png" width="52" style="display:block;width:52px;height:auto"></div>
+          <span style="position:absolute;left:-6px;top:0;font-size:22px;font-weight:700;color:#1f6fe0;animation:note7 1.6s ease-out 1.9s infinite both">♪</span>
+          <span style="position:absolute;left:-2px;top:4px;font-size:18px;font-weight:700;color:#d81f00;animation:note7 1.6s ease-out 2.4s infinite both">♫</span>
+          <span style="position:absolute;left:-8px;top:2px;font-size:20px;font-weight:700;color:#f5a000;animation:note7 1.6s ease-out 2.9s infinite both">♪</span>
+        </div>
+      </sc-if>
+      <div style="position:absolute;left:50%;top:120px;transform:translateX(-50%);animation:rise7 4.2s ease both"><div style="padding:10px 22px;border-radius:999px;background:#d81f00;color:#fff;font-size:22px;font-weight:700;white-space:nowrap">{{ rwText7 }}</div></div>
+
+    </sc-if>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:28px;line-height:1.5;color:#d81f00;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase">Hijjeh</span></div>
+    <div style="flex:none;display:flex;gap:6px;align-items:center">
+      <div onClick="{{ toggleLook7 }}" style="cursor:pointer;white-space:nowrap;min-height:32px;display:flex;align-items:center;padding:0 10px;border-radius:999px;background:rgba(40,2,9,.08);font-size:12px;font-weight:700">{{ lookLabel7 }}</div>
+      <span style="padding:4px 12px;border-radius:999px;background:#1f6fe0;color:#fff;font-size:15px;font-weight:700">{{ score7 }}</span>
+      <sc-for list="{{ stars7 }}" as="s" hint-placeholder-count="3"><span style="width:20px;height:20px;background:{{ s.bg }};clip-path:polygon(50% 0,62% 36%,100% 38%,70% 60%,81% 100%,50% 76%,19% 100%,30% 60%,0 38%,38% 36%)"></span></sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:20px;background:rgba(40,2,9,.07)">
+    <sc-for list="{{ modes7 }}" as="m" hint-placeholder-count="2">
+      <div onClick="{{ m.tap }}" style="cursor:pointer;min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:15px;background:{{ m.bg }};color:{{ m.fg }};font-size:15px;font-weight:700">{{ m.label }}</div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ isBook7 }}" hint-placeholder-val="{{ true }}">
+    <div onClick="{{ openPick7 }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;border-radius:20px;background:rgba(245,160,0,.2)">
+      <div style="flex:none;width:42px;height:59px;border-radius:8px;background:url({{ bk7.img }}) center/cover"></div>
+      <div style="min-width:0;flex:1">
+        <div style="font-size:15px;font-weight:700;line-height:1.3">{{ bk7.en }}</div>
+        <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#7a4f00">{{ bk7.ur }}</div>
+      </div>
+      <div style="text-align:center;padding:6px 12px;border-radius:14px;background:#f5a000;color:#280209;font-size:11px;font-weight:700;line-height:1.2"><b style="display:block;font-size:20px">{{ bk7.prog }}</b>Change ▾</div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ isFree7 }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:20px;background:rgba(31,111,224,.14)">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:15px;font-weight:700;line-height:1.3">Free play</div>
+        <div style="font-size:13px;line-height:1.35">Words from all books, getting harder as you go</div>
+      </div>
+      <div style="text-align:center;padding:6px 12px;border-radius:14px;background:#1f6fe0;color:#fff;font-size:11px;font-weight:700;line-height:1.2"><b style="display:block;font-size:20px">1</b>Level</div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ pick7 }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePick7 }}" style="position:absolute;inset:0;z-index:8;background:rgba(40,2,9,.4)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;z-index:9;display:flex;flex-direction:column;gap:10px;padding:18px 14px 22px;border-radius:28px 28px 0 0;background:#faf5e8">
+      <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:18px;font-weight:700">Choose a book</div><div onClick="{{ closePick7 }}" style="cursor:pointer;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:rgba(40,2,9,.08);font-size:20px;font-weight:700">×</div></div>
+      <sc-for list="{{ books7 }}" as="b" hint-placeholder-count="0">
+        <div onClick="{{ b.tap }}" style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 14px 10px 10px;border-radius:20px;background:{{ b.bg }}">
+          <div style="flex:none;width:48px;height:68px;border-radius:8px;background:url({{ b.img }}) center/cover"></div>
+          <div style="min-width:0;flex:1">
+            <div style="font-size:15px;font-weight:700;line-height:1.3">{{ b.en }}</div>
+            <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#7a4f00">{{ b.ur }}</div>
+          </div>
+          <div style="font-size:13px;font-weight:700">{{ b.prog }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+  <div style="display:grid;gap:10px">
+    <div style="display:contents">
+      <div style="position:relative;display:grid;place-items:center;border-radius:24px;background:#faf5e8;height:150px">
+        <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:56px;line-height:1;color:#280209;transform:translate({{ wd7.dx }}em,{{ wd7.dy }}em)">پھرکی</div>
+        <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:24px">
+          <sc-for list="{{ conf7 }}" as="c" hint-placeholder-count="0"><span style="position:absolute;left:{{ c.x }}%;top:40%;width:9px;height:9px;border-radius:{{ c.r }};background:{{ c.bg }};animation:{{ c.anim }}"></span></sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="min-height:22px;text-align:center;font-size:15px;font-weight:700;color:{{ msgc7 }};animation:{{ bird7 }}">{{ msg7 }}</div>
+  <div dir="rtl" style="display:flex;justify-content:center;gap:8px">
+    <sc-for list="{{ slots7 }}" as="s" hint-placeholder-count="5">
+      <span lang="ur" style="width:52px;height:56px;display:grid;place-items:center;border-radius:16px;background:{{ s.bg }};color:{{ s.fg }};font-family:'Noto Nastaliq Urdu',serif;font-size:26px;animation:{{ s.anim }}"><span style="display:block;line-height:1;transform:translate({{ s.dx }}em,{{ s.dy }}em)">{{ s.ch }}</span></span>
+    </sc-for>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:16px 12px 14px;border-radius:28px;background:rgba(250,246,236,.92)">
+    <sc-if value="{{ win7 }}" hint-placeholder-val="{{ false }}"><div onClick="{{ next7 }}" style="cursor:pointer;min-height:52px;display:flex;align-items:center;justify-content:center;border-radius:18px;background:#1f6fe0;color:#fff;font-size:17px;font-weight:700;border-bottom:5px solid #1553ad">Next word →</div></sc-if>
+    <div dir="rtl" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <sc-for list="{{ tiles7 }}" as="t" hint-placeholder-count="8">
+        <div lang="ur" onClick="{{ t.tap }}" style="cursor:pointer;aspect-ratio:1;display:grid;place-items:center;border-radius:20px;background:{{ t.bg }};border-bottom:{{ t.edge }} solid {{ t.dk }};opacity:{{ t.op }};font-family:'Noto Nastaliq Urdu',serif;font-size:32px;color:{{ t.fg }};animation:{{ t.anim }}"><span style="display:block;line-height:1;transform:translate({{ t.dx }}em,{{ t.dy }}em)">{{ t.ch }}</span></div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+    <sc-for list="{{ tools7 }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-radius:18px;background:{{ b.bg }};font-size:12px;font-weight:700"><span style="width:26px;height:26px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="margin:0 -14px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:rgba(250,246,236,.92);font-size:12px">
+    <span>Game design · <b>Saif Ali</b></span><img src="hijjeh/bafter-logo.png" height="18" style="display:block;height:18px;width:auto">
+  </div>
+</div>
+</div>
+</section>
+<section style="display:flex;gap:56px;padding:56px 56px 0;align-items:flex-start;font-family:Andika,system-ui,sans-serif">
+
+<div id="6a" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#d81f00;color:#fff;padding:3px 8px;margin-right:8px">6a</span>ORIGAMI — game</div>
+<div style="width:390px;min-height:844px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#280209;background:#f1e9d6;border:1px solid #280209;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#d81f00;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(40,2,9,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #280209;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;background:#d81f00;color:#fff;border-left:1px solid #280209">Book</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border:1px solid #f5a000;border-left-width:5px;background:rgba(245,160,0,.16)">
+    <img src="hijjeh/phirki-cover.jpg" width="42" height="59" style="flex:none;display:block">
+    <div style="min-width:0;flex:1">
+      <div style="font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7a4f00;font-weight:700">Book · tap to change</div>
+      <div style="font-size:15px;font-weight:700;line-height:1.3">Kaaghaz Ki Phirki</div>
+      <div dir="rtl" lang="ur" style="text-align:right;font-family:'Noto Nastaliq Urdu',serif;font-size:18px;line-height:1.9;color:#7a4f00">کاغذ کی پھرکی</div>
+    </div>
+    <div style="text-align:end;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(40,2,9,.72);white-space:nowrap"><b style="display:block;font-size:22px;line-height:1.1;letter-spacing:0;color:#280209">12/57</b>words</div>
+  </div>
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:14px;padding:14px;border:1px solid #280209;background:rgba(250,246,236,.92)">
+    <div style="position:absolute;top:-1px;right:18px;width:20px;height:26px;background:#f5a000;clip-path:polygon(0 0,100% 0,100% 100%,50% 74%,0 100%)"></div>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+      <sc-for list="{{ stats6 }}" as="p" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:6px 4px 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(40,2,9,.72);border-left:{{ p.bl }}">{{ p.k }}<b style="font-size:22px;line-height:1.2;letter-spacing:0;color:#280209">{{ p.v }}</b></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;gap:10px;text-align:center;justify-items:center">
+      <div style="font-size:14px;color:rgba(40,2,9,.72)">Look at the word, then tap its letters in order.</div>
+      <div style="width:100%;margin-top:6px;background:#f5a000;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding:1px">
+        <div style="background:#faf5e8;clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%);padding-top:44px">
+          <div dir="rtl" lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:52px;line-height:1.9;padding:0 12px 18px">پھرکی</div>
+        </div>
+      </div>
+      <div dir="rtl" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ progress6 }}" as="s" hint-placeholder-count="5">
+          <span lang="ur" style="min-width:34px;height:44px;display:grid;place-items:center;font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:{{ s.fg }};border-bottom:2px solid {{ s.bd }}"><span style="display:block;line-height:1;transform:translate({{ s.dx }}em,{{ s.dy }}em)">{{ s.ch }}</span></span>
+        </sc-for>
+      </div>
+      <div style="min-height:22px;font-size:15px;font-weight:700;color:#55705e">Right — پھ. Next letter.</div>
+      <div style="display:flex;align-items:center;gap:12px;width:100%;max-width:340px">
+        <div style="flex:1;height:6px;background:rgba(40,2,9,.12)"><div style="height:100%;width:45%;background:#d81f00"></div></div>
+        <div style="min-height:36px;padding:0 16px;display:flex;align-items:center;border:1px solid #d81f00;color:#d81f00;font-weight:700;font-size:14px;opacity:.45">Hint</div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(40,2,9,.25)">
+      <div dir="rtl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(56px,1fr));gap:8px">
+        <sc-for list="{{ tiles6 }}" as="t" hint-placeholder-count="8">
+          <div lang="ur" style="aspect-ratio:1;display:grid;place-items:center;background:{{ t.bg }};font-family:'Noto Nastaliq Urdu',serif;font-size:28px;color:{{ t.fg }}"><span style="display:block;line-height:1;transform:translate({{ t.dx }}em,{{ t.dy }}em)">{{ t.ch }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.55)">
+    <sc-for list="{{ tools6 }}" as="b" hint-placeholder-count="4">
+      <div style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;font-size:11px;font-weight:700;border-left:{{ b.bl }}"><span style="width:22px;height:22px;background:url({{ b.icon }}) center/contain no-repeat"></span>{{ b.label }}</div>
+    </sc-for>
+  </div>
+  <div style="margin:0 -14px;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #280209;background:rgba(250,246,236,.92)">
+    <div style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(40,2,9,.72)">Game design</div>
+      <div style="font-size:16px;font-weight:700">Saif Ali</div>
+      <a href="#6b" style="margin-top:2px;font-size:13px;font-weight:700;text-decoration:none;color:#d81f00;border-bottom:1px solid currentColor;padding-bottom:1px">About Hijjeh →</a>
+    </div>
+    <a href="https://bafter.wordpress.com" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;border-left:1px solid rgba(40,2,9,.25);text-decoration:none;color:#280209">
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(40,2,9,.72)">In association with</div>
+      <img src="hijjeh/bafter-logo.png" height="20" style="display:block;height:20px;width:auto">
+      <div style="font-size:10px;line-height:1.3;color:rgba(40,2,9,.72)">Barkat Ali Firaq Trust for Education and Research</div>
+    </a>
+  </div>
+</div>
+</div>
+
+<div id="6b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:700;font-size:13px;letter-spacing:.1em"><span style="background:#d81f00;color:#fff;padding:3px 8px;margin-right:8px">6b</span>ORIGAMI — about</div>
+<div style="width:390px;display:flex;flex-direction:column;gap:10px;padding:10px 14px 0;color:#280209;background:#f1e9d6;border:1px solid #280209;font-family:Andika,system-ui,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:6px">
+    <div style="display:flex;align-items:center;gap:12px"><span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:26px;line-height:1.5;color:#d81f00;transform:translateY(-6px)">ہجے</span><span style="font-weight:700;font-size:15px;letter-spacing:.24em;text-transform:uppercase;padding-left:12px;border-left:1px solid rgba(40,2,9,.25)">Hijjeh</span></div>
+    <div style="display:inline-flex;border:1px solid #280209;background:rgba(255,255,255,.5)"><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;white-space:nowrap">Free play</div><div style="min-height:40px;padding:0 12px;display:flex;align-items:center;font-size:13px;font-weight:700;border-left:1px solid #280209">Book</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:22px;padding:16px 14px 22px;border:1px solid #280209;background:rgba(250,246,236,.92)">
+    <div style="align-self:flex-start;min-height:40px;padding:0 12px;display:flex;align-items:center;white-space:nowrap;background:rgba(255,255,255,.7);font-size:14px;font-weight:700">← Back to the game</div>
+    <div style="display:flex;align-items:center;gap:14px;padding-bottom:28px;border-bottom:2px solid #280209">
+      <span lang="ur" style="font-family:'Noto Nastaliq Urdu',serif;font-size:44px;line-height:1.5;color:#d81f00">ہجے</span>
+      <h1 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700">About Hijjeh</h1>
+    </div>
+    <sc-for list="{{ about }}" as="s" hint-placeholder-count="4">
+      <section style="display:grid;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:11px;font-weight:700;color:#d81f00;letter-spacing:.08em">{{ s.n }}</span><h2 style="margin:0;font-family:Andika,system-ui,sans-serif;font-size:18px;font-weight:700">{{ s.h }}</h2></div>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p1 }}</p>
+        <p style="margin:0;font-size:15px;line-height:1.6">{{ s.p2 }}</p>
+        <div style="display:grid;gap:0;border-top:1px solid rgba(40,2,9,.25)">
+          <sc-for list="{{ s.list }}" as="li" hint-placeholder-count="0"><div style="display:grid;grid-template-columns:14px 1fr;font-size:15px;line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(40,2,9,.25)"><span style="color:#d81f00;font-weight:700">–</span><span>{{ li }}</span></div></sc-for>
+        </div>
+      </section>
+<section style="padding:24px 56px 56px;font-family:Andika,system-ui,sans-serif;font-size:14px">Earlier options (1a–5b) are in <a href="Hijjeh Game archive.dc.html">Hijjeh Game archive</a>.</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tier: 0, score: 0, rw: false, rwN: 0, pk: 0, used: [], msg: "Tap the letters of the word, in order!", n: 0, hit: -1, kind: "", win: false, conf: 0 };
+  tap7(ch, i) {
+    const T = ["پ","ھ","ر","ک","ی"];
+    this.setState(s => {
+      if (s.used.includes(ch) || s.win) return null;
+      const n = s.n + 1;
+      if (ch === T[s.pk]) {
+        const pk = s.pk + 1, win = pk === T.length, score = s.score + (win ? 20 : 10);
+        const crossed = Math.floor(score / 50) > Math.floor(s.score / 50);
+        if (crossed) setTimeout(() => this.fire7(Math.floor(score / 50)), 0);
+        return { pk, score, used: [...s.used, ch], n, hit: i, kind: "ok", win, conf: win ? s.conf + 1 : s.conf,
+          msg: win ? "Wonderful! You spelled پھرکی — a pinwheel!" : ["Yes!", "Great!", "You got it!", "Super!"][s.pk % 4] + " Now the next letter." };
+      }
+      return { n, hit: i, kind: "no", msg: "Almost! Look again and try another." };
+    });
+  }
+  fire7(tier) {
+    clearTimeout(this.rwT);
+    this.setState({ rw: false }, () => requestAnimationFrame(() => {
+      this.setState({ rw: true, tier, rwN: tier * 50 });
+      this.rwT = setTimeout(() => this.setState({ rw: false }), tier >= 4 ? 6600 : 5400);
+    }));
+  }
+  next7() { this.setState({ pk: 0, used: [], win: false, hit: -1, kind: "", msg: "Tap the letters of the word, in order!" }); }
+  r7() {
+    const s = this.state, T = ["پ","ھ","ر","ک","ی"], tl = ["ک","ن","پ","ی","ل","ھ","ب","ر"];
+    const P = [["#d81f00","#fff","#9c1700"],["#f5a000","#280209","#b87800"],["#1f6fe0","#fff","#1553ad"],["#ff8a3d","#280209","#c4601a"],["#ff7a6b","#280209","#c9544a"],["#3f8f6a","#fff","#2b6a4d"]];
+    const ab = s.n % 2 ? "a" : "b";
+    const tiles7 = tl.map((ch, i) => {
+      const u = s.used.includes(ch), p = P[i % 6], h = s.hit === i;
+      return { ch, ...this.off(ch), bg: p[0], fg: p[1], dk: p[2], edge: u ? "2px" : "7px", op: u ? 0.3 : 1,
+        anim: h ? (s.kind === "ok" ? "pop7" : "wob7") + ab + " .45s ease" : "none", tap: () => this.tap7(ch, i) };
+    });
+    const slots7 = T.map((ch, i) => {
+      const f = i < s.pk, a = i === s.pk && !s.win, ti = tl.indexOf(ch), p = P[ti % 6];
+      return { ch: f ? ch : "", ...this.off(ch), bg: f ? p[0] : a ? "rgba(245,160,0,.35)" : "rgba(40,2,9,.08)", fg: f ? p[1] : "#280209",
+        anim: f && i === s.pk - 1 ? "pop7" + ab + " .45s ease" : a ? "pulse 1.6s ease-in-out infinite" : "none" };
+    });
+    const stars7 = [0, 1, 2].map(i => ({ bg: i < 3 ? "#f5a000" : "rgba(40,2,9,.15)" }));
+    const tools7 = [["Undo","hijjeh/icons/undo.svg","rgba(31,111,224,.22)"],["Skip","hijjeh/icons/skip.svg","rgba(255,138,61,.3)"],["Hint","hijjeh/icons/hint.svg","rgba(245,160,0,.32)"],["Reset","hijjeh/icons/reset.svg","rgba(255,122,107,.3)"]].map(([label,icon,bg]) => ({ label, icon, bg }));
+    const cols = ["#d81f00","#f5a000","#1f6fe0","#ff8a3d","#ff7a6b","#3f8f6a"];
+    const conf7 = s.win ? Array.from({ length: 18 }, (_, i) => ({ x: 8 + (i * 5.1) % 84, bg: cols[i % 6], r: i % 3 ? "2px" : "50%", anim: "cf7" + "abc"[i % 3] + (s.conf % 2 ? "" : "") + " " + (1.1 + (i % 4) * .15) + "s ease-out " + (i % 5) * .05 + "s both" })) : [];
+    const leaf = ["#7a8a4a","#8a9a5a","#55705e"], fl = ["#ff7a6b","#f5a000","#ff8a3d","#d81f00"];
+    const tr = s.tier || 1, flowers = tr === 3 || tr >= 5;
+    const rwActs = { aFly7: s.rw && tr === 2, aLoop7: s.rw && tr === 3, aWalk7: s.rw && tr === 4, aChase7: s.rw && tr === 5, aSing7: s.rw && tr >= 6 };
+    const blow7 = s.rw ? Array.from({ length: Math.min(10 + tr * 2, 24) }, (_, i) => {
+      const f = flowers && i % 3 === 0;
+      return { top: 60 + (i * 47) % 700, w: f ? 18 : 20, h: f ? 18 : 11, bg: f ? "radial-gradient(circle,#fff3c4 0 22%," + fl[i % 4] + " 24%)" : leaf[i % 3],
+        br: f ? "0" : "100% 0 100% 0", clip: f ? "polygon(50% 0,63% 25%,93% 18%,75% 44%,100% 62%,70% 68%,64% 100%,50% 78%,36% 100%,30% 68%,0 62%,25% 44%,7% 18%,37% 25%)" : "none",
+        dur: (3.4 + (i % 5) * .5).toFixed(1), delay: ((i % 7) * .3).toFixed(1) };
+    }) : [];
+    const B = [["Budhiya aur Chidiya ki Kahaani","بڑھیا اور چڑیا کی کہانی","hijjeh/budhiya-cover.jpg","4/38"],["Kaaghaz Ki Phirki","کاغذ کی پھرکی","hijjeh/phirki-cover.jpg","12/57"],["Pyaara Hindustan","پیارا ہندوستان","hijjeh/pyaara-cover.jpg","0/44"]];
+    const bi = s.book ?? 1, mode = s.mode || "book";
+    const bk7 = { en: B[bi][0], ur: B[bi][1], img: B[bi][2], prog: B[bi][3] };
+    const books7 = B.map(([en, ur, img, prog], i) => ({ en, ur, img, prog, bg: i === bi ? "rgba(245,160,0,.35)" : "#fff", tap: () => this.setState({ book: i, mode: "book", pick: false }) }));
+    const modes7 = [["book","Book"],["free","Free play"]].map(([k, label]) => ({ label, bg: mode === k ? (k === "book" ? "#f5a000" : "#1f6fe0") : "transparent", fg: mode === k && k === "free" ? "#fff" : "#280209", tap: () => this.setState({ mode: k, pick: k === "book" && mode === "book" }) }));
+    if (s.adult) {
+      tiles7.forEach(t => { const u = t.op < 1; t.bg = u ? "rgba(40,2,9,.06)" : "#fff"; t.fg = "#280209"; t.dk = "transparent"; t.edge = "0px"; t.op = u ? .45 : 1; t.anim = "none"; });
+      slots7.forEach((x, i) => { const f = i < s.pk; x.bg = f ? "#1f6fe0" : i === s.pk && !s.win ? "rgba(216,31,0,.12)" : "rgba(40,2,9,.06)"; x.fg = f ? "#fff" : "#280209"; x.anim = "none"; });
+      tools7.forEach(b => { b.bg = "rgba(40,2,9,.06)"; });
+      stars7.length = 0;
+    }
+    const adultX = s.adult ? { blow7: [], rw7: false, conf7: [], bird7: "none", aFly7: false, aLoop7: false, aWalk7: false, aChase7: false, aSing7: false } : {};
+    const demo7 = [1, 2, 3, 4, 5, 6].map(t => ({ label: String(t), tap: () => this.fire7(t), bg: s.rw && s.tier === t ? "#d81f00" : "#fff", fg: s.rw && s.tier === t ? "#fff" : "#280209" }));
+    return { ...rwActs, demo7, lookLabel7: s.adult ? "Child" : "Grown-up", toggleLook7: () => this.setState(p => ({ adult: !p.adult, rw: false })),
+      wd7: this.off("پھرکی"), bk7, books7, modes7, isBook7: mode === "book", isFree7: mode === "free", pick7: !!s.pick,
+      openPick7: () => this.setState({ pick: true }), closePick7: () => this.setState({ pick: false }), blow7, rw7: s.rw, rwText7: s.rwN + " points!", score7: s.score, msgc7: s.kind === "no" ? "#c4601a" : "#1f6fe0", tiles7, slots7, stars7, tools7, conf7, msg7: s.msg, win7: s.win, next7: () => this.next7(),
+      bird7: s.kind === "ok" ? "hop7" + ab + " .6s ease" : s.kind === "no" ? "wob7" + ab + " .5s ease" : "none", ...adultX };
+  }
+  componentDidMount() {
+    const go = () => { this.cache = {}; this.ready = true; this.forceUpdate(); };
+    document.fonts.load('40px "Noto Nastaliq Urdu"', 'ابپ').then(go, go);
+  }
+  off(ch) {
+    this.cache = this.cache || {};
+    if (this.cache[ch]) return this.cache[ch];
+    let o = { dx: 0, dy: 0 };
+    if (this.ready) try {
+      const EM = 48, F = EM + 'px "Noto Nastaliq Urdu", serif';
+      const cv = (this.cvEl = this.cvEl || document.createElement('canvas')), g = cv.getContext('2d', { willReadFrequently: true });
+      g.font = F; const m = g.measureText(ch), fa = m.fontBoundingBoxAscent, fd = m.fontBoundingBoxDescent;
+      const W = Math.ceil(m.width + EM), H = Math.ceil(fa + fd + EM / 2), ox = EM / 2, oy = Math.round(EM / 4 + fa);
+      if (cv.width < W) cv.width = W; if (cv.height < H) cv.height = H;
+      g.clearRect(0, 0, cv.width, cv.height); g.font = F; g.textBaseline = 'alphabetic'; g.fillStyle = '#000'; g.fillText(ch, ox, oy);
+      const d = g.getImageData(0, 0, W, H).data; let x0 = W, x1 = -1, y0 = H, y1 = -1;
+      for (let y = 0; y < H; y++) for (let x = 0, r = y * W * 4; x < W; x++) if (d[r + x * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; y1 = y; }
+      this.cache[ch] = o;
+      if (x1 >= 0) this.cache[ch] = o = { dx: +((ox + m.width / 2 - (x0 + x1 + 1) / 2) / EM).toFixed(3),
+            dy: +((oy - (fa - fd) / 2 - (y0 + y1 + 1) / 2) / EM).toFixed(3) };
+      this.cache[ch] = o;
+    } catch (e) {}
+    return o;
+  }
+  renderVals() {
+    const letters = ["پ","ھ","ر","ک","ی"], done = 2;
+    const tl = ["ک","ن","پ","ی","ل","ھ","ب","ر"], used = ["پ","ھ"];
+    const stats = [["Level",1],["Score",120],["Streak",3],["Mistakes",1]].map(([k,v],i)=>({k,v,bl:i?"1px solid rgba(28,25,23,.2)":"0"}));
+    const tools = [["Undo","hijjeh/icons/undo.svg"],["Skip","hijjeh/icons/skip.svg"],["Hide hints","hijjeh/icons/hint.svg"],["Reset","hijjeh/icons/reset.svg"]].map(([label,icon],i)=>({label,icon,bl:i?"1px solid rgba(28,25,23,.2)":"0"}));
+    const R="2px solid var(--color-text)";
+    const mstats = [["Level",1],["Score",120],["Streak",3],["Miss",1]].map(([k,v],i)=>({k,v,bl:i?R:"0",c:k==="Miss"?"var(--color-accent-700)":"var(--color-text)"}));
+    const acts = [["Undo","M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"],["Skip","M5 4l10 8-10 8zM19 5v14"],["Hint · 45%","M9 18h6M10 22h4M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"],["Reset","M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5"]].map(([label,d],i)=>({label,d,bl:i?R:"0",bg:i===2?"var(--color-accent)":"var(--color-bg)",fg:i===2?"#fff":"var(--color-text)"}));
+    const about = [
+      ["The game",["Hijjeh (ہجے) means spelling. It is a small game for practising the spelling of Urdu words, one letter at a time: a word appears, and you tap its letters in the right order.","It is made as a companion to the Learning While Living readers. Each book has its own word list, taken from its poem, so what children play with is what they have just read aloud."],["Free play: words from a graded list, from single letters up to longer words.","Book mode: choose a book and play only the words of its poem, in that book’s own colours.","Three correct words in a row raise the level, and harder levels add look-alike letters to tell apart."]],
+      ["Learning While Living",["Learning does not begin and end in the classroom. Much of it happens in ordinary life: in talk at home, in stories before sleep, in the shared curiosity between a child and a parent.","The series was conceived by BAFTER to bring learning and life back together, through books meant to be read aloud, revisited, memorised and enjoyed as a family."],[]],
+      ["Barkat Ali Firaq",["The poems in these books are by Barkat Ali Firaq, who took part in the Indian struggle for independence and worked for adult and continuing education. He gave twenty years to building Jamia Millia Islamia under Dr Zakir Husain.","His poems for children hold the idea of learning woven into life."],[]],
+      ["BAFTER",["The Barkat Ali Firaq Trust for Education and Research is a registered society, established in 2005 in New Delhi, working in publishing, courses and talks, and archiving material from the independence era.",""],[]]
+    ].map(([h,p,list],i)=>({n:"0"+(i+1),h,p1:p[0],p2:p[1],list}));
+    const books = [["بڑھیا اور چڑیا کی کہانی","Budhiya aur Chidiya ki Kahaani","hijjeh/budhiya-cover.jpg","#9a4326","block"],["کاغذ کی پھرکی","Kaaghaz Ki Phirki","hijjeh/phirki-cover.jpg","#a85a18","none"],["سب کا پیارا","Sab Ka Pyaara","hijjeh/pyaara-cover.jpg","#b0405a","none"]].map(([ur,en,img,c,buy])=>({ur,en,img,c,buy}));
+    const T = o => JSON.parse(JSON.stringify(o).split('#4e7a3f').join('#1d1d1f').split('rgba(28,25,23').join('rgba(29,29,31').split('#1c1917').join('#1d1d1f'));
+    const t3 = tl.map(ch=>{const u=used.includes(ch);return {ch,...this.off(ch),bg:u?"rgba(28,25,23,.06)":"#fff",fg:u?"rgba(28,25,23,.3)":"#1c1917"};});
+    const pr = letters.map((ch,i)=>({ch,...this.off(ch),fg:i<done?"#4e7a3f":"rgba(28,25,23,.62)",bd:i<done?"#4e7a3f":"rgba(28,25,23,.2)"}));
+    const T5 = o => JSON.parse(JSON.stringify(o).split('#4e7a3f').join('#3e8087').split('rgba(28,25,23').join('rgba(31,43,45').split('#1c1917').join('#1f2b2d'));
+    const T6 = o => JSON.parse(JSON.stringify(o).split('#4e7a3f').join('#55705e').split('rgba(28,25,23').join('rgba(40,2,9').split('#1c1917').join('#280209'));
+    return {
+      ...this.r7(),
+      tiles6: T6(t3), progress6: JSON.parse(JSON.stringify(T6(pr)).split('#55705e').join('#1f6fe0')), stats6: T6(stats), tools6: T6(tools),
+      tiles5: T5(t3), progress5: T5(pr), stats5: T5(stats), tools5: T5(tools),
+      tiles4: T(t3), progress4: T(pr), stats4: T(stats), tools4: T(tools),
+      about, books,
+      tiles3: tl.map(ch=>{const u=used.includes(ch);return {ch,...this.off(ch),bg:u?"rgba(28,25,23,.06)":"#fff",fg:u?"rgba(28,25,23,.3)":"#1c1917"};}),
+      mStats: mstats, acts,
+      mSlots: letters.map((ch,i)=>{const f=i<done,a=i===done;return {ch:f?ch:"",bg:f?"var(--color-text)":"var(--color-bg)",fg:"var(--color-bg)",ring:a?"inset 0 0 0 4px var(--color-accent)":"none",br:i<4?R:"0"};}),
+      mTiles: tl.map((ch,i)=>{const u=used.includes(ch);return {ch,bg:u?"var(--color-neutral-300)":"var(--color-bg)",fg:u?"var(--color-neutral-500)":"var(--color-text)",br:i%4!==3?R:"0",bt:i>3?R:"0"};}),
+      tools, stats,
+      progress: letters.map((ch,i)=>({ch,...this.off(ch), fg:i<done?"#4e7a3f":"rgba(28,25,23,.62)", bd:i<done?"#4e7a3f":"rgba(28,25,23,.2)"})),
+      slots: letters.map((ch,i)=>{
+        const f=i<done, a=i===done;
+        return {ch:f?ch:"", bg:f?"rgba(78,122,63,.12)":"rgba(255,255,255,.5)", bd:f?"#4e7a3f":a?"#a85a18":"rgba(28,25,23,.25)", fg:"#4e7a3f", anim:a?"pulse 1.6s ease-in-out infinite":"none"};
+      }),
+      tiles: tl.map(ch=>{const u=used.includes(ch);return {ch, op:u?0.25:1, sh:u?"none":"3px 3px 0 #a85a18", sha:u?"none":"3px 3px 0 #a85a18"};})
+    };
+  }
+}
+</script>
+</body>
+</html>
