@@ -22,7 +22,7 @@ export default {
   subtitleEn: "Everyone's Darling",
   author: "Barkat Ali Firaq",
   cover,
-  buyUrl: "",         // Amazon link for this book; empty until it is added (no button shows while empty)
+  buyUrl: "https://www.amazon.in/gp/product/B0HMJHD6P6?storeType=ebooks",   // Amazon link for this book (no button shows while empty)
   accent: "#b0405a",   // deep rose, legible version of the cover's pink ribbons
   done: "#5d7a4f",     // sage of the cover's foliage
   paper: "#f7f1e6",    // cover background
